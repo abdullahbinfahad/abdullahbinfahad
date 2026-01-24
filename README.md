@@ -1,4 +1,4 @@
-I am Abdullah Bin Fahad, a passionate thinker, writer, and future engineer.
+I am Abdullah Bin Fahad, a passionate writer and automation engineer.
 My focus lies in the powerful intersection of:
 
 🤖 Robotics: design, control systems, and autonomous algorithms
