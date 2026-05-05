@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Abdullah Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>{{ profile.name }}</h1>
+        <p class="tag">Future Builder • Automation Student</p>
+
+        <div class="info">
+            <p><b>DOB:</b> {{ profile.dob }}</p>
+            <p><b>Age:</b> {{ profile.age }}</p>
+            <p><b>Height:</b> {{ profile.height }}</p>
+            <p><b>Weight:</b> {{ profile.weight }}</p>
+            <p><b>Blood:</b> {{ profile.blood_group }}</p>
+        </div>
+
+        <h2>Education</h2>
+        <ul>
+            <li>{{ profile.education.university }}</li>
+            <li>{{ profile.education.major }}</li>
+            <li>Scholarship: {{ profile.education.scholarship }}</li>
+        </ul>
+
+        <h2>Skills</h2>
+        <div class="chips">
+            {% for skill in profile.skills %}
+                <span>{{ skill }}</span>
+            {% endfor %}
+        </div>
+
+        <h2>Goals</h2>
+        <ul>
+            {% for goal in profile.goals %}
+                <li>{{ goal }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
