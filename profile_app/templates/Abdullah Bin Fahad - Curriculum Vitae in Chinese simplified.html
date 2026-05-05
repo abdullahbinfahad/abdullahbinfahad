@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿卜杜拉·本·法赫德 - 简历</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Arial', 'Helvetica', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            font-size: 13px; /* 缩小字体大小 */
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* A4打印优化 */
+        @page {
+            size: A4;
+            margin: 0.5in;
+        }
+
+        .cv-container {
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background: white;
+            display: flex;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* 中国风装饰元素 */
+        .chinese-decoration {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.05;
+            font-size: 90px; /* 缩小装饰元素 */
+            color: #c03;
+            font-family: 'SimSun', serif;
+        }
+
+        .decoration-top-left {
+            top: 15px;
+            left: 15px;
+            transform: rotate(-15deg);
+        }
+
+        .decoration-top-right {
+            top: 15px;
+            right: 15px;
+            transform: rotate(15deg);
+        }
+
+        .decoration-bottom-left {
+            bottom: 15px;
+            left: 15px;
+            transform: rotate(15deg);
+        }
+
+        .decoration-bottom-right {
+            bottom: 15px;
+            right: 15px;
+            transform: rotate(-15deg);
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes progressBar {
+            0% { width: 0; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px; /* 缩小按钮 */
+            background: #c03;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px; /* 缩小字体 */
+            box-shadow: 0 4px 10px rgba(192, 3, 3, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .print-button:hover {
+            background: #a00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(192, 3, 3, 0.4);
+        }
+
+        .print-button i {
+            margin-right: 8px;
+        }
+
+        /* 新增繁体中文按钮 */
+        .traditional-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+
+        .traditional-button:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .traditional-button i {
+            margin-right: 8px;
+        }
+
+        @media print {
+            .print-button, .traditional-button {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .cv-container {
+                box-shadow: none;
+                margin: 0;
+                max-width: none;
+                min-height: auto;
+            }
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            width: 35%;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            padding: 25px 20px; /* 缩小内边距 */
+            border-right: 1px solid #e0e0e0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 25px; /* 缩小外边距 */
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        .profile-image {
+            width: 120px; /* 缩小图片 */
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 12px; /* 缩小外边距 */
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            transition: transform 0.5s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name {
+            font-size: 20px; /* 缩小字体 */
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .name::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #c03;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .name:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .title {
+            font-size: 13px; /* 缩小字体 */
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* 侧边栏部分 */
+        .sidebar-section {
+            margin-bottom: 20px; /* 缩小外边距 */
+            animation: fadeIn 1s ease-out 0.4s both;
+        }
+
+        .sidebar-section h3 {
+            font-size: 15px; /* 缩小字体 */
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px; /* 缩小外边距 */
+            letter-spacing: 0.5px;
+            padding-bottom: 6px; /* 缩小内边距 */
+            border-bottom: 2px solid #c03;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-section h3 i {
+            margin-right: 8px; /* 缩小外边距 */
+            color: #c03;
+        }
+
+        .contact-item {
+            margin-bottom: 8px; /* 缩小外边距 */
+            font-size: 12px; /* 缩小字体 */
+            display: flex;
+            align-items: flex-start;
+            gap: 8px; /* 缩小间隙 */
+        }
+
+        .contact-label {
+            font-weight: bold;
+            color: #34495e;
+            min-width: 65px; /* 缩小宽度 */
+        }
+
+        .contact-value {
+            color: #555;
+            word-break: break-word;
+        }
+
+        /* 个人资料 */
+        .personal-item {
+            margin-bottom: 7px; /* 缩小外边距 */
+            font-size: 12px; /* 缩小字体 */
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .personal-label {
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .personal-value {
+            color: #555;
+        }
+
+        /* 技能 */
+        .skill-item {
+            margin-bottom: 8px; /* 缩小外边距 */
+        }
+
+        .skill-name {
+            font-size: 12px; /* 缩小字体 */
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 4px; /* 缩小外边距 */
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .skill-level {
+            height: 7px; /* 缩小高度 */
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(to right, #c03, #f36);
+            border-radius: 4px;
+            animation: progressBar 1.5s ease-out forwards;
+        }
+
+        /* 语言 */
+        .language-item {
+            margin-bottom: 8px; /* 缩小外边距 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px; /* 缩小字体 */
+        }
+
+        .language-name {
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .language-level {
+            background: linear-gradient(to right, #c03, #f36);
+            color: white;
+            padding: 2px 8px; /* 缩小内边距 */
+            border-radius: 12px;
+            font-size: 10px; /* 缩小字体 */
+            box-shadow: 0 2px 5px rgba(192, 3, 3, 0.2);
+        }
+
+        /* 主要内容 */
+        .main-content {
+            width: 65%;
+            padding: 25px 20px; /* 缩小内边距 */
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-section {
+            margin-bottom: 25px; /* 缩小外边距 */
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        .main-section h2 {
+            font-size: 16px; /* 缩小字体 */
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 18px; /* 缩小外边距 */
+            letter-spacing: 1px;
+            padding-bottom: 6px; /* 缩小内边距 */
+            border-bottom: 2px solid #c03;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .main-section h2 i {
+            margin-right: 8px; /* 缩小外边距 */
+            color: #c03;
+        }
+
+        /* 教育 */
+        .education-item {
+            margin-bottom: 20px; /* 缩小外边距 */
+            padding-bottom: 18px; /* 缩小内边距 */
+            border-bottom: 1px solid #ecf0f1;
+            position: relative;
+            padding-left: 18px; /* 缩小内边距 */
+        }
+
+        .education-item:last-child {
+            border-bottom: none;
+        }
+
+        .education-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 10px; /* 缩小尺寸 */
+            height: 10px;
+            border-radius: 50%;
+            background: #c03;
+        }
+
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px; /* 缩小外边距 */
+        }
+
+        .education-degree {
+            font-size: 14px; /* 缩小字体 */
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .education-date {
+            font-size: 12px; /* 缩小字体 */
+            color: #7f8c8d;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 2px 6px; /* 缩小内边距 */
+            border-radius: 4px;
+        }
+
+        .education-institution {
+            font-size: 13px; /* 缩小字体 */
+            color: #c03;
+            margin-bottom: 4px; /* 缩小外边距 */
+            font-weight: 600;
+        }
+
+        .education-result {
+            font-size: 12px; /* 缩小字体 */
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 6px; /* 缩小外边距 */
+            padding: 2px 6px; /* 缩小内边距 */
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .education-subjects {
+            font-size: 11px; /* 缩小字体 */
+            color: #555;
+            line-height: 1.6;
+            margin-top: 8px; /* 缩小外边距 */
+        }
+
+        /* 经验 */
+        .experience-item {
+            margin-bottom: 20px; /* 缩小外边距 */
+            padding-bottom: 18px; /* 缩小内边距 */
+            border-bottom: 1px solid #ecf0f1;
+            position: relative;
+            padding-left: 18px; /* 缩小内边距 */
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 10px; /* 缩小尺寸 */
+            height: 10px;
+            border: 2px solid #c03;
+            border-radius: 50%;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px; /* 缩小外边距 */
+        }
+
+        .experience-title {
+            font-size: 14px; /* 缩小字体 */
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .experience-organization {
+            font-size: 13px; /* 缩小字体 */
+            color: #e74c3c;
+            margin-bottom: 6px; /* 缩小外边距 */
+            font-weight: 600;
+        }
+
+        .experience-description {
+            font-size: 12px; /* 缩小字体 */
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* 活动 */
+        .activity-item {
+            margin-bottom: 15px; /* 缩小外边距 */
+            padding-bottom: 12px; /* 缩小内边距 */
+            border-bottom: 1px dashed #ecf0f1;
+            position: relative;
+            padding-left: 18px; /* 缩小内边距 */
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #c03;
+            font-size: 18px; /* 缩小字体 */
+        }
+
+        .activity-title {
+            font-size: 13px; /* 缩小字体 */
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 4px; /* 缩小外边距 */
+        }
+
+        .activity-description {
+            font-size: 11px; /* 缩小字体 */
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .cv-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .main-content {
+                width: 100%;
+            }
+        }
+
+        /* 打印样式调整 */
+        @media print {
+            .cv-container {
+                flex-direction: row;
+            }
+            
+            .sidebar {
+                width: 35%;
+            }
+            
+            .main-content {
+                width: 65%;
+            }
+            
+            .main-section {
+                page-break-inside: avoid;
+            }
+            
+            .print-button, .traditional-button {
+                display: none;
+            }
+            
+            .chinese-decoration {
+                display: none;
+            }
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 12px; /* 缩小内边距 */
+            color: #7f8c8d;
+            font-size: 11px; /* 缩小字体 */
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            margin-top: 15px; /* 缩小外边距 */
+        }
+
+        /* 中国风动画 */
+        .floating-element {
+            position: absolute;
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.1;
+            font-size: 36px; /* 缩小尺寸 */
+            color: #c03;
+        }
+
+        .element-1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .element-2 {
+            top: 25%;
+            right: 5%;
+            animation-delay: 1s;
+        }
+
+        .element-3 {
+            bottom: 15%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        .element-4 {
+            bottom: 30%;
+            right: 15%;
+            animation-delay: 3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- 打印按钮 -->
+    <button class="print-button" onclick="window.print()">
+        <i class="fas fa-print"></i> 打印简历
+    </button>
+    
+    <!-- 繁体中文按钮 -->
+    <button class="traditional-button" onclick="window.open('https://abdullahbinfahad.com/wp-content/uploads/e-campus/Abdullah%20Bin%20Fahad%20-%20Curriculum%20Vitae%20in%20Chinese.html', '_blank')">
+        <i class="fas fa-exchange-alt"></i> 繁体中文版
+    </button>
+    
+    <div class="cv-container">
+        <!-- 中国风装饰元素 -->
+        <div class="chinese-decoration decoration-top-left">智</div>
+        <div class="chinese-decoration decoration-top-right">慧</div>
+        <div class="chinese-decoration decoration-bottom-left">成</div>
+        <div class="chinese-decoration decoration-bottom-right">就</div>
+        
+        <div class="floating-element element-1">学</div>
+        <div class="floating-element element-2">业</div>
+        <div class="floating-element element-3">精</div>
+        <div class="floating-element element-4">进</div>
+        
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <!-- 个人资料区 -->
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="http://abdullahbinfahad.com/wp-content/uploads/2025/07/A-B-F.jpg" alt="阿卜杜拉·本·法赫德">
+                </div>
+                <div class="name">Abdullah Bin Fahad (法德·明远)</div>
+                <div class="title">自动化工程系学生</div>
+            </div>
+
+            <!-- 联络信息 -->
+            <div class="sidebar-section">
+                <h3><i class="fas fa-envelope"></i> 联络信息</h3>
+                <div class="contact-item">
+                    <span class="contact-label">电子邮件：</span>
+                    <span class="contact-value">official@abdullahbinfahad.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">个人网站：</span>
+                    <span class="contact-value">www.abdullahbinfahad.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">通讯地址：</span>
+                    <span class="contact-value">南京工业大学，江浦校区<br>
+                    浦珠南路30号<br>
+                    南京市浦口区<br>
+                    江苏省，211816<br>
+                    中华人民共和国</span>
+                </div>
+            </div>
+
+            <!-- 个人资料 -->
+            <div class="sidebar-section">
+                <h3><i class="fas fa-user"></i> 个人资料</h3>
+                <div class="personal-item">
+                    <span class="personal-label">出生日期：</span>
+                    <span class="personal-value">2006年8月14日</span>
+                </div>
+                <div class="personal-item">
+                    <span class="personal-label">国籍：</span>
+                    <span class="personal-value">孟加拉</span>
+                </div>
+                <div class="personal-item">
+                    <span class="personal-label">护照号码：</span>
+                    <span class="personal-value">A16306012</span>
+                </div>
+                <div class="personal-item">
+                    <span class="personal-label">性别：</span>
+                    <span class="personal-value">男性</span>
+                </div>
+                <div class="personal-item">
+                    <span class="personal-label">宗教信仰：</span>
+                    <span class="personal-value">伊斯兰教</span>
+                </div>
+                <div class="personal-item">
+                    <span class="personal-label">血型：</span>
+                    <span class="personal-value">A+</span>
+                </div>
+            </div>
+
+            <!-- 专业技能 -->
+            <div class="sidebar-section">
+                <h3><i class="fas fa-laptop-code"></i> 专业技能</h3>
+                <div class="skill-item">
+                    <div class="skill-name">自动化与控制 <span>70%</span></div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 70%;"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">HTML/CSS <span>80%</span></div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 80%;"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Python编程 <span>60%</span></div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 60%;"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">数字营销 <span>75%</span></div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 75%;"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">影音编辑 <span>85%</span></div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 85%;"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">内容撰写 <span>90%</span></div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 90%;"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Microsoft Office <span>85%</span></div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 语言能力 -->
+            <div class="sidebar-section">
+                <h3><i class="fas fa-language"></i> 语言能力</h3>
+                <div class="language-item">
+                    <span class="language-name">孟加拉语</span>
+                    <span class="language-level">母语</span>
+                </div>
+                <div class="language-item">
+                    <span class="language-name">英语</span>
+                    <span class="language-level">流利</span>
+                </div>
+                <div class="language-item">
+                    <span class="language-name">普通话</span>
+                    <span class="language-level">初级</span>
+                </div>
+                <div class="language-item">
+                    <span class="language-name">印地语 & 乌尔都语</span>
+                    <span class="language-level">会话</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主要内容 -->
+        <div class="main-content">
+            <!-- 教育背景 -->
+            <div class="main-section">
+                <h2><i class="fas fa-graduation-cap"></i> 教育背景</h2>
+                
+                <div class="education-item">
+                    <div class="education-header">
+                        <div class="education-degree">自动化工程理学学士</div>
+                        <div class="education-date">2025 – 2029 (预期)</div>
+                    </div>
+                    <div class="education-institution">Nanjing Tech University(南京工业大学), China</div>
+                    <div class="education-result">新生奖学金获得者</div>
+                    <div class="education-subjects">
+                        <strong>主修科目：</strong>控制系统、机器人学、可编程逻辑控制器(PLC)、电气工程、传感器与仪器、C/C++编程、高等数学
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="education-header">
+                        <div class="education-degree">高等中学证书(HSC) - 理科</div>
+                        <div class="education-date">2022 – 2024</div>
+                    </div>
+                    <div class="education-institution">Bhola Government College, Bangladesh</div>
+                    <div class="education-result">平均绩点：4.58/5.00</div>
+                    <div class="education-subjects">
+                        <strong>主修科目：</strong>物理、化学、数学、生物学、信息与通信技术(ICT)
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="education-header">
+                        <div class="education-degree">中学毕业证书(SSC) - 理科</div>
+                        <div class="education-date">2020 – 2022</div>
+                    </div>
+                    <div class="education-institution">Dhaligour Nagar Secondary School, Bangladesh</div>
+                    <div class="education-result">平均绩点：5.00/5.00 (满分)</div>
+                    <div class="education-subjects">
+                        <strong>主修科目：</strong>物理、化学、数学、生物学、英语
+                    </div>
+                </div>
+            </div>
+
+            <!-- 专业经历 -->
+            <div class="main-section">
+                <h2><i class="fas fa-briefcase"></i> 专业经历</h2>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="experience-title">自由撰稿人</div>
+                    </div>
+                    <div class="experience-organization">自主执业</div>
+                    <div class="experience-description">
+                        撰写综合性论文及哲学著作《道德价值观》，展现了在哲学与伦理论述领域的深入研究能力与分析思维。
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="experience-title">青年演讲者</div>
+                    </div>
+                    <div class="experience-organization">道德讲座系列</div>
+                    <div class="experience-description">
+                        就自律、道德价值观及青年觉醒等主题向多元观众进行富有影响力的演讲，培养了出色的公开演讲能力与领导才能。
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="experience-title">志愿文化推广员</div>
+                    </div>
+                    <div class="experience-organization">本地英语俱乐部</div>
+                    <div class="experience-description">
+                        用英语向来宾介绍孟加拉文化与传统，促进跨文化理解，提升沟通能力。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动与成就 -->
+            <div class="main-section">
+                <h2><i class="fas fa-trophy"></i> 活动与成就</h2>
+                
+                <div class="activity-item">
+                    <div class="activity-title">哲学与文学社团 - 活跃成员</div>
+                    <div class="activity-description">
+                        积极参与关于伦理学、形而上学及伊斯兰哲学的学术讨论，促进学术交流与批判性思维发展。
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-title">科技博览会 - 参展者</div>
+                    <div class="activity-description">
+                        展示与自动化及控制系统相关的创新项目，展现工程原理的实践应用与技术专长。
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-title">社区志愿服务</div>
+                    <div class="activity-description">
+                        参与支持教育与青年赋权的本地社会活动，展现对社区发展的承诺。
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-title">公开演讲工作坊</div>
+                    <div class="activity-description">
+                        参加专业发展课程，提升沟通与领导能力，重点学习有效演讲技巧与听众互动策略。
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-title">文化交流项目</div>
+                    <div class="activity-description">
+                        与国际学生及来宾互动，促进跨文化理解，培养教育与文化多样性的全球视野。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 附加能力 -->
+            <div class="main-section">
+                <h2><i class="fas fa-star"></i> 附加能力</h2>
+                
+                <div class="activity-item">
+                    <div class="activity-title">研究与分析</div>
+                    <div class="activity-description">
+                        具备强大的分析与解决问题能力，拥有独立研究方法经验及复杂信息批判性评估能力。
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-title">数字媒体制作</div>
+                    <div class="activity-description">
+                        精通影音编辑软件，拥有内容创作与数字营销策略的实践经验。
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-title">网页开发</div>
+                    <div class="activity-description">
+                        掌握HTML、CSS及Python编程基础至中级技能，理解网页开发原理与自动化技术。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>此简历由阿卜杜拉·本·法赫德制作 • 最后更新于 2025年7月</p>
+    </div>
+
+    <script>
+        // 添加技能条动画延迟
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.skill-progress');
+            progressBars.forEach((bar, index) => {
+                bar.style.animationDelay = `${index * 0.2}s`;
+            });
+            
+            // 添加打印功能
+            document.querySelector('.print-button').addEventListener('click', function() {
+                window.print();
+            });
+        });
+    </script>
+</body>
+</html>
