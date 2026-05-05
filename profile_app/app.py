@@ -1,49 +1,51 @@
-from flask import Flask, render_template
+import streamlit as st
 
-app = Flask(__name__)
+st.set_page_config(page_title="Abdullah Profile", layout="centered")
 
+# Profile Data
 profile = {
     "name": "Abdullah Bin Fahad",
-    "age": "19 (approx)",
     "dob": "14 August 2006",
-    "gender": "Male",
-    "religion": "Islam",
-    "blood_group": "A+",
     "height": "166 cm",
     "weight": "57.1 kg",
-
-    "education": {
-        "university": "Nanjing Tech University",
-        "major": "Automation",
-        "scholarship": "20,000 RMB",
-        "hsc": "GPA 4.58",
-        "ssc": "GPA 5.00"
-    },
-
-    "skills": [
-        "Python", "HTML", "Marketing Strategy",
-        "Research & Analysis", "Public Speaking",
-        "Creative Writing", "Video Editing"
-    ],
-
-    "personality": [
-        "Introverted", "Overthinker",
-        "Ambitious", "Philosophical",
-        "Emotionally intense"
-    ],
-
-    "goals": [
-        "Become Billionaire",
-        "Master Chinese (HSK 1–4)",
-        "Build Smart Calculator",
-        "Develop AI-based systems"
-    ]
+    "blood": "A+",
+    "university": "Nanjing Tech University",
+    "major": "Automation",
+    "goal": "Become Billionaire & Build AI Systems"
 }
 
-@app.route("/")
-def home():
-    return render_template("index.html", profile=profile)
+# UI
+st.markdown(
+    """
+    <style>
+    .card {
+        background: rgba(255,255,255,0.08);
+        padding: 30px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+st.markdown('<div class="card">', unsafe_allow_html=True)
 
+st.title(profile["name"])
+st.caption("Future Builder • Automation Student")
+
+st.write(f"**DOB:** {profile['dob']}")
+st.write(f"**Height:** {profile['height']}")
+st.write(f"**Weight:** {profile['weight']}")
+st.write(f"**Blood Group:** {profile['blood']}")
+
+st.subheader("Education")
+st.write(profile["university"])
+st.write(profile["major"])
+
+st.subheader("Goal")
+st.write(profile["goal"])
+
+st.markdown('</div>', unsafe_allow_html=True)
