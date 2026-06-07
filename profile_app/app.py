@@ -293,12 +293,10 @@ st.markdown("""
 <h3>Bachelor of Science in Automation Engineering</h3>
 <b>Nanjing Tech University, China</b> (2025–2029 Expected)<br>
 • Core focus: Control Systems, Robotics, PLC, Sensors, C/C++<br>
-<br><br>
 <h3>Higher Secondary Certificate (Science)</h3>
 <b>Bhola Government College, Bangladesh</b> (2022–2024)<br>
 Physics, Chemistry, Mathematics, Biology, ICT<br>
 
-<br><br>
 <h3>Secondary School Certificate (Science)</h3>
 <b>Dhaligour Nagar Secondary School, Bangladesh</b> (2020–2022)<br>
 </div>
