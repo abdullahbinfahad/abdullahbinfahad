@@ -292,18 +292,15 @@ st.markdown("""
 <h2>🎓 Education</h2>
 <h3>Bachelor of Science in Automation Engineering</h3>
 <b>Nanjing Tech University, China</b> (2025–2029 Expected)<br>
-• Secured Freshman Scholarship (top 5% of admitted cohort)<br>
 • Core focus: Control Systems, Robotics, PLC, Sensors, C/C++<br>
-• Current GPA: 3.8/4.0 (self‑reported)
 <br><br>
 <h3>Higher Secondary Certificate (Science)</h3>
 <b>Bhola Government College, Bangladesh</b> (2022–2024)<br>
-• Achieved GPA 5.00/5.00 in Physics, Chemistry, Mathematics, Biology, ICT<br>
-• Ranked among top 3% of science graduates nationwide
+Physics, Chemistry, Mathematics, Biology, ICT<br>
+
 <br><br>
 <h3>Secondary School Certificate (Science)</h3>
 <b>Dhaligour Nagar Secondary School, Bangladesh</b> (2020–2022)<br>
-• GPA 5.00/5.00, awarded Best Student in English Language
 </div>
 """, unsafe_allow_html=True)
 
