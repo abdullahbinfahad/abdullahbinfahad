@@ -8,7 +8,7 @@ st.set_page_config(
 )
 
 # =====================================================
-# ADVANCED CSS + MODERN SHAPES + RESPONSIVE GLASSMORPHISM
+# MODERN BLACK THEME – NO HOVER – FORMAL ANIMATION
 # =====================================================
 
 st.markdown("""
@@ -18,39 +18,13 @@ st.markdown("""
 html, body, [class*="css"]{
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
-    cursor: none;  /* hide default cursor for custom */
 }
 
-/* custom cursor */
-.cursor {
-    width: 30px;
-    height: 30px;
-    border: 2px solid rgba(255,255,255,0.8);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: difference;
-    transition: transform 0.2s ease, background 0.2s ease;
-    transform: translate(-50%, -50%);
-}
-.cursor-dot {
-    width: 8px;
-    height: 8px;
-    background: #fff;
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 10000;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.2s;
-}
-
-/* animated background gradient */
+/* Deep black animated gradient (no color hues) */
 .stApp {
-    background: linear-gradient(-45deg, #020617, #0f172a, #0f766e, #312e81, #111827);
-    background-size: 500% 500%;
-    animation: gradientBG 25s ease infinite;
+    background: linear-gradient(-45deg, #000000, #0a0a0a, #111111, #050505, #000000);
+    background-size: 400% 400%;
+    animation: gradientBG 30s ease infinite;
 }
 
 @keyframes gradientBG {
@@ -59,7 +33,7 @@ html, body, [class*="css"]{
     100%{background-position:0% 50%;}
 }
 
-/* diagonal section dividers (modern shapes) */
+/* Section divider shape (dark) */
 .section-divider {
     position: relative;
     height: 80px;
@@ -75,91 +49,81 @@ html, body, [class*="css"]{
     transform: rotateY(180deg);
 }
 .section-divider .shape-fill {
-    fill: rgba(255,255,255,0.03);
+    fill: #0a0a0a;
 }
 
-/* modern glass card with 3d hover and border glow */
+/* Static glass card – no hover effects */
 .glass {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(20, 20, 20, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
     padding: 35px;
     margin: 25px 0;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255,255,255,0.05);
-    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    transform-style: preserve-3d;
-}
-.glass:hover {
-    transform: translateY(-10px) scale(1.02) rotateX(2deg);
-    border: 1px solid rgba(255,255,255,0.4);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.2);
-}
-.glass::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transition: left 0.8s;
-}
-.glass:hover::before {
-    left: 100%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
 }
 
-/* title & subtitle with text shadow animation */
+/* Title – subtle float */
 .title {
     text-align: center;
     font-size: clamp(3rem, 10vw, 5rem);
     font-weight: 800;
-    color: white;
-    text-shadow: 0 0 20px rgba(255,255,255,0.3);
-    animation: floatText 3s ease-in-out infinite;
+    color: #ffffff;
+    animation: floatText 4s ease-in-out infinite;
 }
 @keyframes floatText {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-6px); }
+    50% { transform: translateY(-4px); }
 }
+
 .subtitle {
     text-align: center;
-    color: #d1d5db;
-    font-size: clamp(1rem, 4vw, 1.4rem);
+    color: #aaaaaa;
+    font-size: clamp(1rem, 4vw, 1.3rem);
     margin-bottom: 25px;
     letter-spacing: 1px;
 }
+
 .quote {
     text-align: center;
-    color: #f8fafc;
+    color: #e0e0e0;
     font-size: clamp(1.1rem, 5vw, 1.6rem);
     font-style: italic;
-    opacity: 0.9;
+    line-height: 1.6;
 }
 
-/* glowing progress bars */
+/* Progress bars – static dark gradient */
 .stProgress > div > div > div > div {
-    background: linear-gradient(90deg, #0f766e, #6d28d9) !important;
+    background: linear-gradient(90deg, #444444, #888888) !important;
     border-radius: 20px;
-    box-shadow: 0 0 15px #0f766e;
 }
 
-/* buttons and links */
-a, button {
-    cursor: none;
+/* All text color */
+h1, h2, h3, p, li, div {
+    color: #e0e0e0;
 }
 
-/* responsive adjustments */
+/* Links */
+a {
+    color: #999999;
+    text-decoration: none;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: #666666;
+    margin-top: 60px;
+    padding: 30px;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     .glass {
         padding: 20px;
         border-radius: 20px;
-    }
-    .title {
-        font-size: 2.8rem;
     }
     .section-divider {
         height: 50px;
@@ -173,74 +137,14 @@ a, button {
 """, unsafe_allow_html=True)
 
 # =====================================================
-# 3D BACKGROUND + MOUSE PARALLAX + CUSTOM CURSOR (Three.js)
+# 3D BACKGROUND (no mouse effect, slow ambient rotation)
 # =====================================================
 
 components.html("""
-<!-- Three.js canvas for 3D floating shapes -->
-<div id="three-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none;"></div>
-
-<!-- Custom cursor elements -->
-<div class="cursor"></div>
-<div class="cursor-dot"></div>
-
-<!-- Particles.js background -->
-<div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+<div id="three-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-
 <script>
-// ---- CUSTOM CURSOR ----
-const cursor = document.querySelector('.cursor');
-const cursorDot = document.querySelector('.cursor-dot');
-document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    cursorDot.style.left = e.clientX + 'px';
-    cursorDot.style.top = e.clientY + 'px';
-});
-// enlarge cursor on hover over interactive elements
-document.querySelectorAll('.glass, a, button, .stProgress, h1, h2, h3').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1.8)';
-        cursor.style.background = 'rgba(255,255,255,0.1)';
-        cursorDot.style.opacity = '0.5';
-    });
-    el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursor.style.background = 'transparent';
-        cursorDot.style.opacity = '1';
-    });
-});
-
-// ---- PARTICLES.JS ----
-particlesJS("particles-js", {
-    particles: {
-        number: { value: 100, density: { enable: true, value_area: 800 } },
-        color: { value: "#ffffff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.15, random: true },
-        size: { value: 3, random: true },
-        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.1, width: 1 },
-        move: { enable: true, speed: 1.5, direction: "none", random: true, out_mode: "out" }
-    },
-    interactivity: {
-        detect_on: "canvas",
-        events: {
-            onhover: { enable: true, mode: "grab" },
-            onclick: { enable: true, mode: "push" },
-            resize: true
-        },
-        modes: {
-            grab: { distance: 140, line_linked: { opacity: 0.3 } },
-            push: { particles_nb: 3 }
-        }
-    },
-    retina_detect: true
-});
-
-// ---- THREE.JS 3D FLOATING SHAPES WITH MOUSE PARALLAX ----
 const container = document.getElementById('three-container');
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -251,33 +155,33 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 container.appendChild(renderer.domElement);
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0x404066);
+// Very dim ambient light
+const ambientLight = new THREE.AmbientLight(0x222222);
 scene.add(ambientLight);
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-directionalLight.position.set(1, 1, 1);
-scene.add(directionalLight);
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.3);
+dirLight.position.set(1, 1, 1);
+scene.add(dirLight);
 
-// Create various geometric shapes
+// Create subtle monochrome shapes
 const shapes = [];
-const geometryTypes = [
-    new THREE.IcosahedronGeometry(0.8, 0),
-    new THREE.OctahedronGeometry(0.7, 0),
-    new THREE.TetrahedronGeometry(0.6, 0),
-    new THREE.TorusKnotGeometry(0.5, 0.15, 64, 8),
-    new THREE.DodecahedronGeometry(0.7, 0)
+const geos = [
+    new THREE.IcosahedronGeometry(0.7, 0),
+    new THREE.OctahedronGeometry(0.6, 0),
+    new THREE.TetrahedronGeometry(0.5, 0),
+    new THREE.TorusKnotGeometry(0.45, 0.12, 64, 8),
+    new THREE.DodecahedronGeometry(0.6, 0)
 ];
 
-for (let i = 0; i < 30; i++) {
-    const geo = geometryTypes[Math.floor(Math.random() * geometryTypes.length)];
+for (let i = 0; i < 25; i++) {
+    const geo = geos[Math.floor(Math.random() * geos.length)];
     const material = new THREE.MeshStandardMaterial({
-        color: new THREE.Color(`hsl(${Math.random() * 60 + 180}, 70%, 65%)`),
-        roughness: 0.2,
-        metalness: 0.5,
-        emissive: new THREE.Color(0x0f172a),
-        emissiveIntensity: 0.2,
+        color: 0xffffff,
+        roughness: 0.5,
+        metalness: 0.3,
+        emissive: 0x000000,
+        emissiveIntensity: 0,
         transparent: true,
-        opacity: 0.25
+        opacity: 0.1
     });
     const mesh = new THREE.Mesh(geo, material);
     mesh.position.x = (Math.random() - 0.5) * 18;
@@ -286,57 +190,32 @@ for (let i = 0; i < 30; i++) {
     mesh.rotation.x = Math.random() * Math.PI;
     mesh.rotation.y = Math.random() * Math.PI;
     mesh.userData = {
-        speedX: (Math.random() - 0.5) * 0.008,
-        speedY: (Math.random() - 0.5) * 0.008,
-        speedZ: (Math.random() - 0.5) * 0.008,
-        rotX: (Math.random() - 0.5) * 0.01,
-        rotY: (Math.random() - 0.5) * 0.01
+        rotX: (Math.random() - 0.5) * 0.005,
+        rotY: (Math.random() - 0.5) * 0.005,
+        speedX: (Math.random() - 0.5) * 0.003,
+        speedY: (Math.random() - 0.5) * 0.003,
+        speedZ: (Math.random() - 0.5) * 0.003
     };
     scene.add(mesh);
     shapes.push(mesh);
 }
 
-// Mouse parallax variables
-let mouseX = 0, mouseY = 0;
-let targetX = 0, targetY = 0;
-const windowHalfX = window.innerWidth / 2;
-const windowHalfY = window.innerHeight / 2;
-
-document.addEventListener('mousemove', (event) => {
-    mouseX = (event.clientX - windowHalfX) / windowHalfX;
-    mouseY = (event.clientY - windowHalfY) / windowHalfY;
-});
-
-// Animation loop
 function animate() {
     requestAnimationFrame(animate);
-
-    // Smooth camera movement based on mouse
-    targetX = mouseX * 2;
-    targetY = mouseY * 1.5;
-    camera.position.x += (targetX - camera.position.x) * 0.05;
-    camera.position.y += (-targetY - camera.position.y) * 0.05;
-    camera.lookAt(scene.position);
-
-    // Rotate and move shapes
     shapes.forEach(mesh => {
         mesh.rotation.x += mesh.userData.rotX;
         mesh.rotation.y += mesh.userData.rotY;
         mesh.position.x += mesh.userData.speedX;
         mesh.position.y += mesh.userData.speedY;
         mesh.position.z += mesh.userData.speedZ;
-
-        // Boundary wrap
-        if (Math.abs(mesh.position.x) > 12) mesh.userData.speedX *= -1;
-        if (Math.abs(mesh.position.y) > 8) mesh.userData.speedY *= -1;
-        if (Math.abs(mesh.position.z) > 6) mesh.userData.speedZ *= -1;
+        if (Math.abs(mesh.position.x) > 11) mesh.userData.speedX *= -1;
+        if (Math.abs(mesh.position.y) > 7) mesh.userData.speedY *= -1;
+        if (Math.abs(mesh.position.z) > 5) mesh.userData.speedZ *= -1;
     });
-
     renderer.render(scene, camera);
 }
 animate();
 
-// Handle resize
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -346,16 +225,16 @@ window.addEventListener('resize', () => {
 """, height=0)
 
 # =====================================================
-# HERO SECTION (with wave divider)
+# HERO SECTION
 # =====================================================
 
 st.markdown("""
 <div class="title">Abdullah Bin Fahad</div>
 <div class="subtitle">Automation Student • AI Builder • Entrepreneur • Writer • Philosopher</div>
-<div class="quote">"I do not seek to predict the future. I seek to build it."</div>
+<div class="quote">"Today, what people create for their safety,<br>in the future they will have to run for safety from it."</div>
 """, unsafe_allow_html=True)
 
-# Wave divider after hero
+# Wave divider
 st.markdown("""
 <div class="section-divider">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -365,7 +244,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =====================================================
-# ABOUT SECTION (modern glass card)
+# ABOUT
 # =====================================================
 
 st.markdown("""
@@ -391,7 +270,7 @@ China
 """, unsafe_allow_html=True)
 
 # =====================================================
-# SKILLS WITH ANIMATED PROGRESS
+# SKILLS
 # =====================================================
 
 st.markdown('<div class="glass"><h2>⚡ Skills</h2>', unsafe_allow_html=True)
@@ -412,7 +291,7 @@ st.progress(80)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # =====================================================
-# FEATURED PROJECT (MarketLens AI)
+# FEATURED PROJECT – MARKETLENS AI
 # =====================================================
 
 st.markdown("""
@@ -443,13 +322,13 @@ st.markdown("""
 <div class="glass">
 <h2>🧠 Philosophy</h2>
 <p>I believe technology should not replace human thinking; it should enhance it. My curiosity extends beyond engineering into philosophy, economics, psychology, ethics, and civilization.</p>
-<p>I am particularly interested in exploring: <br>• Intelligence vs Wisdom<br>• Technology vs Humanity<br>• Wealth vs Meaning<br>• Power vs Responsibility<br>• Progress vs Purpose</p>
+<p>I am particularly interested in exploring:<br>• Intelligence vs Wisdom<br>• Technology vs Humanity<br>• Wealth vs Meaning<br>• Power vs Responsibility<br>• Progress vs Purpose</p>
 <p>I view learning as a lifelong pursuit and believe that independent thinking remains one of the most valuable abilities a person can develop.</p>
 </div>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# METRICS (with clean columns)
+# METRICS
 # =====================================================
 
 st.markdown('<div class="glass"><h2>📊 Snapshot</h2>', unsafe_allow_html=True)
@@ -480,8 +359,8 @@ st.markdown("""
 # =====================================================
 
 st.markdown("""
-<div style="text-align: center; color: #94a3b8; margin-top: 60px; padding: 30px; font-size: 0.9rem;">
+<div class="footer">
 © 2026 Abdullah Bin Fahad<br>
-<a href="https://www.abdullahbinfahad.info" style="color: #5eead4; text-decoration: none;">www.abdullahbinfahad.info</a>
+<a href="https://www.abdullahbinfahad.info" style="color: #888;">www.abdullahbinfahad.info</a>
 </div>
 """, unsafe_allow_html=True)
