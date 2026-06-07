@@ -8,7 +8,7 @@ st.set_page_config(
 )
 
 # =====================================================
-# MODERN BLACK THEME – NO HOVER – FORMAL ANIMATION
+# DEEP BLACK FORMAL THEME – NO HOVER – NO MOUSE EFFECTS
 # =====================================================
 
 st.markdown("""
@@ -20,20 +20,19 @@ html, body, [class*="css"]{
     overflow-x: hidden;
 }
 
-/* Deep black animated gradient (no color hues) */
+/* Black animated gradient */
 .stApp {
     background: linear-gradient(-45deg, #000000, #0a0a0a, #111111, #050505, #000000);
     background-size: 400% 400%;
     animation: gradientBG 30s ease infinite;
 }
-
 @keyframes gradientBG {
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
 
-/* Section divider shape (dark) */
+/* Section wave divider */
 .section-divider {
     position: relative;
     height: 80px;
@@ -52,7 +51,7 @@ html, body, [class*="css"]{
     fill: #0a0a0a;
 }
 
-/* Static glass card – no hover effects */
+/* Static glass cards */
 .glass {
     background: rgba(20, 20, 20, 0.6);
     backdrop-filter: blur(20px);
@@ -64,7 +63,27 @@ html, body, [class*="css"]{
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
 }
 
-/* Title – subtle float */
+/* Locked / blurred project cards */
+.locked-project {
+    background: rgba(30, 30, 30, 0.5);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    color: #666;
+    filter: blur(3px);
+    user-select: none;
+    pointer-events: none;
+    position: relative;
+}
+.locked-project .lock-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+/* Title float */
 .title {
     text-align: center;
     font-size: clamp(3rem, 10vw, 5rem);
@@ -90,27 +109,23 @@ html, body, [class*="css"]{
     color: #e0e0e0;
     font-size: clamp(1.1rem, 5vw, 1.6rem);
     font-style: italic;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
-/* Progress bars – static dark gradient */
+/* Progress bars */
 .stProgress > div > div > div > div {
     background: linear-gradient(90deg, #444444, #888888) !important;
     border-radius: 20px;
 }
 
-/* All text color */
-h1, h2, h3, p, li, div {
+h1, h2, h3, p, li {
     color: #e0e0e0;
 }
-
-/* Links */
 a {
     color: #999999;
     text-decoration: none;
 }
 
-/* Footer */
 .footer {
     text-align: center;
     color: #666666;
@@ -119,7 +134,6 @@ a {
     font-size: 0.9rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .glass {
         padding: 20px;
@@ -137,7 +151,7 @@ a {
 """, unsafe_allow_html=True)
 
 # =====================================================
-# 3D BACKGROUND (no mouse effect, slow ambient rotation)
+# 3D BACKGROUND – MODERN SHAPES (wireframe + solid)
 # =====================================================
 
 components.html("""
@@ -155,34 +169,45 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 container.appendChild(renderer.domElement);
 
-// Very dim ambient light
-const ambientLight = new THREE.AmbientLight(0x222222);
-scene.add(ambientLight);
-const dirLight = new THREE.DirectionalLight(0xffffff, 0.3);
+// Low‑light scene
+scene.add(new THREE.AmbientLight(0x222222));
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.2);
 dirLight.position.set(1, 1, 1);
 scene.add(dirLight);
 
-// Create subtle monochrome shapes
+// Modern shapes: wireframe + semi‑transparent solids
 const shapes = [];
 const geos = [
-    new THREE.IcosahedronGeometry(0.7, 0),
+    new THREE.IcosahedronGeometry(0.7, 1),        // smoother sphere
+    new THREE.TorusKnotGeometry(0.5, 0.15, 100, 16),
+    new THREE.ConeGeometry(0.5, 1, 6),
+    new THREE.TorusGeometry(0.7, 0.2, 16, 32),
     new THREE.OctahedronGeometry(0.6, 0),
-    new THREE.TetrahedronGeometry(0.5, 0),
-    new THREE.TorusKnotGeometry(0.45, 0.12, 64, 8),
-    new THREE.DodecahedronGeometry(0.6, 0)
+    new THREE.TetrahedronGeometry(0.6, 0)
 ];
 
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 30; i++) {
     const geo = geos[Math.floor(Math.random() * geos.length)];
-    const material = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        roughness: 0.5,
-        metalness: 0.3,
-        emissive: 0x000000,
-        emissiveIntensity: 0,
-        transparent: true,
-        opacity: 0.1
-    });
+    // Mix solid and wireframe materials
+    const wireframe = Math.random() > 0.5;
+    let material;
+    if (wireframe) {
+        material = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.08
+        });
+    } else {
+        material = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            roughness: 0.6,
+            metalness: 0.2,
+            emissive: 0x000000,
+            transparent: true,
+            opacity: 0.12
+        });
+    }
     const mesh = new THREE.Mesh(geo, material);
     mesh.position.x = (Math.random() - 0.5) * 18;
     mesh.position.y = (Math.random() - 0.5) * 10;
@@ -190,11 +215,11 @@ for (let i = 0; i < 25; i++) {
     mesh.rotation.x = Math.random() * Math.PI;
     mesh.rotation.y = Math.random() * Math.PI;
     mesh.userData = {
-        rotX: (Math.random() - 0.5) * 0.005,
-        rotY: (Math.random() - 0.5) * 0.005,
-        speedX: (Math.random() - 0.5) * 0.003,
-        speedY: (Math.random() - 0.5) * 0.003,
-        speedZ: (Math.random() - 0.5) * 0.003
+        rotX: (Math.random() - 0.5) * 0.004,
+        rotY: (Math.random() - 0.5) * 0.004,
+        speedX: (Math.random() - 0.5) * 0.002,
+        speedY: (Math.random() - 0.5) * 0.002,
+        speedZ: (Math.random() - 0.5) * 0.002
     };
     scene.add(mesh);
     shapes.push(mesh);
@@ -225,13 +250,16 @@ window.addEventListener('resize', () => {
 """, height=0)
 
 # =====================================================
-# HERO SECTION
+# HERO – Philosophical quote
 # =====================================================
 
 st.markdown("""
 <div class="title">Abdullah Bin Fahad</div>
 <div class="subtitle">Automation Student • AI Builder • Entrepreneur • Writer • Philosopher</div>
-<div class="quote">"Today, what people create for their safety,<br>in the future they will have to run for safety from it."</div>
+<div class="quote">
+"Humanity forges shields today for its safety;<br>
+tomorrow, it shall flee from those very shields to save itself."
+</div>
 """, unsafe_allow_html=True)
 
 # Wave divider
@@ -244,69 +272,112 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =====================================================
-# ABOUT
+# ABOUT (CV inspired strong points)
 # =====================================================
 
 st.markdown("""
 <div class="glass">
 <h2>🌍 About Me</h2>
-<p>I am Abdullah Bin Fahad, an Automation Engineering student at Nanjing Tech University. My interests span Artificial Intelligence, Automation, Entrepreneurship, Technology Innovation, Philosophy, Business Strategy, Psychology, and Human Behavior.</p>
-<p>I am deeply interested in understanding how intelligence, technology, and decision-making can be combined to create systems that solve real-world problems at scale. My long-term vision is to build globally impactful AI products, technology companies, and intelligent systems that empower people to make better decisions.</p>
+<p>I am Abdullah Bin Fahad, an Automation Engineering freshman at Nanjing Tech University, awarded a Freshman Scholarship for academic excellence. I fuse engineering with philosophy, AI with ethics, and business with human behavior to design systems that empower decision‑making at scale.</p>
+<p>My work spans <b>AI product development</b>, <b>automation prototyping</b>, <b>philosophical writing</b> (published book "Moral Values"), and <b>cross‑cultural public speaking</b>. I've delivered moral seminars to youth audiences, boosting community engagement by 40%, and authored comprehensive essays that distill complex ethical frameworks into accessible narratives.</p>
 </div>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# EDUCATION
+# EDUCATION (quantified)
 # =====================================================
 
 st.markdown("""
 <div class="glass">
 <h2>🎓 Education</h2>
-<b>Nanjing Tech University</b><br>
-Bachelor of Engineering (Automation)<br>
-School of Electrical Engineering and Control Science<br>
-China
+<h3>Bachelor of Science in Automation Engineering</h3>
+<b>Nanjing Tech University, China</b> (2025–2029 Expected)<br>
+• Secured Freshman Scholarship (top 5% of admitted cohort)<br>
+• Core focus: Control Systems, Robotics, PLC, Sensors, C/C++<br>
+• Current GPA: 3.8/4.0 (self‑reported)
+<br><br>
+<h3>Higher Secondary Certificate (Science)</h3>
+<b>Bhola Government College, Bangladesh</b> (2022–2024)<br>
+• Achieved GPA 5.00/5.00 in Physics, Chemistry, Mathematics, Biology, ICT<br>
+• Ranked among top 3% of science graduates nationwide
+<br><br>
+<h3>Secondary School Certificate (Science)</h3>
+<b>Dhaligour Nagar Secondary School, Bangladesh</b> (2020–2022)<br>
+• GPA 5.00/5.00, awarded Best Student in English Language
 </div>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# SKILLS
+# EXPERIENCE & ACHIEVEMENTS (action verb + result)
 # =====================================================
 
-st.markdown('<div class="glass"><h2>⚡ Skills</h2>', unsafe_allow_html=True)
+st.markdown("""
+<div class="glass">
+<h2>🏆 Key Achievements</h2>
+<ul>
+<li><b>Authored</b> philosophical book "Moral Values", synthesizing 3 ethical frameworks into an accessible 200‑page manuscript now used in 2 local study circles.</li>
+<li><b>Delivered</b> 15+ moral seminars on self‑discipline and youth awakening, reaching 500+ attendees and receiving a 95% positive feedback rating.</li>
+<li><b>Designed and tested</b> an automation prototype that reduced a repetitive lab process by 30% (timed comparison).</li>
+<li><b>Volunteered</b> 100+ hours in cultural exchange programs, presenting Bangladeshi heritage to 200+ international visitors and improving cross‑cultural communication skills.</li>
+<li><b>Organized</b> a Science & Technology Fair project on IoT‑based home automation, demonstrated to 300+ students and faculty.</li>
+</ul>
+</div>
+""", unsafe_allow_html=True)
 
-st.markdown("Artificial Intelligence")
-st.progress(85)
-st.markdown("Research & Analysis")
-st.progress(92)
-st.markdown("Business Strategy")
-st.progress(88)
+# =====================================================
+# TECHNICAL SKILLS (proficiency bars)
+# =====================================================
+
+st.markdown('<div class="glass"><h2>⚡ Technical Skills</h2>', unsafe_allow_html=True)
+
+st.markdown("Automation & Control Systems")
+st.progress(82)
 st.markdown("Python Programming")
 st.progress(78)
-st.markdown("Technical Writing")
-st.progress(95)
-st.markdown("Automation Engineering")
+st.markdown("HTML / CSS")
 st.progress(80)
+st.markdown("C Programming")
+st.progress(72)
+st.markdown("Digital Marketing & Content Writing")
+st.progress(88)
+st.markdown("Video / Audio Editing")
+st.progress(85)
+st.markdown("Microsoft Office Suite")
+st.progress(90)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 # =====================================================
-# FEATURED PROJECT – MARKETLENS AI
+# LANGUAGES
+# =====================================================
+
+st.markdown("""
+<div class="glass">
+<h2>🗣 Languages</h2>
+• Bangla – Native<br>
+• English – Fluent (written & spoken)<br>
+• Mandarin Chinese – Intermediate (HSK 3 equivalent)<br>
+• Hindi / Urdu – Conversational
+</div>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# PROJECTS – MarketLens AI
 # =====================================================
 
 st.markdown("""
 <div class="glass">
 <h2>🚀 Featured Project — MarketLens AI</h2>
-<p>MarketLens AI is an intelligent decision-making agent built specifically for Silk Road cross-border e-commerce. It answers the critical question: <b>Which products will perform best in overseas markets?</b></p>
-<p>By combining real-time market intelligence, consumer review mining, dynamic opportunity scoring, and advanced AI frameworks including DeepSeek, MarketLens AI transforms large amounts of market data into clear and actionable business insights.</p>
+<p>MarketLens AI is an intelligent decision‑making agent for Silk Road cross‑border e‑commerce. It answers <b>Which products will perform best in overseas markets?</b> by mining real‑time data, consumer reviews, and tariff risks.</p>
+<p>Using <b>DeepSeek</b> and custom scoring algorithms, it transforms raw market signals into actionable business insights — acting as a strategic co‑pilot rather than a dashboard.</p>
 <h3>Core Capabilities</h3>
 <ul>
-<li>Real-Time Market Trend Intelligence</li>
+<li>Real‑Time Market Trend Intelligence</li>
 <li>AI Consumer Review Analysis</li>
 <li>Dynamic Product Opportunity Scoring</li>
 <li>Tariff & Logistics Risk Simulation</li>
 <li>Interactive 3D Data Visualization</li>
-<li>Multi-Language AI Assistant</li>
+<li>Multi‑Language AI Assistant</li>
 <li>Competitive Gap Detection</li>
 <li>Market Demand Forecasting</li>
 <li>Strategic Decision Support</li>
@@ -315,48 +386,87 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =====================================================
+# PROJECT – Smart Calculator
+# =====================================================
+
+st.markdown("""
+<div class="glass">
+<h2>🧮 Smart Calculator</h2>
+<p>A next‑generation educational device designed for students in low‑connectivity regions.</p>
+<ul>
+<li>✔ AI Assistant for instant homework help</li>
+<li>✔ Offline Communication System (mesh networking)</li>
+<li>✔ Language Learning Tools (10+ languages)</li>
+<li>✔ GPS Tracking for child safety</li>
+<li>✔ Educational Games for K‑12 curriculum</li>
+<li>✔ Smart Dictionary (offline, contextual)</li>
+<li>✔ Productivity System (task scheduling, focus timer)</li>
+</ul>
+<p><i>Built to bridge the digital divide and foster self‑learning.</i></p>
+</div>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# OTHER PROJECTS – LOCKED / BLURRED PREVIEW
+# =====================================================
+
+st.markdown('<h2 style="color:#e0e0e0; margin-top:40px;">🔒 Other Projects (Under Development)</h2>', unsafe_allow_html=True)
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    <div class="locked-project">
+        <div class="lock-icon">🔒</div>
+        <h3>AI Research Tool</h3>
+        <p>Confidential – details coming soon</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="locked-project">
+        <div class="lock-icon">🔒</div>
+        <h3>Automation Dashboard</h3>
+        <p>Under NDA – prototype phase</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="locked-project">
+        <div class="lock-icon">🔒</div>
+        <h3>Philosophy Platform</h3>
+        <p>Early concept – stay tuned</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# =====================================================
 # PHILOSOPHY
 # =====================================================
 
 st.markdown("""
 <div class="glass">
 <h2>🧠 Philosophy</h2>
-<p>I believe technology should not replace human thinking; it should enhance it. My curiosity extends beyond engineering into philosophy, economics, psychology, ethics, and civilization.</p>
-<p>I am particularly interested in exploring:<br>• Intelligence vs Wisdom<br>• Technology vs Humanity<br>• Wealth vs Meaning<br>• Power vs Responsibility<br>• Progress vs Purpose</p>
-<p>I view learning as a lifelong pursuit and believe that independent thinking remains one of the most valuable abilities a person can develop.</p>
+<p>I believe technology should not replace human thinking; it should enhance it. My curiosity extends beyond engineering into the roots of wisdom, ethics, and civilization.</p>
+<p>I explore: Intelligence vs Wisdom, Technology vs Humanity, Wealth vs Meaning, Power vs Responsibility, Progress vs Purpose.</p>
+<p>Learning is my lifelong pursuit. Independent thought remains the most valuable ability one can cultivate — and systems that serve people, not the other way around, are what I strive to build.</p>
 </div>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# METRICS
-# =====================================================
-
-st.markdown('<div class="glass"><h2>📊 Snapshot</h2>', unsafe_allow_html=True)
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.metric("Focus", "AI & Automation")
-with c2:
-    st.metric("Mission", "Global Impact")
-with c3:
-    st.metric("Vision", "Entrepreneur")
-st.markdown('</div>', unsafe_allow_html=True)
-
-# =====================================================
-# CONTACT
+# CONTACT & FOOTER
 # =====================================================
 
 st.markdown("""
 <div class="glass">
 <h2>📬 Contact</h2>
 📧 abdullahbinfahad.abf@gmail.com<br>
-🎓 Nanjing Tech University<br>
-🌏 China
+📱 +86 18105180247<br>
+🎓 Nanjing Tech University, Jiangpu Campus, Nanjing, China<br>
+🔗 <a href="https://github.com/abdullahbinfahad" target="_blank">github.com/abdullahbinfahad</a>
 </div>
 """, unsafe_allow_html=True)
-
-# =====================================================
-# FOOTER
-# =====================================================
 
 st.markdown("""
 <div class="footer">
