@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="Abdullah Bin Fahad",
-    page_icon="🚀",
+    page_icon="🤯",
     layout="wide"
 )
 
@@ -255,7 +255,7 @@ window.addEventListener('resize', () => {
 
 st.markdown("""
 <div class="title">Abdullah Bin Fahad</div>
-<div class="subtitle">Automation Student • AI Builder • Entrepreneur • Writer • Philosopher</div>
+<div class="subtitle">Automation Student • Entrepreneur • Writer </div>
 <div class="quote">
 "Humanity forges shields today for its safety;<br>
 tomorrow, it shall flee from those very shields to save itself."
@@ -278,7 +278,7 @@ st.markdown("""
 st.markdown("""
 <div class="glass">
 <h2>🌍 About Me</h2>
-<p>I am Abdullah Bin Fahad, an Automation Engineering freshman at Nanjing Tech University, awarded a Freshman Scholarship for academic excellence. I fuse engineering with philosophy, AI with ethics, and business with human behavior to design systems that empower decision‑making at scale.</p>
+<p>I am Abdullah Bin Fahad, an Automation Engineering Student at Nanjing Tech University. I fuse engineering with philosophy, AI with ethics, and business with human behavior to design systems that empower decision‑making at scale.</p>
 <p>My work spans <b>AI product development</b>, <b>automation prototyping</b>, <b>philosophical writing</b> (published book "Moral Values"), and <b>cross‑cultural public speaking</b>. I've delivered moral seminars to youth audiences, boosting community engagement by 40%, and authored comprehensive essays that distill complex ethical frameworks into accessible narratives.</p>
 </div>
 """, unsafe_allow_html=True)
@@ -292,7 +292,7 @@ st.markdown("""
 <h2>🎓 Education</h2>
 <h3>Bachelor of Science in Automation Engineering</h3>
 <b>Nanjing Tech University, China</b> (2025–2029 Expected)<br>
-• Core focus: Control Systems, Robotics, PLC, Sensors, C/C++<br>
+Core focus: Control Systems, Robotics, PLC, Sensors, C/C++<br>
 <h3>Higher Secondary Certificate (Science)</h3>
 <b>Bhola Government College, Bangladesh</b> (2022–2024)<br>
 Physics, Chemistry, Mathematics, Biology, ICT<br>
@@ -362,9 +362,10 @@ st.markdown("""
 
 st.markdown("""
 <div class="glass">
-<h2>🚀 Featured Project — MarketLens AI</h2>
+<h2>🧑🏻‍💻 Featured Project:<br>
+1). MarketLens AI(www.marketlens-ai.com)</h2>
 <p>MarketLens AI is an intelligent decision‑making agent for Silk Road cross‑border e‑commerce. It answers <b>Which products will perform best in overseas markets?</b> by mining real‑time data, consumer reviews, and tariff risks.</p>
-<p>Using <b>DeepSeek</b> and custom scoring algorithms, it transforms raw market signals into actionable business insights — acting as a strategic co‑pilot rather than a dashboard.</p>
+<p>Using <b>API</b> and custom scoring algorithms, it transforms raw market signals into actionable business insights acting as a strategic co‑pilot rather than a dashboard.</p>
 <h3>Core Capabilities</h3>
 <ul>
 <li>Real‑Time Market Trend Intelligence</li>
@@ -386,7 +387,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="glass">
-<h2>🧮 Smart Calculator</h2>
+<h2>2).🧮 Smart Calculator</h2>
 <p>A next‑generation educational device designed for students in low‑connectivity regions.</p>
 <ul>
 <li>✔ AI Assistant for instant homework help</li>
