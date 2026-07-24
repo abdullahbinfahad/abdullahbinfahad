@@ -3,132 +3,176 @@ import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="Abdullah Bin Fahad",
-    page_icon="🤯",
+    page_icon="🧠",
     layout="wide"
 )
 
 # =====================================================
-# DEEP BLACK FORMAL THEME – NO HOVER – NO MOUSE EFFECTS
+# MODERN DARK THEME – VISUAL & ANIMATED
 # =====================================================
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
-html, body, [class*="css"]{
-    font-family: 'Poppins', sans-serif;
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
-/* Black animated gradient */
+/* Animated gradient background */
 .stApp {
     background: linear-gradient(-45deg, #000000, #0a0a0a, #111111, #050505, #000000);
     background-size: 400% 400%;
-    animation: gradientBG 30s ease infinite;
+    animation: gradientBG 25s ease infinite;
 }
 @keyframes gradientBG {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
 }
 
-/* Section wave divider */
-.section-divider {
-    position: relative;
-    height: 80px;
-    margin: 40px 0 -40px 0;
-    overflow: hidden;
-    line-height: 0;
+/* Scroll reveal base */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.section-divider svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 80px;
-    transform: rotateY(180deg);
-}
-.section-divider .shape-fill {
-    fill: #0a0a0a;
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Static glass cards */
+/* Modern glass cards with subtle hover lift */
 .glass {
-    background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(18, 18, 18, 0.7);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    padding: 35px;
-    margin: 25px 0;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+    border-radius: 28px;
+    padding: 40px;
+    margin: 30px 0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+    transition: all 0.3s ease;
+}
+.glass:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0,0,0,1);
 }
 
-/* Locked / blurred project cards */
-.locked-project {
-    background: rgba(30, 30, 30, 0.5);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 25px;
+/* Hero title floating */
+.hero-title {
     text-align: center;
-    color: #666;
-    filter: blur(3px);
-    user-select: none;
-    pointer-events: none;
-    position: relative;
+    font-size: clamp(3.5rem, 10vw, 5.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 30%, #bbbbbb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: floatTitle 4s ease-in-out infinite;
+    margin-bottom: 10px;
 }
-.locked-project .lock-icon {
+@keyframes floatTitle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+/* Typewriter container */
+.typewriter {
+    text-align: center;
+    color: #cccccc;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    font-weight: 500;
+    min-height: 2.5rem;
+    letter-spacing: 0.8px;
+}
+
+/* Quote card styling */
+.quote-card {
+    background: rgba(30, 30, 30, 0.6);
+    border-left: 4px solid #888;
+    border-radius: 12px;
+    padding: 20px 25px;
+    margin: 20px 0;
+    font-style: italic;
+    color: #d0d0d0;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+.quote-card:hover {
+    border-left-color: #ffffff;
+    background: rgba(50, 50, 50, 0.6);
+}
+
+/* Principles grid */
+.principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+.principle-item {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 25px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.principle-item:hover {
+    transform: scale(1.03);
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(30, 30, 30, 0.8);
+}
+.principle-icon {
     font-size: 2rem;
     margin-bottom: 10px;
-    opacity: 0.6;
-}
-
-/* Title float */
-.title {
-    text-align: center;
-    font-size: clamp(3rem, 10vw, 5rem);
-    font-weight: 800;
-    color: #ffffff;
-    animation: floatText 4s ease-in-out infinite;
-}
-@keyframes floatText {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-4px); }
-}
-
-.subtitle {
-    text-align: center;
-    color: #aaaaaa;
-    font-size: clamp(1rem, 4vw, 1.3rem);
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-}
-
-.quote {
-    text-align: center;
-    color: #e0e0e0;
-    font-size: clamp(1.1rem, 5vw, 1.6rem);
-    font-style: italic;
-    line-height: 1.7;
 }
 
 /* Progress bars */
 .stProgress > div > div > div > div {
-    background: linear-gradient(90deg, #444444, #888888) !important;
+    background: linear-gradient(90deg, #3a3a3a, #b0b0b0) !important;
     border-radius: 20px;
+    height: 8px;
 }
 
+/* Typography */
 h1, h2, h3, p, li {
-    color: #e0e0e0;
+    color: #e5e5e5;
 }
 a {
-    color: #999999;
+    color: #bbbbbb;
     text-decoration: none;
+    transition: color 0.2s;
+}
+a:hover {
+    color: #ffffff;
+}
+
+/* Locked project cards */
+.locked-project {
+    background: rgba(30, 30, 30, 0.45);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    color: #777;
+    filter: blur(2.5px);
+    user-select: none;
+    pointer-events: none;
+}
+.lock-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
 }
 
 .footer {
     text-align: center;
-    color: #666666;
+    color: #666;
     margin-top: 60px;
     padding: 30px;
     font-size: 0.9rem;
@@ -136,22 +180,15 @@ a {
 
 @media (max-width: 768px) {
     .glass {
-        padding: 20px;
-        border-radius: 20px;
-    }
-    .section-divider {
-        height: 50px;
-        margin: 20px 0 -20px 0;
-    }
-    .section-divider svg {
-        height: 50px;
+        padding: 25px;
+        border-radius: 24px;
     }
 }
 </style>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# 3D BACKGROUND – MODERN SHAPES (wireframe + solid)
+# 3D BACKGROUND (reused modern shapes)
 # =====================================================
 
 components.html("""
@@ -169,16 +206,14 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 container.appendChild(renderer.domElement);
 
-// Low‑light scene
 scene.add(new THREE.AmbientLight(0x222222));
 const dirLight = new THREE.DirectionalLight(0xffffff, 0.2);
 dirLight.position.set(1, 1, 1);
 scene.add(dirLight);
 
-// Modern shapes: wireframe + semi‑transparent solids
 const shapes = [];
 const geos = [
-    new THREE.IcosahedronGeometry(0.7, 1),        // smoother sphere
+    new THREE.IcosahedronGeometry(0.7, 1),
     new THREE.TorusKnotGeometry(0.5, 0.15, 100, 16),
     new THREE.ConeGeometry(0.5, 1, 6),
     new THREE.TorusGeometry(0.7, 0.2, 16, 32),
@@ -186,9 +221,8 @@ const geos = [
     new THREE.TetrahedronGeometry(0.6, 0)
 ];
 
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 28; i++) {
     const geo = geos[Math.floor(Math.random() * geos.length)];
-    // Mix solid and wireframe materials
     const wireframe = Math.random() > 0.5;
     let material;
     if (wireframe) {
@@ -196,16 +230,16 @@ for (let i = 0; i < 30; i++) {
             color: 0xffffff,
             wireframe: true,
             transparent: true,
-            opacity: 0.08
+            opacity: 0.06
         });
     } else {
         material = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            roughness: 0.6,
+            roughness: 0.7,
             metalness: 0.2,
             emissive: 0x000000,
             transparent: true,
-            opacity: 0.12
+            opacity: 0.1
         });
     }
     const mesh = new THREE.Mesh(geo, material);
@@ -250,167 +284,289 @@ window.addEventListener('resize', () => {
 """, height=0)
 
 # =====================================================
-# HERO – Philosophical quote
+# SCROLL REVEAL ANIMATION SCRIPT
 # =====================================================
 
+components.html("""
+<script>
+(function() {
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15 });
+    revealElements.forEach(el => observer.observe(el));
+
+    // Re-run observer after Streamlit might re-render
+    const mutationObserver = new MutationObserver(() => {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+""", height=0)
+
+# =====================================================
+# TYPEWRITER EFFECT FOR SUBTITLE
+# =====================================================
+
+components.html("""
+<div class="typewriter" id="typewriter-target"></div>
+<script>
+const words = [
+    "Automation Engineering Student",
+    "AI Enthusiast",
+    "Entrepreneur",
+    "Writer",
+    "Independent Thinker"
+];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const target = document.getElementById('typewriter-target');
+function type() {
+    const current = words[wordIndex];
+    if (isDeleting) {
+        target.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        target.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
+    }
+    if (!isDeleting && charIndex === current.length) {
+        setTimeout(() => isDeleting = true, 2000);
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+    }
+    const speed = isDeleting ? 50 : 100;
+    setTimeout(type, speed);
+}
+type();
+</script>
+""", height=50)
+
+# =====================================================
+# HERO
+# =====================================================
+
+st.markdown('<div class="hero-title">Abdullah Bin Fahad</div>', unsafe_allow_html=True)
+st.markdown('<div class="typewriter" style="color:#aaaaaa; margin-bottom: 20px;">Automation Engineering Student • Entrepreneur • Writer • AI Enthusiast</div>', unsafe_allow_html=True)
+
 st.markdown("""
-<div class="title">Abdullah Bin Fahad</div>
-<div class="subtitle">Automation Student • Entrepreneur • Writer </div>
-<div class="quote">
-"Humanity forges shields today for its safety;<br>
-tomorrow, it shall flee from those very shields to save itself."
+<div class="reveal">
+    <div class="glass" style="text-align:center; font-size:1.1rem; font-style:italic; max-width:800px; margin:20px auto;">
+        "Technology should empower humanity, not replace it."
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Wave divider
+# =====================================================
+# WHO IS ABDULLAH BIN FAHAD?
+# =====================================================
+
+st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
 st.markdown("""
-<div class="section-divider">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-    </svg>
+## 🌐 Who Is Abdullah Bin Fahad?
+Abdullah Bin Fahad is a Bangladeshi Automation Engineering student at Nanjing Tech University in China, an AI enthusiast, entrepreneur, writer, and independent thinker. His work centers on the intersection of **technology, education, philosophy, and human development**. Rather than viewing artificial intelligence as a replacement for people, he believes it should **expand human potential, creativity, and critical thinking**.
+
+Driven by curiosity and long‑term vision, he is building projects that combine engineering with real‑world impact. His interests span **artificial intelligence, robotics, embedded systems, business innovation, psychology, philosophy, and education**. He is motivated by solving meaningful problems — not pursuing technology for its own sake.
+
+For Fahad, learning is not simply the accumulation of knowledge — it is a **continuous process of questioning assumptions, refining ideas, and transforming understanding into practical solutions**. He believes that genuine progress comes from discipline, intellectual honesty, and consistent action.
+""", unsafe_allow_html=True)
+st.markdown('</div></div>', unsafe_allow_html=True)
+
+# =====================================================
+# PERSONAL PHILOSOPHY (quote cards)
+# =====================================================
+
+st.markdown('<div class="reveal"><div class="glass"><h2>🧠 Personal Philosophy</h2>', unsafe_allow_html=True)
+
+quotes = [
+    "“Technology should empower humanity, not replace it.”",
+    "“Knowledge has little value unless it creates positive change in people’s lives.”",
+    "“The future belongs to those who keep learning long after others stop.”",
+    "“Success is built through discipline, consistency, and the courage to think independently.”",
+    "“Question assumptions, seek truth, and let evidence shape your beliefs.”",
+    "“Innovation begins where curiosity meets responsibility.”",
+    "“Character is the foundation upon which every lasting achievement is built.”",
+    "“Dream boldly, build patiently, and improve continuously.”"
+]
+
+cols = st.columns(2)
+for i, quote in enumerate(quotes):
+    with cols[i % 2]:
+        st.markdown(f'<div class="quote-card">{quote}</div>', unsafe_allow_html=True)
+
+st.markdown('</div></div>', unsafe_allow_html=True)
+
+# =====================================================
+# CORE PRINCIPLES (icon grid)
+# =====================================================
+
+st.markdown('<div class="reveal"><div class="glass"><h2>⚖️ Core Principles</h2>', unsafe_allow_html=True)
+
+principles = [
+    ("🧭", "Think independently before following the crowd."),
+    ("💡", "Build solutions that create lasting value."),
+    ("📚", "Stay curious and embrace lifelong learning."),
+    ("⚙️", "Use technology responsibly and ethically."),
+    ("🤝", "Lead with integrity, humility, and purpose."),
+    ("🚀", "Turn ideas into action through discipline and persistence."),
+    ("🌱", "Measure success by the positive impact left on others.")
+]
+
+# Create a grid manually with columns
+cols = st.columns(3)
+for i, (icon, text) in enumerate(principles):
+    with cols[i % 3]:
+        st.markdown(f"""
+        <div class="principle-item">
+            <div class="principle-icon">{icon}</div>
+            <p style="font-size:0.95rem; margin:0;">{text}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+st.markdown('</div></div>', unsafe_allow_html=True)
+
+# =====================================================
+# VISION
+# =====================================================
+
+st.markdown("""
+<div class="reveal">
+    <div class="glass">
+        <h2>🔭 Vision</h2>
+        <p style="font-size:1.1rem; line-height:1.7;">
+        Abdullah envisions a future where artificial intelligence, engineering, and education work together to make high‑quality knowledge more accessible, practical, and beneficial for everyone. His mission is to develop technologies that solve real problems, inspire innovation, and encourage future generations to think critically, act ethically, and create meaningful change.
+        </p>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# ABOUT (CV inspired strong points)
+# EDUCATION
 # =====================================================
 
+st.markdown('<div class="reveal"><div class="glass"><h2>🎓 Education</h2>', unsafe_allow_html=True)
 st.markdown("""
-<div class="glass">
-<h2>🌍 About Me</h2>
-<p>I am Abdullah Bin Fahad, an Automation Engineering Student at Nanjing Tech University. I fuse engineering with philosophy, AI with ethics, and business with human behavior to design systems that empower decision‑making at scale.</p>
-<p>My work spans <b>AI product development</b>, <b>automation prototyping</b>, <b>philosophical writing</b> (published book "Moral Values"), and <b>cross‑cultural public speaking</b>. I've delivered moral seminars to youth audiences, boosting community engagement by 40%, and authored comprehensive essays that distill complex ethical frameworks into accessible narratives.</p>
-</div>
-""", unsafe_allow_html=True)
+**Bachelor of Science in Automation Engineering**  
+Nanjing Tech University, China (2025–2029 Expected)  
+Core focus: Control Systems, Robotics, PLC, Sensors, C/C++  
+
+**Higher Secondary Certificate (Science)**  
+Bhola Government College, Bangladesh (2022–2024)  
+
+**Secondary School Certificate (Science)**  
+Dhaligour Nagar Secondary School, Bangladesh (2020–2022)  
+""")
+st.markdown('</div></div>', unsafe_allow_html=True)
 
 # =====================================================
-# EDUCATION (quantified)
+# KEY ACHIEVEMENTS
 # =====================================================
 
+st.markdown('<div class="reveal"><div class="glass"><h2>🏆 Key Achievements</h2>', unsafe_allow_html=True)
 st.markdown("""
-<div class="glass">
-<h2>🎓 Education</h2>
-<h3>Bachelor of Science in Automation Engineering</h3>
-<b>Nanjing Tech University, China</b> (2025–2029 Expected)<br>
-Core focus: Control Systems, Robotics, PLC, Sensors, C/C++<br>
-<h3>Higher Secondary Certificate (Science)</h3>
-<b>Bhola Government College, Bangladesh</b> (2022–2024)<br>
-Physics, Chemistry, Mathematics, Biology, ICT<br>
-
-<h3>Secondary School Certificate (Science)</h3>
-<b>Dhaligour Nagar Secondary School, Bangladesh</b> (2020–2022)<br>
-</div>
-""", unsafe_allow_html=True)
+- **Authored** philosophical book "Moral Values", synthesizing 3 ethical frameworks into an accessible 200‑page manuscript used in 2 local study circles.
+- **Delivered** 15+ moral seminars on self‑discipline and youth awakening, reaching 500+ attendees with 95% positive feedback.
+- **Designed and tested** an automation prototype that reduced a repetitive lab process by 30%.
+- **Volunteered** 100+ hours in cultural exchange programs, presenting Bangladeshi heritage to 200+ international visitors.
+- **Organized** a Science & Technology Fair project on IoT‑based home automation, demonstrated to 300+ students and faculty.
+""")
+st.markdown('</div></div>', unsafe_allow_html=True)
 
 # =====================================================
-# EXPERIENCE & ACHIEVEMENTS (action verb + result)
+# TECHNICAL SKILLS
 # =====================================================
 
-st.markdown("""
-<div class="glass">
-<h2>🏆 Key Achievements</h2>
-<ul>
-<li><b>Authored</b> philosophical book "Moral Values", synthesizing 3 ethical frameworks into an accessible 200‑page manuscript now used in 2 local study circles.</li>
-<li><b>Delivered</b> 15+ moral seminars on self‑discipline and youth awakening, reaching 500+ attendees and receiving a 95% positive feedback rating.</li>
-<li><b>Designed and tested</b> an automation prototype that reduced a repetitive lab process by 30% (timed comparison).</li>
-<li><b>Volunteered</b> 100+ hours in cultural exchange programs, presenting Bangladeshi heritage to 200+ international visitors and improving cross‑cultural communication skills.</li>
-<li><b>Organized</b> a Science & Technology Fair project on IoT‑based home automation, demonstrated to 300+ students and faculty.</li>
-</ul>
-</div>
-""", unsafe_allow_html=True)
+st.markdown('<div class="reveal"><div class="glass"><h2>⚡ Technical Skills</h2>', unsafe_allow_html=True)
 
-# =====================================================
-# TECHNICAL SKILLS (proficiency bars)
-# =====================================================
+skills = {
+    "Automation & Control Systems": 82,
+    "Python Programming": 78,
+    "HTML / CSS": 80,
+    "C Programming": 72,
+    "Digital Marketing & Content Writing": 88,
+    "Video / Audio Editing": 85,
+    "Microsoft Office Suite": 90
+}
+for skill, level in skills.items():
+    st.markdown(skill)
+    st.progress(level)
 
-st.markdown('<div class="glass"><h2>⚡ Technical Skills</h2>', unsafe_allow_html=True)
-
-st.markdown("Automation & Control Systems")
-st.progress(82)
-st.markdown("Python Programming")
-st.progress(78)
-st.markdown("HTML / CSS")
-st.progress(80)
-st.markdown("C Programming")
-st.progress(72)
-st.markdown("Digital Marketing & Content Writing")
-st.progress(88)
-st.markdown("Video / Audio Editing")
-st.progress(85)
-st.markdown("Microsoft Office Suite")
-st.progress(90)
-
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div></div>', unsafe_allow_html=True)
 
 # =====================================================
 # LANGUAGES
 # =====================================================
 
 st.markdown("""
-<div class="glass">
-<h2>🗣 Languages</h2>
-• Bangla – Native<br>
-• English – Fluent (written & spoken)<br>
-• Mandarin Chinese – Intermediate (HSK 3 equivalent)<br>
-• Hindi / Urdu – Conversational
+<div class="reveal">
+    <div class="glass">
+        <h2>🗣 Languages</h2>
+        • Bangla – Native<br>
+        • English – Fluent (written & spoken)<br>
+        • Mandarin Chinese – Intermediate (HSK 3 equivalent)<br>
+        • Hindi / Urdu – Conversational
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# PROJECTS – MarketLens AI
+# PROJECTS
 # =====================================================
+
+st.markdown('<div class="reveal"><div class="glass"><h2>🧑🏻‍💻 Featured Project: MarketLens AI</h2>', unsafe_allow_html=True)
+st.markdown("""
+*www.marketlens-ai.com*
+
+MarketLens AI is an intelligent decision‑making agent for Silk Road cross‑border e‑commerce. It answers **Which products will perform best in overseas markets?** by mining real‑time data, consumer reviews, and tariff risks.
+
+Using **API** and custom scoring algorithms, it transforms raw market signals into actionable business insights — acting as a strategic co‑pilot rather than a dashboard.
+
+**Core Capabilities**
+- Real‑Time Market Trend Intelligence
+- AI Consumer Review Analysis
+- Dynamic Product Opportunity Scoring
+- Tariff & Logistics Risk Simulation
+- Interactive 3D Data Visualization
+- Multi‑Language AI Assistant
+- Competitive Gap Detection
+- Market Demand Forecasting
+- Strategic Decision Support
+""")
+st.markdown('</div></div>', unsafe_allow_html=True)
 
 st.markdown("""
-<div class="glass">
-<h2>🧑🏻‍💻 Featured Project:<br>
-1). MarketLens AI(www.marketlens-ai.com)</h2>
-<p>MarketLens AI is an intelligent decision‑making agent for Silk Road cross‑border e‑commerce. It answers <b>Which products will perform best in overseas markets?</b> by mining real‑time data, consumer reviews, and tariff risks.</p>
-<p>Using <b>API</b> and custom scoring algorithms, it transforms raw market signals into actionable business insights acting as a strategic co‑pilot rather than a dashboard.</p>
-<h3>Core Capabilities</h3>
-<ul>
-<li>Real‑Time Market Trend Intelligence</li>
-<li>AI Consumer Review Analysis</li>
-<li>Dynamic Product Opportunity Scoring</li>
-<li>Tariff & Logistics Risk Simulation</li>
-<li>Interactive 3D Data Visualization</li>
-<li>Multi‑Language AI Assistant</li>
-<li>Competitive Gap Detection</li>
-<li>Market Demand Forecasting</li>
-<li>Strategic Decision Support</li>
-</ul>
+<div class="reveal">
+    <div class="glass">
+        <h2>🧮 Smart Calculator</h2>
+        <p>A next‑generation educational device designed for students in low‑connectivity regions.</p>
+        <ul>
+            <li>✔ AI Assistant for instant homework help</li>
+            <li>✔ Offline Communication System (mesh networking)</li>
+            <li>✔ Language Learning Tools (10+ languages)</li>
+            <li>✔ GPS Tracking for child safety</li>
+            <li>✔ Educational Games for K‑12 curriculum</li>
+            <li>✔ Smart Dictionary (offline, contextual)</li>
+            <li>✔ Productivity System (task scheduling, focus timer)</li>
+        </ul>
+        <p><i>Built to bridge the digital divide and foster self‑learning.</i></p>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
 # =====================================================
-# PROJECT – Smart Calculator
+# OTHER PROJECTS (locked previews)
 # =====================================================
 
-st.markdown("""
-<div class="glass">
-<h2>2).🧮 Smart Calculator</h2>
-<p>A next‑generation educational device designed for students in low‑connectivity regions.</p>
-<ul>
-<li>✔ AI Assistant for instant homework help</li>
-<li>✔ Offline Communication System (mesh networking)</li>
-<li>✔ Language Learning Tools (10+ languages)</li>
-<li>✔ GPS Tracking for child safety</li>
-<li>✔ Educational Games for K‑12 curriculum</li>
-<li>✔ Smart Dictionary (offline, contextual)</li>
-<li>✔ Productivity System (task scheduling, focus timer)</li>
-</ul>
-<p><i>Built to bridge the digital divide and foster self‑learning.</i></p>
-</div>
-""", unsafe_allow_html=True)
-
-# =====================================================
-# OTHER PROJECTS – LOCKED / BLURRED PREVIEW
-# =====================================================
-
-st.markdown('<h2 style="color:#e0e0e0; margin-top:40px;">🔒 Other Projects (Under Development)</h2>', unsafe_allow_html=True)
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
+st.markdown('<h2 style="color:#e0e0e0; margin-top:50px;">🔒 Other Projects (Under Development)</h2>', unsafe_allow_html=True)
+cols = st.columns(3)
+with cols[0]:
     st.markdown("""
     <div class="locked-project">
         <div class="lock-icon">🔒</div>
@@ -418,8 +574,7 @@ with col1:
         <p>Confidential – details coming soon</p>
     </div>
     """, unsafe_allow_html=True)
-
-with col2:
+with cols[1]:
     st.markdown("""
     <div class="locked-project">
         <div class="lock-icon">🔒</div>
@@ -427,8 +582,7 @@ with col2:
         <p>Under NDA – prototype phase</p>
     </div>
     """, unsafe_allow_html=True)
-
-with col3:
+with cols[2]:
     st.markdown("""
     <div class="locked-project">
         <div class="lock-icon">🔒</div>
@@ -438,29 +592,18 @@ with col3:
     """, unsafe_allow_html=True)
 
 # =====================================================
-# PHILOSOPHY
-# =====================================================
-
-st.markdown("""
-<div class="glass">
-<h2>🧠 Philosophy</h2>
-<p>I believe technology should not replace human thinking; it should enhance it. My curiosity extends beyond engineering into the roots of wisdom, ethics, and civilization.</p>
-<p>I explore: Intelligence vs Wisdom, Technology vs Humanity, Wealth vs Meaning, Power vs Responsibility, Progress vs Purpose.</p>
-<p>Learning is my lifelong pursuit. Independent thought remains the most valuable ability one can cultivate — and systems that serve people, not the other way around, are what I strive to build.</p>
-</div>
-""", unsafe_allow_html=True)
-
-# =====================================================
 # CONTACT & FOOTER
 # =====================================================
 
 st.markdown("""
-<div class="glass">
-<h2>📬 Contact</h2>
-📧 abdullahbinfahad.abf@gmail.com<br>
-📱 +86 18105180247<br>
-🎓 Nanjing Tech University, Jiangpu Campus, Nanjing, China<br>
-🔗 <a href="https://github.com/abdullahbinfahad" target="_blank">github.com/abdullahbinfahad</a>
+<div class="reveal">
+    <div class="glass">
+        <h2>📬 Contact</h2>
+        📧 abdullahbinfahad.abf@gmail.com<br>
+        📱 +86 18105180247<br>
+        🎓 Nanjing Tech University, Jiangpu Campus, Nanjing, China<br>
+        🔗 <a href="https://github.com/abdullahbinfahad" target="_blank">github.com/abdullahbinfahad</a>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
