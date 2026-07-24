@@ -1,453 +1,218 @@
 import streamlit as st
 
-st.set_page_config(
-    page_title="Abdullah Bin Fahad – Personal Website",
-    page_icon="🧠",
-    layout="wide"
-)
+st.set_page_config(page_title="Abdullah Bin Fahad", page_icon="🧠", layout="wide")
 
-# ---- THEME TOGGLE ----
+# ---- THEME ----
 if "theme" not in st.session_state:
-    st.session_state.theme = "light"  # default white mode
+    st.session_state.theme = "light"
 
-def toggle_theme():
+def toggle():
     st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
 
-# Inject dynamic CSS based on theme
-if st.session_state.theme == "light":
-    bg_color = "#ffffff"
-    card_bg = "rgba(0,0,0,0.03)"
-    text_color = "#1a1a1a"
-    muted_color = "#555555"
-    accent = "#1a1a1a"
-    border_color = "rgba(0,0,0,0.08)"
-    shadow = "0 4px 20px rgba(0,0,0,0.05)"
-    gradient_bg = "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
-    card_hover = "0 8px 30px rgba(0,0,0,0.1)"
-    progress_bg = "linear-gradient(90deg, #333, #666)"
-    hero_text = "linear-gradient(135deg, #111, #333)"
-    quote_border = "4px solid #333"
-else:
-    bg_color = "#0a0a0a"
-    card_bg = "rgba(255,255,255,0.04)"
-    text_color = "#e0e0e0"
-    muted_color = "#aaaaaa"
-    accent = "#ffffff"
-    border_color = "rgba(255,255,255,0.08)"
-    shadow = "0 4px 20px rgba(0,0,0,0.4)"
-    gradient_bg = "linear-gradient(135deg, #000000 0%, #1a1a1a 100%)"
-    card_hover = "0 8px 30px rgba(0,0,0,0.8)"
-    progress_bg = "linear-gradient(90deg, #444, #aaa)"
-    hero_text = "linear-gradient(135deg, #fff, #ccc)"
-    quote_border = "4px solid #888"
+# Theme‑aware CSS
+light = st.session_state.theme == "light"
+bg = "#ffffff" if light else "#0a0a0a"
+card = "rgba(0,0,0,0.04)" if light else "rgba(255,255,255,0.05)"
+txt = "#1a1a1a" if light else "#e0e0e0"
+muted = "#555" if light else "#aaa"
+accent = "#1a1a1a" if light else "#ffffff"
+border = "rgba(0,0,0,0.08)" if light else "rgba(255,255,255,0.1)"
+shadow = "0 4px 20px rgba(0,0,0,0.05)" if light else "0 4px 20px rgba(0,0,0,0.4)"
+progress_bg = "linear-gradient(90deg, #333, #666)" if light else "linear-gradient(90deg, #444, #aaa)"
 
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap');
 
-html, body, [class*="css"] {{
-    font-family: 'Inter', sans-serif;
-    scroll-behavior: smooth;
-}}
-
-.stApp {{
-    background: {bg_color};
-    color: {text_color};
-}}
+html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; scroll-behavior: smooth; }}
+.stApp {{ background: {bg}; color: {txt}; }}
 
 /* Hero */
 .hero-name {{
-    font-size: clamp(3rem, 10vw, 5rem);
-    font-weight: 700;
-    background: {hero_text};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: center;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin-bottom: 0.2em;
+    font-size: clamp(3rem, 12vw, 6rem); font-weight: 800;
+    background: linear-gradient(135deg, {txt}, {muted});
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-align: center; line-height: 1.1; margin-top: 0.3em;
 }}
-.hero-role {{
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: {muted_color};
-    min-height: 2em;
-}}
-.hero-statement {{
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: {text_color};
-    max-width: 600px;
-    margin: 20px auto;
-}}
+.hero-role {{ text-align: center; font-size: 1.2rem; color: {muted}; min-height: 2em; }}
+.hero-statement {{ text-align: center; font-size: 1.3rem; font-weight: 500; color: {txt}; max-width: 600px; margin: 20px auto; }}
 
-/* Section cards */
+/* Card */
 .card {{
-    background: {card_bg};
-    backdrop-filter: blur(10px);
-    border: 1px solid {border_color};
-    border-radius: 24px;
-    padding: 40px;
-    margin: 30px 0;
-    box-shadow: {shadow};
-    transition: all 0.3s ease;
-}}
-.card:hover {{
-    box-shadow: {card_hover};
-    transform: translateY(-2px);
-}}
-
-/* Quote card */
-.quote-card {{
-    background: {card_bg};
-    border-left: {quote_border};
-    border-radius: 12px;
-    padding: 24px 28px;
-    margin: 20px 0;
-    font-style: italic;
-    color: {text_color};
-    font-size: 1.1rem;
-    transition: 0.2s;
-}}
-.quote-card:hover {{
-    background: rgba(128,128,128,0.1);
-}}
-
-/* Principles grid */
-.principle-grid {{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}}
-.principle-tile {{
-    background: {card_bg};
-    border: 1px solid {border_color};
-    border-radius: 20px;
-    padding: 28px 20px;
-    text-align: center;
+    background: {card}; backdrop-filter: blur(10px); border: 1px solid {border};
+    border-radius: 24px; padding: 40px; margin: 30px 0; box-shadow: {shadow};
     transition: 0.3s;
 }}
-.principle-tile:hover {{
-    transform: translateY(-6px);
-    border-color: {accent};
+.card:hover {{ transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }}
+
+/* Quote */
+.quote-card {{
+    background: {card}; border-left: 4px solid {accent};
+    border-radius: 12px; padding: 20px 25px; margin: 16px 0;
+    font-style: italic; font-size: 1.05rem;
 }}
-.principle-icon {{
-    font-size: 2rem;
-    margin-bottom: 12px;
+
+/* Principles */
+.principle-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }}
+.principle-tile {{
+    background: {card}; border: 1px solid {border}; border-radius: 20px;
+    padding: 25px 15px; text-align: center; transition: 0.3s;
 }}
+.principle-tile:hover {{ transform: translateY(-6px); border-color: {accent}; }}
+.principle-icon {{ font-size: 2rem; margin-bottom: 10px; }}
 
 /* Timeline */
-.timeline {{
-    position: relative;
-    padding-left: 40px;
-    margin: 30px 0;
-}}
-.timeline::before {{
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: {muted_color};
-    opacity: 0.3;
-}}
-.timeline-item {{
-    position: relative;
-    margin-bottom: 28px;
-}}
-.timeline-dot {{
-    position: absolute;
-    left: -30px;
-    top: 4px;
-    width: 20px;
-    height: 20px;
-    background: {accent};
-    border-radius: 50%;
-    box-shadow: 0 0 12px {accent}44;
-}}
-.timeline-content {{
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: {text_color};
-}}
+.timeline {{ position: relative; padding-left: 40px; margin: 30px 0; }}
+.timeline::before {{ content:''; position: absolute; left: 20px; top:0; bottom:0; width:2px; background:{muted}; opacity:0.3; }}
+.timeline-item {{ position: relative; margin-bottom: 28px; }}
+.timeline-dot {{ position: absolute; left:-30px; top:4px; width:20px; height:20px; background:{accent}; border-radius:50%; box-shadow:0 0 10px {accent}44; }}
+.timeline-content {{ font-weight:500; }}
 
-/* Circular progress */
-.circular-progress {{
-    display: inline-block;
-    position: relative;
-    width: 90px;
-    height: 90px;
-}}
-.circular-progress svg {{
-    transform: rotate(-90deg);
-}}
-.circle-bg {{
-    fill: none;
-    stroke: {border_color};
-    stroke-width: 6;
-}}
-.circle-fill {{
-    fill: none;
-    stroke: {accent};
-    stroke-width: 6;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 1.5s ease;
-}}
+/* Skills progress bars */
+.skill-label {{ display: flex; justify-content: space-between; font-weight:500; margin-top: 20px; }}
+.stProgress > div > div > div > div {{ background: {progress_bg} !important; border-radius: 20px; }}
 
-/* Contact cards */
+/* Contact */
 .contact-tile {{
-    background: {card_bg};
-    border: 1px solid {border_color};
-    border-radius: 20px;
-    padding: 28px 20px;
-    text-align: center;
-    transition: 0.3s;
+    background: {card}; border: 1px solid {border}; border-radius: 20px;
+    padding: 25px; text-align: center; transition: 0.3s;
 }}
-.contact-tile:hover {{
-    transform: translateY(-4px);
-    border-color: {accent};
-}}
-.contact-icon {{
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}}
+.contact-tile:hover {{ transform: translateY(-4px); border-color: {accent}; }}
+.contact-icon {{ font-size: 1.8rem; margin-bottom: 10px; }}
 
 /* Footer */
-.footer {{
-    text-align: center;
-    padding: 50px 20px;
-    color: {muted_color};
-    font-size: 0.9rem;
-}}
+.footer {{ text-align: center; padding: 40px 20px; color: {muted}; }}
 
-/* Scroll reveal */
-.reveal {{
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-}}
-.reveal.visible {{
-    opacity: 1;
-    transform: translateY(0);
-}}
+/* Reveal */
+.reveal {{ opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }}
+.reveal.visible {{ opacity: 1; transform: translateY(0); }}
 </style>
 """, unsafe_allow_html=True)
 
-# Theme toggle button (top right)
-col_toggle = st.columns([5,1])[1]
-with col_toggle:
-    st.button("🌓 Toggle Theme" if st.session_state.theme == "light" else "☀️ Toggle Theme",
-              on_click=toggle_theme,
-              key="theme_toggle",
-              use_container_width=True)
+# Theme toggle button
+_, btn_col = st.columns([5,1])
+with btn_col:
+    st.button("🌓 Toggle Theme" if light else "☀️ Toggle Theme", on_click=toggle)
 
 # ---- HERO ----
-st.markdown("""
-<div class="hero-name" style="margin-top: 20px;">Abdullah Bin Fahad</div>
-<div class="hero-role" id="role-text"></div>
-<div class="hero-statement">Building technologies that expand human potential.</div>
-""", unsafe_allow_html=True)
+st.markdown('<div class="hero-name">Abdullah Bin Fahad</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-role" id="role-rotator"></div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-statement">Building technologies that expand human potential.</div>', unsafe_allow_html=True)
 
-# Rotating roles (typewriter effect)
-roles = [
-    "Automation Engineer",
-    "AI Entrepreneur",
-    "Independent Thinker",
-    "Technology Philosopher",
-    "Future Visionary"
-]
-roles_js = ", ".join(f'"{r}"' for r in roles)
+# Rotating roles
+roles = ["Automation Engineer","AI Entrepreneur","Independent Thinker","Technology Philosopher","Future Visionary"]
 st.components.v1.html(f"""
 <script>
-const roles = [{roles_js}];
-let i = 0;
-const el = document.getElementById('role-text');
-setInterval(() => {{
-    el.textContent = roles[i];
-    i = (i+1) % roles.length;
-}}, 2000);
-el.textContent = roles[0];
+const r = {roles};
+let i=0;
+const el=document.getElementById('role-rotator');
+setInterval(()=>{{el.textContent=r[i]; i=(i+1)%r.length}},2000);
+el.textContent=r[0];
 </script>
 """, height=0)
 
-# Scroll reveal (Intersection Observer)
+# Scroll reveal
 st.components.v1.html("""
 <script>
-(function() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    new MutationObserver(() => {
-        document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
-    }).observe(document.body, { childList: true, subtree: true });
-})();
+const obs = new IntersectionObserver((e)=>e.forEach(en=>{if(en.isIntersecting) en.target.classList.add('visible')}),{threshold:0.2});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+new MutationObserver(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el))).observe(document.body,{childList:true,subtree:true});
 </script>
 """, height=0)
 
-# ---- SECTIONS ----
-
-# About Me (Who Is Abdullah Bin Fahad?)
+# ---- WHO IS ABDULLAH ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## 🌐 Who Is Abdullah Bin Fahad?")
 st.markdown("""
 **Abdullah Bin Fahad** is a Bangladeshi Automation Engineering student at Nanjing Tech University in China, an AI enthusiast, entrepreneur, writer, and independent thinker.  
-His work centers on the intersection of **technology, education, philosophy, and human development**. Rather than viewing artificial intelligence as a replacement for people, he believes it should **expand human potential, creativity, and critical thinking**.
+His work centers on the intersection of **technology, education, philosophy, and human development**. Rather than viewing AI as a replacement for people, he believes it should **expand human potential, creativity, and critical thinking**.
 
-Driven by curiosity and long‑term vision, he builds projects that combine engineering with real‑world impact. His interests span **artificial intelligence, robotics, embedded systems, business innovation, psychology, philosophy, and education**. He is motivated by solving meaningful problems — not pursuing technology for its own sake.
-
-For Fahad, learning is a **continuous process of questioning assumptions, refining ideas, and transforming understanding into practical solutions**. Genuine progress, he believes, comes from discipline, intellectual honesty, and consistent action.
+Driven by curiosity and long‑term vision, he builds projects that combine engineering with real‑world impact. His interests span **AI, robotics, embedded systems, business, psychology, philosophy, and education**. For him, learning is a **continuous process of questioning assumptions, refining ideas, and turning understanding into practical solutions**.
 """)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Personal Philosophy
+# ---- PHILOSOPHY QUOTES ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## 🧠 Personal Philosophy")
-philosophy_quotes = [
+for q in [
     "Technology should empower humanity, not replace it.",
     "Knowledge has little value unless it creates positive change in people’s lives.",
     "The future belongs to those who keep learning long after others stop.",
-    "Success is built through discipline, consistency, and the courage to think independently.",
-    "Question assumptions, seek truth, and let evidence shape your beliefs.",
+    "Success is built through discipline, consistency, and independent thinking.",
     "Innovation begins where curiosity meets responsibility.",
-    "Character is the foundation upon which every lasting achievement is built.",
-    "Dream boldly, build patiently, and improve continuously."
-]
-for q in philosophy_quotes:
+    "Character is the foundation of every lasting achievement."
+]:
     st.markdown(f'<div class="quote-card">“{q}”</div>', unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Core Principles
+# ---- CORE PRINCIPLES ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## ⚖️ Core Principles")
 principles = [
-    ("🧭", "Think independently before following the crowd."),
-    ("💡", "Build solutions that create lasting value."),
-    ("📚", "Stay curious and embrace lifelong learning."),
-    ("⚙️", "Use technology responsibly and ethically."),
-    ("🤝", "Lead with integrity, humility, and purpose."),
-    ("🚀", "Turn ideas into action through discipline and persistence."),
-    ("🌱", "Measure success by the positive impact left on others.")
+    ("🧭","Think independently before following the crowd."),
+    ("💡","Build solutions that create lasting value."),
+    ("📚","Stay curious and embrace lifelong learning."),
+    ("⚙️","Use technology responsibly and ethically."),
+    ("🤝","Lead with integrity, humility, and purpose."),
+    ("🚀","Turn ideas into action through discipline."),
+    ("🌱","Measure success by the positive impact left on others.")
 ]
 cols = st.columns(4)
 for i, (icon, text) in enumerate(principles):
-    with cols[i % 4]:
-        st.markdown(f"""
-        <div class="principle-tile">
-            <div class="principle-icon">{icon}</div>
-            <p style="font-weight:500;">{text}</p>
-        </div>
-        """, unsafe_allow_html=True)
+    with cols[i%4]:
+        st.markdown(f'<div class="principle-tile"><div class="principle-icon">{icon}</div><p style="font-weight:500;">{text}</p></div>', unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Journey (Timeline)
+# ---- TIMELINE ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## 🛤 My Journey")
-timeline_items = [
-    "Bangladesh – Early curiosity & science background",
-    "SSC & HSC – Academic foundation in science",
+st.markdown('<div class="timeline">', unsafe_allow_html=True)
+for item in [
+    "Bangladesh – Early curiosity & science foundation",
+    "SSC & HSC – Academic excellence in science",
     "Nanjing Tech University – Automation Engineering (2025–2029)",
     "AI & Entrepreneurship – Building MarketLens AI",
     "Writing & Philosophy – Authored 'Moral Values'",
-    "Smart Calculator – Educational tech for underserved students",
-    "Future – Expanding into AI, robotics, and global impact"
-]
-st.markdown('<div class="timeline">', unsafe_allow_html=True)
-for item in timeline_items:
-    st.markdown(f"""
-    <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">{item}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    "Smart Calculator – Educational tech for underserved students"
+]:
+    st.markdown(f'<div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">{item}</div></div>', unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Skills (Circular Progress)
+# ---- SKILLS (progress bars) ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## ⚡ Technical Skills")
 skills = {
-    "Python": 95,
-    "C/C++": 80,
-    "HTML/CSS": 85,
-    "Automation": 90,
-    "Digital Marketing": 88,
-    "Video Editing": 85,
-    "MS Office": 92
+    "Python": 95, "C/C++": 80, "HTML/CSS": 85,
+    "Automation & Control": 90, "Digital Marketing": 88,
+    "Video Editing": 85, "Microsoft Office": 92
 }
-cols = st.columns(4)
-for i, (skill, value) in enumerate(skills.items()):
-    with cols[i % 4]:
-        radius = 36
-        circumference = 2 * 3.14159 * radius
-        offset = circumference - (value / 100) * circumference
-        st.markdown(f"""
-        <div style="text-align:center; margin:20px 0;">
-            <div class="circular-progress">
-                <svg width="90" height="90" viewBox="0 0 100 100">
-                    <circle class="circle-bg" cx="50" cy="50" r="{radius}"></circle>
-                    <circle class="circle-fill" cx="50" cy="50" r="{radius}" 
-                        stroke-dasharray="{circumference}" 
-                        stroke-dashoffset="{circumference}" 
-                        data-offset="{offset}"></circle>
-                </svg>
-                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); 
-                     font-weight:700; color:{accent}; font-size:1.1rem;">{value}%</div>
-            </div>
-            <div style="font-weight:500; margin-top:8px; color:{text_color};">{skill}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-# Animate circles on scroll
-st.components.v1.html("""
-<script>
-function animateCircles() {
-    document.querySelectorAll('.circle-fill').forEach(circle => {
-        const offset = circle.getAttribute('data-offset');
-        if (offset) {
-            circle.style.strokeDashoffset = offset;
-            circle.removeAttribute('data-offset');
-        }
-    });
-}
-const circleObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) animateCircles();
-    });
-});
-document.querySelectorAll('.circular-progress').forEach(el => circleObserver.observe(el));
-</script>
-""", height=0)
+for skill, val in skills.items():
+    st.markdown(f'<div class="skill-label"><span>{skill}</span><span>{val}%</span></div>', unsafe_allow_html=True)
+    st.progress(val)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Featured Projects
+# ---- PROJECTS ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## 🧑🏻‍💻 Featured Projects")
-col1, col2 = st.columns(2)
-with col1:
+c1, c2 = st.columns(2)
+with c1:
     st.markdown("### MarketLens AI")
     st.markdown("""
     *www.marketlens-ai.com*  
-    An intelligent decision‑making agent for cross‑border e‑commerce.  
-    It answers **“Which products will perform best?”** using real‑time market data, consumer reviews, and tariff risk analysis.  
-    <br><a href="https://www.marketlens-ai.com" target="_blank">Visit Project →</a>
+    AI decision‑making agent for cross‑border e‑commerce.  
+    Real‑time market intelligence, consumer review analysis, tariff risk simulation.  
+    <a href="https://www.marketlens-ai.com" target="_blank">Visit project →</a>
     """, unsafe_allow_html=True)
-with col2:
+with c2:
     st.markdown("### 🧮 Smart Calculator")
     st.markdown("""
-    A next‑gen educational device for low‑connectivity regions.  
-    Features AI homework help, offline mesh networking, 10+ language learning tools, GPS tracking, and more.  
-    *Currently under development.*
+    Educational device for low‑connectivity regions.  
+    AI homework help, offline mesh networking, 10+ languages, GPS tracking.  
+    *Coming soon.*
     """)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Vision
+# ---- VISION ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## 🔭 Vision")
 st.markdown("""
@@ -456,32 +221,25 @@ st.markdown("""
 """)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Contact
+# ---- CONTACT ----
 st.markdown('<div class="reveal"><div class="card">', unsafe_allow_html=True)
 st.markdown("## 📬 Contact")
-col1, col2, col3, col4 = st.columns(4)
-contacts = [
-    ("📧", "Email", "abdullahbinfahad.abf@gmail.com"),
-    ("💻", "GitHub", "github.com/abdullahbinfahad"),
-    ("📍", "Location", "Nanjing, China"),
-    ("📱", "Phone", "+86 18105180247")
-]
-for col, (icon, label, value) in zip([col1, col2, col3, col4], contacts):
+c1, c2, c3, c4 = st.columns(4)
+for col, (icon, label, value) in zip([c1,c2,c3,c4], [
+    ("📧","Email","abdullahbinfahad.abf@gmail.com"),
+    ("💻","GitHub","github.com/abdullahbinfahad"),
+    ("📍","Location","Nanjing, China"),
+    ("📱","Phone","+86 18105180247")
+]):
     with col:
-        st.markdown(f"""
-        <div class="contact-tile">
-            <div class="contact-icon">{icon}</div>
-            <h4>{label}</h4>
-            <p style="font-size:0.9rem; color:{muted_color};">{value}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f'<div class="contact-tile"><div class="contact-icon">{icon}</div><h4>{label}</h4><p style="font-size:0.9rem;">{value}</p></div>', unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# Footer
+# ---- FOOTER ----
 st.markdown(f"""
 <div class="footer reveal">
     Designed & Engineered by Abdullah Bin Fahad<br>
-    <span style="font-size:0.8rem;">Building Tomorrow. One Idea at a Time.</span><br>
-    <a href="https://www.abdullahbinfahad.info" style="color:{muted_color};">www.abdullahbinfahad.info</a>
+    <span style="font-size:0.85rem;">Building Tomorrow. One Idea at a Time.</span><br>
+    <a href="https://www.abdullahbinfahad.info">www.abdullahbinfahad.info</a>
 </div>
 """, unsafe_allow_html=True)
