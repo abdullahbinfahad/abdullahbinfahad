@@ -31,23 +31,24 @@ random_quote = random.choice([
 # ====================================================
 theme = st.session_state.theme
 if theme == "light":
-    bg_main = "#f8f9fa"
+    bg_main = "#ffffff"
     bg_card = "rgba(0,0,0,0.03)"
-    text_primary = "#111"
-    text_secondary = "#444"
-    accent = "#111"
+    text_primary = "#111111"
+    text_secondary = "#444444"
+    accent = "#000000"
     border = "rgba(0,0,0,0.08)"
     progress_grad = "linear-gradient(90deg, #222, #666)"
-    wave_fill = "#f8f9fa"
+    wave_fill = "#ffffff"
     glow_color = "0,0,0"
     hero_gradient = "linear-gradient(135deg, #111, #444)"
     card_shadow = "0 4px 20px rgba(0,0,0,0.05)"
-    phi_bg = "rgba(255,255,255,0.7)"
+    phi_bg = "rgba(255,255,255,0.9)"
+    phi_text_color = "#111111"
 elif theme == "dark":
     bg_main = "#0a0a0a"
     bg_card = "rgba(255,255,255,0.05)"
-    text_primary = "#e0e0e0"
-    text_secondary = "#aaa"
+    text_primary = "#ffffff"
+    text_secondary = "#aaaaaa"
     accent = "#ffffff"
     border = "rgba(255,255,255,0.08)"
     progress_grad = "linear-gradient(90deg, #444, #aaa)"
@@ -55,11 +56,12 @@ elif theme == "dark":
     glow_color = "255,255,255"
     hero_gradient = "linear-gradient(135deg, #ffffff, #cccccc)"
     card_shadow = "0 4px 20px rgba(0,0,0,0.4)"
-    phi_bg = "rgba(10,10,10,0.8)"
+    phi_bg = "rgba(10,10,10,0.95)"
+    phi_text_color = "#ffffff"
 else:  # cyber
     bg_main = "#050510"
     bg_card = "rgba(0,255,255,0.05)"
-    text_primary = "#e0ffff"
+    text_primary = "#ffffff"
     text_secondary = "#7fdbdb"
     accent = "#00ffff"
     border = "rgba(0,255,255,0.2)"
@@ -68,7 +70,8 @@ else:  # cyber
     glow_color = "0,255,255"
     hero_gradient = "linear-gradient(135deg, #00ffff, #0088ff)"
     card_shadow = "0 0 25px rgba(0,255,255,0.2)"
-    phi_bg = "rgba(5,5,16,0.85)"
+    phi_bg = "rgba(5,5,16,0.95)"
+    phi_text_color = "#ffffff"
 
 # ====================================================
 # GLOBAL STYLES
@@ -157,7 +160,7 @@ html, body, [class*="css"] {{
     fill: {wave_fill};
 }}
 
-/* ---------- Philosophy Full‑screen Cards ---------- */
+/* ---------- Philosophy Full‑screen Cards (FORCE VISIBLE) ---------- */
 .phi-card {{
     min-height: 80vh;
     display: flex;
@@ -171,8 +174,8 @@ html, body, [class*="css"] {{
     scroll-snap-align: start;
     will-change: opacity, transform;
     background: {phi_bg};
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 40px;
     margin: 20px 0;
 }}
@@ -185,54 +188,38 @@ html, body, [class*="css"] {{
     font-weight: 800;
     text-align: center;
     line-height: 1.2;
-    background: {hero_gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: {phi_text_color} !important;
+    text-shadow: 0 0 30px rgba({glow_color},0.4);
     max-width: 900px;
-    /* Fallback for non-webkit */
+}}
+
+/* ---------- Principles AS LINES ---------- */
+.principle-line {{
+    font-size: 1.2rem;
+    font-weight: 500;
     color: {text_primary};
+    margin: 12px 0;
+    padding-left: 10px;
+    border-left: 3px solid {accent};
 }}
 
-/* ---------- Principles Grid ---------- */
-.principle-grid {{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}}
-.principle-tile {{
-    background: {bg_card};
-    border: 1px solid {border};
-    border-radius: 24px;
-    padding: 30px 20px;
-    text-align: center;
-    transition: 0.3s;
-}}
-.principle-tile:hover {{
-    transform: translateY(-8px);
-    border-color: {accent};
-    box-shadow: 0 10px 30px rgba({glow_color},0.2);
-}}
-.principle-icon {{
-    font-size: 2.2rem;
-    margin-bottom: 12px;
-}}
-
-/* ---------- Horizontal Timeline ---------- */
+/* ---------- Horizontal Timeline (ONE ROW) ---------- */
 .timeline-horizontal {{
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    gap: 40px;
-    padding: 30px 0;
+    gap: 30px;
+    padding: 30px 10px;
     scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
 }}
 .timeline-node {{
     flex: 0 0 auto;
-    width: 160px;
+    width: 140px;
     text-align: center;
     position: relative;
-    padding: 20px 10px;
+    padding: 20px 5px;
     scroll-snap-align: center;
 }}
 .timeline-node::before {{
@@ -262,6 +249,7 @@ html, body, [class*="css"] {{
 .timeline-text {{
     color: {text_secondary};
     font-size: 0.9rem;
+    white-space: normal;
 }}
 
 /* ---------- Animated Counters ---------- */
@@ -369,16 +357,8 @@ html, body, [class*="css"] {{
     .glass, .card {{
         padding: 25px;
     }}
-    .timeline-horizontal {{
-        flex-direction: column;
-        gap: 20px;
-    }}
-    .timeline-node::before {{
-        top: 0;
-        bottom: auto;
-        left: 50%;
-        width: 2px;
-        height: 100%;
+    .timeline-node {{
+        width: 120px;
     }}
 }}
 </style>
@@ -402,7 +382,6 @@ const observer = new IntersectionObserver((entries) => {{
     entries.forEach(entry => {{
         if(entry.isIntersecting) {{
             entry.target.classList.add('visible');
-            // For stat-cards we trigger counters via custom event
             if(entry.target.classList.contains('stat-card')) {{
                 const counters = entry.target.querySelectorAll('.count-up');
                 counters.forEach(counter => {{
@@ -425,10 +404,8 @@ const observer = new IntersectionObserver((entries) => {{
     }});
 }}, {{ threshold: 0.2 }});
 
-// Observe existing elements
 document.querySelectorAll('.reveal, .phi-card').forEach(el => observer.observe(el));
 
-// MutationObserver for dynamically added elements
 const mutationObserver = new MutationObserver(() => {{
     document.querySelectorAll('.reveal:not(.visible), .phi-card:not(.visible)').forEach(el => observer.observe(el));
 }});
@@ -520,7 +497,6 @@ const pMat = new THREE.PointsMaterial({{
 const particles = new THREE.Points(pGeo, pMat);
 scene.add(particles);
 
-// Lines between close particles
 const lineMat = new THREE.LineBasicMaterial({{ color: new THREE.Color('{accent}'), transparent: true, opacity: 0.08 }});
 const linesGroup = new THREE.Group();
 for(let i=0; i<particleCount; i++) {{
@@ -553,7 +529,7 @@ window.addEventListener('resize', () => {{
 """, height=0)
 
 # ====================================================
-# HERO (one line name)
+# HERO (ONE LINE)
 # ====================================================
 st.markdown(f"""
 <div class="hero-name">ABDULLAH BIN FAHAD</div>
@@ -596,7 +572,7 @@ Driven by curiosity and long‑term vision, he builds projects that combine engi
 st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ====================================================
-# PHILOSOPHY FULL‑SCREEN CARDS (now clearly visible)
+# PHILOSOPHY FULL‑SCREEN CARDS (FORCED VISIBLE)
 # ====================================================
 quotes = [
     "Technology<br>should empower humanity,<br>not replace it.",
@@ -614,33 +590,25 @@ for q in quotes:
     """, unsafe_allow_html=True)
 
 # ====================================================
-# CORE PRINCIPLES
+# CORE PRINCIPLES (NOW AS LINES)
 # ====================================================
 st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
 st.markdown("## ⚖️ Core Principles")
 principles = [
-    ("🧠","Think Independently"),
-    ("💡","Build Lasting Value"),
-    ("📚","Lifelong Learning"),
-    ("⚙️","Ethical Technology"),
-    ("🤝","Integrity & Humility"),
-    ("🚀","Action & Discipline"),
-    ("🌍","Positive Impact"),
-    ("✨","Curiosity Forever")
+    "🧠 Think independently before following the crowd.",
+    "💡 Build solutions that create lasting value.",
+    "📚 Stay curious and embrace lifelong learning.",
+    "⚙️ Use technology responsibly and ethically.",
+    "🤝 Lead with integrity, humility, and purpose.",
+    "🚀 Turn ideas into action through discipline and persistence.",
+    "🌱 Measure success by the positive impact left on others."
 ]
-cols = st.columns(4)
-for i, (icon, title) in enumerate(principles):
-    with cols[i%4]:
-        st.markdown(f"""
-        <div class="principle-tile">
-            <div class="principle-icon">{icon}</div>
-            <h4 style="color:{text_primary}; margin:0;">{title}</h4>
-        </div>
-        """, unsafe_allow_html=True)
+for p in principles:
+    st.markdown(f'<div class="principle-line">{p}</div>', unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ====================================================
-# JOURNEY – Horizontal Timeline
+# JOURNEY – HORIZONTAL TIMELINE (ONE ROW)
 # ====================================================
 st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
 st.markdown("## 🛤 My Journey")
@@ -739,7 +707,6 @@ st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
 st.markdown("## 🧑🏻‍💻 Featured Projects")
 col1, col2 = st.columns(2)
 with col1:
-    # 3D laptop
     components.html("""
     <div style="width:100%; height:280px;" id="laptop3d"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -894,7 +861,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ====================================================
-# HIDDEN ROADMAP (easter egg)
+# HIDDEN ROADMAP
 # ====================================================
 st.markdown(f"""
 <div id="hidden-roadmap">
