@@ -1,877 +1,915 @@
-import streamlit as st
-import streamlit.components.v1 as components
-import random
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdullah Bin Fahad – Personal Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-card: rgba(255,255,255,0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #aaaaaa;
+            --accent: #ffffff;
+            --border: rgba(255,255,255,0.08);
+            --progress-grad: linear-gradient(90deg, #444, #aaa);
+            --wave-fill: #0a0a0a;
+            --glow-color: 255,255,255;
+            --hero-gradient: linear-gradient(135deg, #ffffff, #cccccc);
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            --phi-bg: rgba(10,10,10,0.95);
+            --phi-text: #ffffff;
+            --quote-border: 4px solid #888;
+        }
+        .light {
+            --bg-main: #ffffff;
+            --bg-card: rgba(0,0,0,0.03);
+            --text-primary: #111111;
+            --text-secondary: #444444;
+            --accent: #000000;
+            --border: rgba(0,0,0,0.08);
+            --progress-grad: linear-gradient(90deg, #222, #666);
+            --wave-fill: #ffffff;
+            --glow-color: 0,0,0;
+            --hero-gradient: linear-gradient(135deg, #111, #444);
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --phi-bg: rgba(255,255,255,0.9);
+            --phi-text: #111111;
+            --quote-border: 4px solid #333;
+        }
+        .cyber {
+            --bg-main: #050510;
+            --bg-card: rgba(0,255,255,0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #7fdbdb;
+            --accent: #00ffff;
+            --border: rgba(0,255,255,0.2);
+            --progress-grad: linear-gradient(90deg, #00ffff, #0080ff);
+            --wave-fill: #050510;
+            --glow-color: 0,255,255;
+            --hero-gradient: linear-gradient(135deg, #00ffff, #0088ff);
+            --card-shadow: 0 0 25px rgba(0,255,255,0.2);
+            --phi-bg: rgba(5,5,16,0.95);
+            --phi-text: #ffffff;
+            --quote-border: 4px solid #00ffff;
+        }
 
-st.set_page_config(page_title="Abdullah Bin Fahad", page_icon="🧠", layout="wide")
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .theme-btn {
+            position: fixed;
+            top: 20px; right: 20px;
+            z-index: 1000;
+            background: var(--bg-card);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 10px 24px;
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .theme-btn:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(var(--glow-color),0.2);
+        }
 
-# ====================================================
-# THEME SYSTEM: Light / Dark / Cyber
-# ====================================================
-if "theme" not in st.session_state:
-    st.session_state.theme = "dark"
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+        .hero-name {
+            font-size: clamp(3rem, 12vw, 7rem);
+            font-weight: 900;
+            background: var(--hero-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2em;
+        }
+        .hero-roles {
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            min-height: 2.5em;
+            font-weight: 500;
+        }
+        .hero-statement {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .scroll-indicator {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 30px;
+            animation: floatDown 2s infinite;
+        }
+        @keyframes floatDown {
+            0%,100% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(10px); opacity: 1; }
+        }
 
-def cycle_theme():
-    themes = ["light", "dark", "cyber"]
-    idx = themes.index(st.session_state.theme)
-    st.session_state.theme = themes[(idx + 1) % 3]
+        .glass {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1100px;
+            box-shadow: var(--card-shadow);
+            transition: 0.3s;
+        }
+        .glass:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(var(--glow-color),0.15);
+        }
 
-random_quote = random.choice([
-    "Technology should empower humanity, not replace it.",
-    "Knowledge has little value unless it creates positive change.",
-    "Dream boldly. Build patiently. Improve continuously.",
-    "Question assumptions. Seek truth. Follow evidence.",
-    "Innovation begins where curiosity meets responsibility.",
-    "Character is the foundation of every lasting achievement.",
-    "Success is built through discipline, consistency, and independent thinking.",
-    "Humanity forges shields today for its safety; tomorrow, it shall flee from those very shields to save itself."
-])
+        .section-divider {
+            height: 80px;
+            margin: 40px 0 -40px 0;
+            overflow: hidden;
+        }
+        .section-divider svg {
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+            transform: rotateY(180deg);
+        }
+        .shape-fill { fill: var(--wave-fill); }
 
-# ====================================================
-# CSS Variables by Theme
-# ====================================================
-theme = st.session_state.theme
-if theme == "light":
-    bg_main = "#ffffff"
-    bg_card = "rgba(0,0,0,0.03)"
-    text_primary = "#111111"
-    text_secondary = "#444444"
-    accent = "#000000"
-    border = "rgba(0,0,0,0.08)"
-    progress_grad = "linear-gradient(90deg, #222, #666)"
-    wave_fill = "#ffffff"
-    glow_color = "0,0,0"
-    hero_gradient = "linear-gradient(135deg, #111, #444)"
-    card_shadow = "0 4px 20px rgba(0,0,0,0.05)"
-    phi_bg = "rgba(255,255,255,0.9)"
-    phi_text_color = "#111111"
-elif theme == "dark":
-    bg_main = "#0a0a0a"
-    bg_card = "rgba(255,255,255,0.05)"
-    text_primary = "#ffffff"
-    text_secondary = "#aaaaaa"
-    accent = "#ffffff"
-    border = "rgba(255,255,255,0.08)"
-    progress_grad = "linear-gradient(90deg, #444, #aaa)"
-    wave_fill = "#0a0a0a"
-    glow_color = "255,255,255"
-    hero_gradient = "linear-gradient(135deg, #ffffff, #cccccc)"
-    card_shadow = "0 4px 20px rgba(0,0,0,0.4)"
-    phi_bg = "rgba(10,10,10,0.95)"
-    phi_text_color = "#ffffff"
-else:  # cyber
-    bg_main = "#050510"
-    bg_card = "rgba(0,255,255,0.05)"
-    text_primary = "#ffffff"
-    text_secondary = "#7fdbdb"
-    accent = "#00ffff"
-    border = "rgba(0,255,255,0.2)"
-    progress_grad = "linear-gradient(90deg, #00ffff, #0080ff)"
-    wave_fill = "#050510"
-    glow_color = "0,255,255"
-    hero_gradient = "linear-gradient(135deg, #00ffff, #0088ff)"
-    card_shadow = "0 0 25px rgba(0,255,255,0.2)"
-    phi_bg = "rgba(5,5,16,0.95)"
-    phi_text_color = "#ffffff"
+        .phi-card {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 1000px;
+            opacity: 0;
+            transform: scale(0.94);
+            transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+            background: var(--phi-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid var(--border);
+        }
+        .phi-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .phi-quote {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.2;
+            color: var(--phi-text);
+            text-shadow: 0 0 30px rgba(var(--glow-color),0.4);
+        }
 
-# ====================================================
-# GLOBAL STYLES
-# ====================================================
-st.markdown(f"""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap');
-html, body, [class*="css"] {{
-    font-family: 'Inter', sans-serif;
-    scroll-behavior: smooth;
-}}
-.stApp {{
-    background: {bg_main};
-    color: {text_primary};
-}}
+        .principle-line {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 12px 0;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent);
+        }
 
-/* ---------- Hero ---------- */
-.hero-name {{
-    font-size: clamp(3rem, 12vw, 7rem);
-    font-weight: 900;
-    background: {hero_gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: center;
-    line-height: 1;
-    margin: 0.3em 0 0.1em 0;
-    letter-spacing: -0.02em;
-}}
-.hero-roles {{
-    text-align: center;
-    font-size: 1.4rem;
-    color: {text_secondary};
-    min-height: 2.5em;
-    font-weight: 500;
-}}
-.hero-statement {{
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: {text_primary};
-    max-width: 700px;
-    margin: 20px auto 10px;
-}}
-.scroll-indicator {{
-    text-align: center;
-    color: {text_secondary};
-    margin-top: 30px;
-    animation: floatDown 2s infinite;
-}}
-@keyframes floatDown {{
-    0%,100%{{ transform: translateY(0); opacity:0.6; }}
-    50%{{ transform: translateY(10px); opacity:1; }}
-}}
+        /* Timeline with animated line */
+        .timeline-horizontal {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 30px;
+            padding: 30px 10px;
+            scroll-snap-type: x mandatory;
+            position: relative;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.3;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 1.5s ease;
+        }
+        .timeline-line.animated {
+            transform: scaleX(1);
+        }
+        .timeline-node {
+            flex: 0 0 auto;
+            width: 140px;
+            text-align: center;
+            position: relative;
+            padding: 20px 5px;
+            scroll-snap-align: center;
+            z-index: 1;
+        }
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            box-shadow: 0 0 20px var(--accent);
+        }
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .timeline-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            white-space: normal;
+        }
 
-/* ---------- Cards & Glass ---------- */
-.glass, .card {{
-    background: {bg_card};
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid {border};
-    border-radius: 28px;
-    padding: 40px;
-    margin: 40px 0;
-    box-shadow: {card_shadow};
-    transition: 0.3s;
-}}
-.glass:hover, .card:hover {{
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba({glow_color},0.15);
-}}
+        .stat-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 25px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+            transition: 0.3s;
+        }
+        .stat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(var(--glow-color),0.15);
+        }
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
 
-/* ---------- Wave Divider ---------- */
-.section-divider {{
-    height: 80px;
-    margin: 40px 0 -40px 0;
-    overflow: hidden;
-}}
-.section-divider svg {{
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 80px;
-    transform: rotateY(180deg);
-}}
-.shape-fill {{
-    fill: {wave_fill};
-}}
+        .locked-project {
+            background: rgba(30,30,30,0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            color: var(--text-secondary);
+            filter: blur(3px);
+            user-select: none;
+            pointer-events: none;
+        }
+        .lock-icon { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5; }
 
-/* ---------- Philosophy Full‑screen Cards (FORCE VISIBLE) ---------- */
-.phi-card {{
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    margin: 0;
-    opacity: 0;
-    transform: scale(0.94);
-    transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
-    scroll-snap-align: start;
-    will-change: opacity, transform;
-    background: {phi_bg};
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 40px;
-    margin: 20px 0;
-}}
-.phi-card.visible {{
-    opacity: 1;
-    transform: scale(1);
-}}
-.phi-quote {{
-    font-size: clamp(2rem, 8vw, 4.5rem);
-    font-weight: 800;
-    text-align: center;
-    line-height: 1.2;
-    color: {phi_text_color} !important;
-    text-shadow: 0 0 30px rgba({glow_color},0.4);
-    max-width: 900px;
-}}
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .contact-tile {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            flex: 1 1 200px;
+            transition: 0.3s;
+        }
+        .contact-tile:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(var(--glow-color),0.15);
+        }
+        .contact-icon { font-size: 2rem; margin-bottom: 12px; }
 
-/* ---------- Principles AS LINES ---------- */
-.principle-line {{
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: {text_primary};
-    margin: 12px 0;
-    padding-left: 10px;
-    border-left: 3px solid {accent};
-}}
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            background: linear-gradient(180deg, transparent 0%, var(--bg-main) 80%);
+        }
 
-/* ---------- Horizontal Timeline (ONE ROW) ---------- */
-.timeline-horizontal {{
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 30px;
-    padding: 30px 10px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-}}
-.timeline-node {{
-    flex: 0 0 auto;
-    width: 140px;
-    text-align: center;
-    position: relative;
-    padding: 20px 5px;
-    scroll-snap-align: center;
-}}
-.timeline-node::before {{
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, {accent}, transparent);
-    opacity: 0.3;
-    z-index: -1;
-}}
-.timeline-dot {{
-    width: 20px;
-    height: 20px;
-    background: {accent};
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    box-shadow: 0 0 20px {accent};
-}}
-.timeline-year {{
-    font-weight: 700;
-    color: {accent};
-    margin-bottom: 5px;
-}}
-.timeline-text {{
-    color: {text_secondary};
-    font-size: 0.9rem;
-    white-space: normal;
-}}
+        #hidden-roadmap {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            background: var(--bg-card);
+            backdrop-filter: blur(30px);
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+            padding: 40px;
+            z-index: 9999;
+            color: var(--text-primary);
+            box-shadow: 0 0 60px rgba(var(--glow-color),0.3);
+            max-width: 500px;
+        }
+        #hidden-roadmap.visible { display: block; }
 
-/* ---------- Animated Counters ---------- */
-.stat-card {{
-    text-align: center;
-    padding: 20px;
-    background: {bg_card};
-    border-radius: 20px;
-    border: 1px solid {border};
-    transition: 0.3s;
-}}
-.stat-card:hover {{
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba({glow_color},0.15);
-}}
-.stat-number {{
-    font-size: 3rem;
-    font-weight: 800;
-    color: {accent};
-}}
-.stat-label {{
-    color: {text_secondary};
-    font-weight: 500;
-}}
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-/* ---------- Locked Projects ---------- */
-.locked-project {{
-    background: rgba(30,30,30,0.6);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    color: {text_secondary};
-    filter: blur(3px);
-    user-select: none;
-    pointer-events: none;
-}}
-.lock-icon {{
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    opacity: 0.5;
-}}
+        .project-3d {
+            width: 100%;
+            height: 320px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.2);
+        }
 
-/* ---------- Contact Tiles ---------- */
-.contact-tile {{
-    background: {bg_card};
-    border: 1px solid {border};
-    border-radius: 20px;
-    padding: 30px;
-    text-align: center;
-    transition: 0.3s;
-}}
-.contact-tile:hover {{
-    transform: translateY(-5px);
-    border-color: {accent};
-    box-shadow: 0 10px 25px rgba({glow_color},0.15);
-}}
-.contact-icon {{
-    font-size: 2rem;
-    margin-bottom: 12px;
-}}
+        .skill-bar { margin-bottom: 20px; }
+        .skill-bar span { display: flex; justify-content: space-between; font-weight: 500; margin-bottom: 5px; }
+        .progress { height: 8px; background: rgba(128,128,128,0.2); border-radius: 20px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 20px; background: var(--progress-grad); transition: width 1s ease; }
 
-/* ---------- Footer ---------- */
-.footer {{
-    text-align: center;
-    padding: 60px 20px;
-    color: {text_secondary};
-    background: linear-gradient(180deg, transparent 0%, {bg_main} 80%);
-}}
+        @media (max-width: 768px) {
+            .glass { padding: 25px; }
+            .timeline-node { width: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="bg-canvas"></div>
 
-/* ---------- Hidden Roadmap ---------- */
-#hidden-roadmap {{
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: {bg_card};
-    backdrop-filter: blur(30px);
-    border: 2px solid {accent};
-    border-radius: 30px;
-    padding: 40px;
-    z-index: 9999;
-    color: {text_primary};
-    box-shadow: 0 0 60px rgba({glow_color},0.3);
-    max-width: 500px;
-}}
-#hidden-roadmap.visible {{
-    display: block;
-}}
+    <button class="theme-btn" id="themeToggle">🌀 Cyber</button>
 
-/* ---------- Reveal Animation ---------- */
-.reveal {{
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.7s ease;
-}}
-.reveal.visible {{
-    opacity: 1;
-    transform: translateY(0);
-}}
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-name">ABDULLAH BIN FAHAD</div>
+        <div class="hero-roles" id="roleCycler">Engineer</div>
+        <div class="hero-statement">Building technologies that expand human potential.</div>
+        <div class="scroll-indicator">▼ &nbsp; Scroll to Discover</div>
+    </section>
 
-/* ---------- Responsive ---------- */
-@media (max-width: 768px) {{
-    .glass, .card {{
-        padding: 25px;
-    }}
-    .timeline-node {{
-        width: 120px;
-    }}
-}}
-</style>
-""", unsafe_allow_html=True)
-
-# ====================================================
-# THEME TOGGLE BUTTON
-# ====================================================
-col_toggle = st.columns([5,1])[1]
-with col_toggle:
-    theme_label = {"light":"☀️ Light","dark":"🌙 Dark","cyber":"🌀 Cyber"}
-    st.button(f"Theme: {theme_label[theme]}", on_click=cycle_theme, use_container_width=True)
-
-# ====================================================
-# JAVASCRIPT: Scroll Reveal, Philosophy Cards, Easter Eggs
-# ====================================================
-components.html(f"""
-<script>
-// Unified Intersection Observer for .reveal and .phi-card
-const observer = new IntersectionObserver((entries) => {{
-    entries.forEach(entry => {{
-        if(entry.isIntersecting) {{
-            entry.target.classList.add('visible');
-            if(entry.target.classList.contains('stat-card')) {{
-                const counters = entry.target.querySelectorAll('.count-up');
-                counters.forEach(counter => {{
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    if(!target) return;
-                    const suffix = counter.getAttribute('data-suffix') || '';
-                    let start = 0;
-                    const duration = 1500;
-                    const step = timestamp => {{
-                        if(!start) start = timestamp;
-                        const progress = Math.min((timestamp - start) / duration, 1);
-                        counter.textContent = Math.floor(progress * target) + suffix;
-                        if(progress < 1) requestAnimationFrame(step);
-                    }};
-                    requestAnimationFrame(step);
-                }});
-                observer.unobserve(entry.target);
-            }}
-        }}
-    }});
-}}, {{ threshold: 0.2 }});
-
-document.querySelectorAll('.reveal, .phi-card').forEach(el => observer.observe(el));
-
-const mutationObserver = new MutationObserver(() => {{
-    document.querySelectorAll('.reveal:not(.visible), .phi-card:not(.visible)').forEach(el => observer.observe(el));
-}});
-mutationObserver.observe(document.body, {{ childList: true, subtree: true }});
-
-// Easter egg 1: typing 'future' reveals hidden roadmap
-let typed = '';
-document.addEventListener('keydown', (e) => {{
-    typed += e.key.toLowerCase();
-    if(typed.includes('future')) {{
-        document.getElementById('hidden-roadmap')?.classList.add('visible');
-        typed = '';
-        setTimeout(() => {{
-            const roadmap = document.getElementById('hidden-roadmap');
-            if(roadmap) roadmap.classList.remove('visible');
-        }}, 6000);
-    }}
-    if(typed.length > 20) typed = typed.slice(-20);
-}});
-
-// Easter egg 2: double‑click toggles theme
-let clickTimer;
-document.addEventListener('click', (e) => {{
-    if(clickTimer) {{
-        clearTimeout(clickTimer);
-        clickTimer = null;
-        const btns = window.parent.document.querySelectorAll('button');
-        for(let btn of btns) {{
-            if(btn.innerText.includes('Theme:')) {{
-                btn.click();
-                break;
-            }}
-        }}
-    }} else {{
-        clickTimer = setTimeout(() => clickTimer = null, 400);
-    }}
-}});
-
-// Random toast quote
-setTimeout(() => {{
-    const toast = document.createElement('div');
-    toast.style.position = 'fixed';
-    toast.style.bottom = '20px';
-    toast.style.right = '20px';
-    toast.style.background = '{bg_card}';
-    toast.style.color = '{text_primary}';
-    toast.style.padding = '15px 25px';
-    toast.style.borderRadius = '15px';
-    toast.style.border = '1px solid {border}';
-    toast.style.backdropFilter = 'blur(15px)';
-    toast.style.zIndex = '9999';
-    toast.style.fontStyle = 'italic';
-    toast.textContent = '"{random_quote}"';
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 7000);
-}}, 1500);
-</script>
-""", height=0)
-
-# ====================================================
-# 3D NEURAL NETWORK BACKGROUND
-# ====================================================
-components.html(f"""
-<div id="bg-canvas" style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none;"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x000000, 0.0005);
-const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
-camera.position.z = 50;
-const renderer = new THREE.WebGLRenderer({{ alpha: true, antialias: true }});
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-document.getElementById('bg-canvas').appendChild(renderer.domElement);
-
-const particleCount = 1000;
-const positions = new Float32Array(particleCount * 3);
-for(let i=0; i<particleCount*3; i+=3) {{
-    positions[i] = (Math.random()-0.5)*120;
-    positions[i+1] = (Math.random()-0.5)*60;
-    positions[i+2] = (Math.random()-0.5)*60 - 20;
-}}
-const pGeo = new THREE.BufferGeometry();
-pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-const pMat = new THREE.PointsMaterial({{
-    size: 0.2, color: new THREE.Color('{accent}'), transparent: true,
-    opacity: 0.3, blending: THREE.AdditiveBlending
-}});
-const particles = new THREE.Points(pGeo, pMat);
-scene.add(particles);
-
-const lineMat = new THREE.LineBasicMaterial({{ color: new THREE.Color('{accent}'), transparent: true, opacity: 0.08 }});
-const linesGroup = new THREE.Group();
-for(let i=0; i<particleCount; i++) {{
-    const x1 = positions[i*3], y1 = positions[i*3+1], z1 = positions[i*3+2];
-    for(let j=i+1; j<particleCount; j++) {{
-        const x2 = positions[j*3], y2 = positions[j*3+1], z2 = positions[j*3+2];
-        if(Math.hypot(x1-x2, y1-y2, z1-z2) < 12) {{
-            const geo = new THREE.BufferGeometry();
-            geo.setAttribute('position', new THREE.Float32BufferAttribute([x1,y1,z1, x2,y2,z2], 3));
-            const line = new THREE.Line(geo, lineMat);
-            linesGroup.add(line);
-        }}
-    }}
-}}
-scene.add(linesGroup);
-
-function animate() {{
-    requestAnimationFrame(animate);
-    particles.rotation.y += 0.0002;
-    linesGroup.rotation.y = particles.rotation.y;
-    renderer.render(scene, camera);
-}}
-animate();
-window.addEventListener('resize', () => {{
-    camera.aspect = innerWidth/innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(innerWidth, innerHeight);
-}});
-</script>
-""", height=0)
-
-# ====================================================
-# HERO (ONE LINE)
-# ====================================================
-st.markdown(f"""
-<div class="hero-name">ABDULLAH BIN FAHAD</div>
-<div class="hero-roles" id="role-cycler"></div>
-<div class="hero-statement">Building technologies that expand human potential.</div>
-<div class="scroll-indicator">▼ &nbsp; Scroll to Discover</div>
-""", unsafe_allow_html=True)
-
-roles = ["Engineer", "Builder", "Thinker", "Entrepreneur", "Philosopher"]
-components.html(f"""
-<script>
-const roles = {roles};
-let idx = 0;
-const el = document.getElementById('role-cycler');
-setInterval(() => {{ el.textContent = roles[idx]; idx = (idx+1) % roles.length; }}, 1500);
-el.textContent = roles[0];
-</script>
-""", height=0)
-
-# Wave divider
-st.markdown(f"""
-<div class="section-divider">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-    </svg>
-</div>
-""", unsafe_allow_html=True)
-
-# ====================================================
-# WHO IS ABDULLAH BIN FAHAD
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🌐 Who Is Abdullah Bin Fahad?")
-st.markdown("""
-**Abdullah Bin Fahad** is a Bangladeshi Automation Engineering student at Nanjing Tech University in China, an AI enthusiast, entrepreneur, writer, and independent thinker.  
-His work centers on the intersection of **technology, education, philosophy, and human development**. Rather than viewing AI as a replacement for people, he believes it should **expand human potential, creativity, and critical thinking**.
-
-Driven by curiosity and long‑term vision, he builds projects that combine engineering with real‑world impact. His interests span **AI, robotics, embedded systems, business, psychology, philosophy, and education**. For him, learning is a **continuous process of questioning assumptions, refining ideas, and turning understanding into practical solutions**.
-""")
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# ====================================================
-# PHILOSOPHY FULL‑SCREEN CARDS (FORCED VISIBLE)
-# ====================================================
-quotes = [
-    "Technology<br>should empower humanity,<br>not replace it.",
-    "Knowledge has little value<br>unless it creates positive change.",
-    "Dream boldly.<br>Build patiently.<br>Improve continuously.",
-    "Question assumptions.<br>Seek truth.<br>Follow evidence.",
-    "Innovation begins where<br>curiosity meets responsibility.",
-    "Character is the foundation<br>of every lasting achievement."
-]
-for q in quotes:
-    st.markdown(f"""
-    <div class="phi-card">
-        <div class="phi-quote">{q}</div>
+    <div class="section-divider">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"/>
+        </svg>
     </div>
-    """, unsafe_allow_html=True)
 
-# ====================================================
-# CORE PRINCIPLES (NOW AS LINES)
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## ⚖️ Core Principles")
-principles = [
-    "🧠 Think independently before following the crowd.",
-    "💡 Build solutions that create lasting value.",
-    "📚 Stay curious and embrace lifelong learning.",
-    "⚙️ Use technology responsibly and ethically.",
-    "🤝 Lead with integrity, humility, and purpose.",
-    "🚀 Turn ideas into action through discipline and persistence.",
-    "🌱 Measure success by the positive impact left on others."
-]
-for p in principles:
-    st.markdown(f'<div class="principle-line">{p}</div>', unsafe_allow_html=True)
-st.markdown('</div></div>', unsafe_allow_html=True)
+    <section class="glass reveal" style="margin-top: 80px;">
+        <h2>🌐 Who Is Abdullah Bin Fahad?</h2>
+        <p><strong>Abdullah Bin Fahad</strong> is a Bangladeshi Automation Engineering student at Nanjing Tech University in China, an AI enthusiast, entrepreneur, writer, and independent thinker. His work centers on the intersection of <strong>technology, education, philosophy, and human development</strong>. Rather than viewing AI as a replacement for people, he believes it should <strong>expand human potential, creativity, and critical thinking</strong>.</p>
+        <p>Driven by curiosity and long‑term vision, he builds projects that combine engineering with real‑world impact. His interests span <strong>AI, robotics, embedded systems, business, psychology, philosophy, and education</strong>. For him, learning is a <strong>continuous process of questioning assumptions, refining ideas, and turning understanding into practical solutions</strong>.</p>
+    </section>
 
-# ====================================================
-# JOURNEY – HORIZONTAL TIMELINE (ONE ROW)
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🛤 My Journey")
-journey = [
-    ("Bangladesh", "Early Curiosity"),
-    ("Village", "Science Foundation"),
-    ("Technology", "SSC & HSC"),
-    ("China", "Nanjing Tech"),
-    ("Automation", "Engineering"),
-    ("AI", "MarketLens"),
-    ("Entrepreneur", "Startup Vision"),
-    ("Future", "Global Impact")
-]
-st.markdown('<div class="timeline-horizontal">', unsafe_allow_html=True)
-for year, desc in journey:
-    st.markdown(f"""
-    <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">{year}</div>
-        <div class="timeline-text">{desc}</div>
+    <!-- Philosophy Cards -->
+    <section class="phi-card reveal">
+        <div class="phi-quote">Technology<br>should empower humanity,<br>not replace it.</div>
+    </section>
+    <section class="phi-card reveal">
+        <div class="phi-quote">Knowledge has little value<br>unless it creates positive change.</div>
+    </section>
+    <section class="phi-card reveal">
+        <div class="phi-quote">Dream boldly.<br>Build patiently.<br>Improve continuously.</div>
+    </section>
+    <section class="phi-card reveal">
+        <div class="phi-quote">Question assumptions.<br>Seek truth.<br>Follow evidence.</div>
+    </section>
+    <section class="phi-card reveal">
+        <div class="phi-quote">Innovation begins where<br>curiosity meets responsibility.</div>
+    </section>
+    <section class="phi-card reveal">
+        <div class="phi-quote">Character is the foundation<br>of every lasting achievement.</div>
+    </section>
+
+    <section class="glass reveal">
+        <h2>⚖️ Core Principles</h2>
+        <div class="principle-line">🧠 Think independently before following the crowd.</div>
+        <div class="principle-line">💡 Build solutions that create lasting value.</div>
+        <div class="principle-line">📚 Stay curious and embrace lifelong learning.</div>
+        <div class="principle-line">⚙️ Use technology responsibly and ethically.</div>
+        <div class="principle-line">🤝 Lead with integrity, humility, and purpose.</div>
+        <div class="principle-line">🚀 Turn ideas into action through discipline and persistence.</div>
+        <div class="principle-line">🌱 Measure success by the positive impact left on others.</div>
+    </section>
+
+    <!-- Journey with animated timeline line -->
+    <section class="glass reveal" id="journey-section">
+        <h2>🛤 My Journey</h2>
+        <div class="timeline-horizontal" id="timelineContainer">
+            <div class="timeline-line" id="timelineLine"></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Bangladesh</div><div class="timeline-text">Early Curiosity</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Village</div><div class="timeline-text">Science Foundation</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Technology</div><div class="timeline-text">SSC & HSC</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">China</div><div class="timeline-text">Nanjing Tech</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Automation</div><div class="timeline-text">Engineering</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">AI</div><div class="timeline-text">MarketLens</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Entrepreneur</div><div class="timeline-text">Startup Vision</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Future</div><div class="timeline-text">Global Impact</div></div>
+        </div>
+    </section>
+
+    <section class="glass reveal">
+        <h2>🌍 About Me</h2>
+        <p>I am Abdullah Bin Fahad, an Automation Engineering Student at Nanjing Tech University. I fuse engineering with philosophy, AI with ethics, and business with human behavior to design systems that empower decision‑making at scale.</p>
+        <p>My work spans <strong>AI product development</strong>, <strong>automation prototyping</strong>, <strong>philosophical writing</strong> (published book "Moral Values"), and <strong>cross‑cultural public speaking</strong>. I've delivered moral seminars to youth audiences, boosting community engagement by 40%, and authored comprehensive essays that distill complex ethical frameworks into accessible narratives.</p>
+    </section>
+
+    <section class="glass reveal">
+        <h2>🎓 Education</h2>
+        <p><strong>Bachelor of Science in Automation Engineering</strong><br>Nanjing Tech University, China (2025–2029 Expected)<br>Core: Control Systems, Robotics, PLC, Sensors, C/C++</p>
+        <p><strong>Higher Secondary Certificate (Science)</strong><br>Bhola Government College, Bangladesh (2022–2024)</p>
+        <p><strong>Secondary School Certificate (Science)</strong><br>Dhaligour Nagar Secondary School, Bangladesh (2020–2022)</p>
+    </section>
+
+    <section class="glass reveal">
+        <h2>🏆 Key Achievements</h2>
+        <ul>
+            <li><strong>Authored</strong> "Moral Values", synthesizing 3 ethical frameworks into a 200‑page manuscript.</li>
+            <li><strong>Delivered</strong> 15+ moral seminars, reaching 500+ attendees (95% positive feedback).</li>
+            <li><strong>Designed</strong> an automation prototype reducing lab process time by 30%.</li>
+            <li><strong>Volunteered</strong> 100+ hours in cultural exchange, presenting Bangladeshi heritage to 200+ visitors.</li>
+            <li><strong>Organized</strong> IoT‑based home automation demo at Science Fair (300+ students/faculty).</li>
+        </ul>
+    </section>
+
+    <section class="glass reveal">
+        <h2>⚡ Technical Skills</h2>
+        <div class="skill-bar"><span>Automation & Control Systems</span><span>82%</span><div class="progress"><div class="progress-fill" style="width:82%"></div></div></div>
+        <div class="skill-bar"><span>Python Programming</span><span>78%</span><div class="progress"><div class="progress-fill" style="width:78%"></div></div></div>
+        <div class="skill-bar"><span>HTML / CSS</span><span>80%</span><div class="progress"><div class="progress-fill" style="width:80%"></div></div></div>
+        <div class="skill-bar"><span>C Programming</span><span>72%</span><div class="progress"><div class="progress-fill" style="width:72%"></div></div></div>
+        <div class="skill-bar"><span>Digital Marketing & Content Writing</span><span>88%</span><div class="progress"><div class="progress-fill" style="width:88%"></div></div></div>
+        <div class="skill-bar"><span>Video / Audio Editing</span><span>85%</span><div class="progress"><div class="progress-fill" style="width:85%"></div></div></div>
+        <div class="skill-bar"><span>Microsoft Office Suite</span><span>90%</span><div class="progress"><div class="progress-fill" style="width:90%"></div></div></div>
+    </section>
+
+    <section class="glass reveal">
+        <h2>🗣 Languages</h2>
+        <p>• Bangla – Native<br>• English – Fluent<br>• Mandarin Chinese – Intermediate (HSK 3)<br>• Hindi/Urdu – Conversational</p>
+    </section>
+
+    <!-- Projects with realistic 3D mockups -->
+    <section class="glass reveal">
+        <h2>🧑🏻‍💻 Featured Projects</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <div style="flex: 1 1 400px;">
+                <div class="project-3d" id="laptop3d"></div>
+                <p><strong>MarketLens AI</strong> — Intelligent cross‑border e‑commerce agent. Real‑time market intelligence, consumer review analysis, tariff risk simulation. <a href="https://www.marketlens-ai.com" target="_blank">Visit →</a></p>
+            </div>
+            <div style="flex: 1 1 400px;">
+                <div class="project-3d" id="calc3d"></div>
+                <p><strong>🧮 Smart Calculator</strong> — Educational device for low‑connectivity areas. AI assistant, offline mesh, 10+ languages, GPS. <em>Coming soon.</em></p>
+            </div>
+        </div>
+    </section>
+
+    <h2 style="max-width:1100px; margin:40px auto 10px;">🔒 Other Projects (Under Development)</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; max-width:1100px; margin:0 auto 40px; justify-content: center;">
+        <div class="locked-project"><div class="lock-icon">🔒</div><h3>AI Research Tool</h3><p>Confidential</p></div>
+        <div class="locked-project"><div class="lock-icon">🔒</div><h3>Automation Dashboard</h3><p>Under NDA</p></div>
+        <div class="locked-project"><div class="lock-icon">🔒</div><h3>Philosophy Platform</h3><p>Early concept</p></div>
     </div>
-    """, unsafe_allow_html=True)
-st.markdown('</div></div>', unsafe_allow_html=True)
 
-# ====================================================
-# ORIGINAL SECTIONS (About, Education, Achievements)
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🌍 About Me")
-st.markdown("""
-I am Abdullah Bin Fahad, an Automation Engineering Student at Nanjing Tech University. I fuse engineering with philosophy, AI with ethics, and business with human behavior to design systems that empower decision‑making at scale.
+    <section class="glass reveal">
+        <h2>📊 By the Numbers</h2>
+        <div class="stat-grid">
+            <div class="stat-card"><div class="stat-number count-up" data-target="15" data-suffix="+">0+</div><div class="stat-label">Seminars</div></div>
+            <div class="stat-card"><div class="stat-number count-up" data-target="6" data-suffix="+">0+</div><div class="stat-label">Projects</div></div>
+            <div class="stat-card"><div class="stat-number count-up" data-target="4" data-suffix="+">0+</div><div class="stat-label">Research Areas</div></div>
+            <div class="stat-card"><div class="stat-number count-up" data-target="500" data-suffix="+">0+</div><div class="stat-label">Audience</div></div>
+            <div class="stat-card"><div class="stat-number count-up" data-target="4" data-suffix="">0</div><div class="stat-label">Languages</div></div>
+        </div>
+    </section>
 
-My work spans **AI product development**, **automation prototyping**, **philosophical writing** (published book "Moral Values"), and **cross‑cultural public speaking**. I've delivered moral seminars to youth audiences, boosting community engagement by 40%, and authored comprehensive essays that distill complex ethical frameworks into accessible narratives.
-""")
-st.markdown('</div></div>', unsafe_allow_html=True)
+    <section class="glass reveal">
+        <h2>🧠 Philosophy</h2>
+        <p>I believe technology should not replace human thinking; it should enhance it. My curiosity extends beyond engineering into the roots of wisdom, ethics, and civilization.</p>
+        <p>I explore: Intelligence vs Wisdom, Technology vs Humanity, Wealth vs Meaning, Power vs Responsibility, Progress vs Purpose.</p>
+        <p>Learning is my lifelong pursuit. Independent thought remains the most valuable ability one can cultivate — and systems that serve people, not the other way around, are what I strive to build.</p>
+    </section>
 
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🎓 Education")
-st.markdown("""
-**Bachelor of Science in Automation Engineering**  
-Nanjing Tech University, China (2025–2029 Expected)  
-Core: Control Systems, Robotics, PLC, Sensors, C/C++
+    <section class="glass reveal">
+        <h2>🔭 Vision</h2>
+        <blockquote style="border-left: 4px solid var(--accent); padding-left: 20px; font-size: 1.2rem;">
+            To build technologies that combine <strong>Artificial Intelligence, Engineering, and Education</strong> to make knowledge more accessible, practical, and meaningful for everyone.<br><br>
+            <strong>Create. Inspire. Empower. Repeat.</strong>
+        </blockquote>
+    </section>
 
-**Higher Secondary Certificate (Science)**  
-Bhola Government College, Bangladesh (2022–2024)
+    <section class="glass reveal">
+        <h2>📬 Contact</h2>
+        <div class="contact-grid">
+            <div class="contact-tile"><div class="contact-icon">📧</div><h4>Email</h4><p>abdullahbinfahad.abf@gmail.com</p></div>
+            <div class="contact-tile"><div class="contact-icon">💻</div><h4>GitHub</h4><p>github.com/abdullahbinfahad</p></div>
+            <div class="contact-tile"><div class="contact-icon">📍</div><h4>Location</h4><p>Nanjing, China</p></div>
+            <div class="contact-tile"><div class="contact-icon">📱</div><h4>Phone</h4><p>+86 18105180247</p></div>
+        </div>
+    </section>
 
-**Secondary School Certificate (Science)**  
-Dhaligour Nagar Secondary School, Bangladesh (2020–2022)
-""")
-st.markdown('</div></div>', unsafe_allow_html=True)
+    <footer class="footer">
+        <span style="font-size:1.5rem; font-weight:600;">Building Tomorrow.</span><br>
+        <span style="font-size:1rem;">One Idea. One Innovation. One Step at a Time.</span><br><br>
+        © 2026 Abdullah Bin Fahad<br>
+        <a href="https://www.abdullahbinfahad.info" style="color:var(--text-secondary);">www.abdullahbinfahad.info</a>
+    </footer>
 
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🏆 Key Achievements")
-st.markdown("""
-- **Authored** "Moral Values", synthesizing 3 ethical frameworks into a 200‑page manuscript.
-- **Delivered** 15+ moral seminars, reaching 500+ attendees (95% positive feedback).
-- **Designed** an automation prototype reducing lab process time by 30%.
-- **Volunteered** 100+ hours in cultural exchange, presenting Bangladeshi heritage to 200+ visitors.
-- **Organized** IoT‑based home automation demo at Science Fair (300+ students/faculty).
-""")
-st.markdown('</div></div>', unsafe_allow_html=True)
+    <div id="hidden-roadmap">
+        <h3 style="color:var(--accent);">🚀 Secret Roadmap</h3>
+        <p>2025 – MarketLens AI</p>
+        <p>2025 – Smart Calculator</p>
+        <p>2026 – AI Research Platform</p>
+        <p>2027 – Education System</p>
+        <p>2028 – Global Startup</p>
+        <p>2030 – Impact millions</p>
+        <p style="font-size:0.8rem; color:var(--text-secondary);">(type 'future' anywhere to show this)</p>
+    </div>
 
-# ====================================================
-# TECHNICAL SKILLS
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass"><h2>⚡ Technical Skills</h2>', unsafe_allow_html=True)
-skills = [
-    ("Automation & Control Systems", 82),
-    ("Python Programming", 78),
-    ("HTML / CSS", 80),
-    ("C Programming", 72),
-    ("Digital Marketing & Content Writing", 88),
-    ("Video / Audio Editing", 85),
-    ("Microsoft Office Suite", 90)
-]
-for name, val in skills:
-    st.markdown(f'<div style="display:flex; justify-content:space-between; font-weight:500;"><span>{name}</span><span>{val}%</span></div>', unsafe_allow_html=True)
-    st.progress(val)
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# Languages
-st.markdown("""
-<div class="reveal"><div class="glass">
-<h2>🗣 Languages</h2>
-• Bangla – Native<br>
-• English – Fluent<br>
-• Mandarin Chinese – Intermediate (HSK 3)<br>
-• Hindi/Urdu – Conversational
-</div></div>
-""", unsafe_allow_html=True)
-
-# ====================================================
-# PROJECTS with 3D mockups
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🧑🏻‍💻 Featured Projects")
-col1, col2 = st.columns(2)
-with col1:
-    components.html("""
-    <div style="width:100%; height:280px;" id="laptop3d"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-    const container = document.getElementById('laptop3d');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, container.clientWidth/280, 0.1, 100);
-    camera.position.set(0,1,8);
-    const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
-    renderer.setSize(container.clientWidth, 280);
-    container.appendChild(renderer.domElement);
-    scene.add(new THREE.AmbientLight(0x444444));
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(1,1,1); scene.add(light);
-    const base = new THREE.Mesh(new THREE.BoxGeometry(3.5,0.1,2.2), new THREE.MeshStandardMaterial({color:0x333333, roughness:0.3, metalness:0.8}));
-    base.position.y = -1.2; scene.add(base);
-    const screen = new THREE.Mesh(new THREE.BoxGeometry(3.3,2.2,0.05), new THREE.MeshStandardMaterial({color:0x111122, emissive:0x000033, roughness:0.2}));
-    screen.position.set(0,0.3,-1.2); screen.rotation.x = -0.3; scene.add(screen);
-    function animate(){ requestAnimationFrame(animate); screen.rotation.y += 0.005; base.rotation.y = screen.rotation.y; renderer.render(scene,camera); }
-    animate();
+        // ---------- THEME MANAGEMENT ----------
+        const body = document.body;
+        const themeBtn = document.getElementById('themeToggle');
+        const themes = ['light', 'dark', 'cyber'];
+        let currentTheme = 2; // DEFAULT CYBER
+        const themeLabels = ['☀️ Light', '🌙 Dark', '🌀 Cyber'];
+
+        function applyTheme(index) {
+            body.className = '';
+            body.classList.add(themes[index]);
+            themeBtn.textContent = themeLabels[index];
+            if (window.updateBackgroundColors) window.updateBackgroundColors();
+        }
+
+        // Initial apply
+        applyTheme(currentTheme);
+
+        themeBtn.addEventListener('click', () => {
+            currentTheme = (currentTheme + 1) % 3;
+            applyTheme(currentTheme);
+        });
+
+        // Double‑click toggles (manual)
+        let clickTimer;
+        document.addEventListener('click', (e) => {
+            if (clickTimer) {
+                clearTimeout(clickTimer);
+                clickTimer = null;
+                currentTheme = (currentTheme + 1) % 3;
+                applyTheme(currentTheme);
+            } else {
+                clickTimer = setTimeout(() => clickTimer = null, 400);
+            }
+        });
+
+        // ---------- EASTER EGG: type 'future' ----------
+        let typed = '';
+        document.addEventListener('keydown', (e) => {
+            typed += e.key.toLowerCase();
+            if (typed.includes('future')) {
+                document.getElementById('hidden-roadmap').classList.add('visible');
+                typed = '';
+                setTimeout(() => document.getElementById('hidden-roadmap').classList.remove('visible'), 6000);
+            }
+            if (typed.length > 20) typed = typed.slice(-20);
+        });
+
+        // ---------- SCROLL REVEAL + TIMELINE LINE ANIMATION ----------
+        const revealElements = document.querySelectorAll('.reveal, .phi-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Animate counters if present
+                    if (entry.target.querySelector('.count-up')) {
+                        const counters = entry.target.querySelectorAll('.count-up');
+                        counters.forEach(counter => {
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            const suffix = counter.getAttribute('data-suffix') || '';
+                            if (!target) return;
+                            let start = 0;
+                            const duration = 1500;
+                            const step = timestamp => {
+                                if (!start) start = timestamp;
+                                const progress = Math.min((timestamp - start) / duration, 1);
+                                counter.textContent = Math.floor(progress * target) + suffix;
+                                if (progress < 1) requestAnimationFrame(step);
+                            };
+                            requestAnimationFrame(step);
+                        });
+                    }
+
+                    // Special: animate journey timeline line when the section is visible
+                    if (entry.target.id === 'journey-section') {
+                        const line = document.getElementById('timelineLine');
+                        if (line) {
+                            line.classList.add('animated');
+                        }
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // ---------- 3D BACKGROUND ----------
+        const canvasContainer = document.getElementById('bg-canvas');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x000000, 0.0005);
+        const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
+        camera.position.z = 50;
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        canvasContainer.appendChild(renderer.domElement);
+
+        const particleCount = 1000;
+        const positions = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            positions[i] = (Math.random() - 0.5) * 120;
+            positions[i + 1] = (Math.random() - 0.5) * 60;
+            positions[i + 2] = (Math.random() - 0.5) * 60 - 20;
+        }
+        const pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const getAccentColor = () => {
+            const style = getComputedStyle(document.body);
+            return new THREE.Color(style.getPropertyValue('--accent').trim() || '#00ffff');
+        };
+        const pMat = new THREE.PointsMaterial({
+            size: 0.2,
+            color: getAccentColor(),
+            transparent: true,
+            opacity: 0.3,
+            blending: THREE.AdditiveBlending
+        });
+        const particles = new THREE.Points(pGeo, pMat);
+        scene.add(particles);
+
+        const lineMat = new THREE.LineBasicMaterial({ color: getAccentColor(), transparent: true, opacity: 0.08 });
+        const linesGroup = new THREE.Group();
+        for (let i = 0; i < particleCount; i++) {
+            const x1 = positions[i * 3], y1 = positions[i * 3 + 1], z1 = positions[i * 3 + 2];
+            for (let j = i + 1; j < particleCount; j++) {
+                const x2 = positions[j * 3], y2 = positions[j * 3 + 1], z2 = positions[j * 3 + 2];
+                if (Math.hypot(x1 - x2, y1 - y2, z1 - z2) < 12) {
+                    const geo = new THREE.BufferGeometry();
+                    geo.setAttribute('position', new THREE.Float32BufferAttribute([x1, y1, z1, x2, y2, z2], 3));
+                    const line = new THREE.Line(geo, lineMat);
+                    linesGroup.add(line);
+                }
+            }
+        }
+        scene.add(linesGroup);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.y += 0.0002;
+            linesGroup.rotation.y = particles.rotation.y;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = innerWidth / innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+        });
+
+        window.updateBackgroundColors = () => {
+            const accentCol = getAccentColor();
+            pMat.color = accentCol;
+            lineMat.color = accentCol;
+        };
+
+        // ---------- 3D PROJECTS (REALISTIC) ----------
+        function initProject3D(containerId, createGroup) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / 320, 0.1, 100);
+            camera.position.set(0, 1.5, 8);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, 320);
+            container.appendChild(renderer.domElement);
+            scene.add(new THREE.AmbientLight(0x444444));
+            const light1 = new THREE.DirectionalLight(0xffffff, 1);
+            light1.position.set(1, 1, 1);
+            scene.add(light1);
+            const light2 = new THREE.PointLight(0x3366ff, 0.6, 10);
+            light2.position.set(0, 0, 2);
+            scene.add(light2);
+
+            const group = createGroup();
+            scene.add(group);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                group.rotation.y += 0.005;
+                renderer.render(scene, camera);
+            }
+            animate();
+            window.addEventListener('resize', () => {
+                if (container.clientWidth > 0) {
+                    renderer.setSize(container.clientWidth, 320);
+                    camera.aspect = container.clientWidth / 320;
+                    camera.updateProjectionMatrix();
+                }
+            });
+        }
+
+        // Laptop with dashboard screen & keyboard details
+        initProject3D('laptop3d', () => {
+            const group = new THREE.Group();
+
+            // Create screen texture with dashboard look
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#0a0a1a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#00ffff';
+            ctx.lineWidth = 3;
+            // Fake chart lines
+            for (let i=0; i<6; i++) {
+                const y = 40 + i*35;
+                ctx.beginPath();
+                ctx.moveTo(30, y);
+                ctx.lineTo(480, y + Math.sin(i)*20);
+                ctx.strokeStyle = `hsl(${180+i*20}, 70%, 60%)`;
+                ctx.stroke();
+            }
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Inter';
+            ctx.fillText('MarketLens AI', 180, 30);
+            ctx.fillStyle = '#aaa';
+            ctx.font = '14px Inter';
+            ctx.fillText('Live Dashboard', 210, 230);
+            const texture = new THREE.CanvasTexture(canvas);
+
+            // Screen frame
+            const frameGeom = new THREE.BoxGeometry(3.6, 2.4, 0.1);
+            const frameMat = new THREE.MeshStandardMaterial({ color: 0x222233, roughness: 0.2, metalness: 0.8 });
+            const frame = new THREE.Mesh(frameGeom, frameMat);
+            frame.position.set(0, 0.4, -1.1);
+            frame.rotation.x = -0.3;
+            group.add(frame);
+
+            // Screen
+            const screenGeom = new THREE.PlaneGeometry(3.3, 2.2);
+            const screenMat = new THREE.MeshBasicMaterial({ map: texture, emissive: new THREE.Color(0x001122), emissiveIntensity: 0.5 });
+            const screen = new THREE.Mesh(screenGeom, screenMat);
+            screen.position.copy(frame.position);
+            screen.position.z += 0.06;
+            screen.rotation.x = -0.3;
+            group.add(screen);
+
+            // Keyboard base
+            const baseGeom = new THREE.BoxGeometry(3.8, 0.2, 2.4);
+            const baseMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.4, metalness: 0.9 });
+            const base = new THREE.Mesh(baseGeom, baseMat);
+            base.position.y = -1.2;
+            group.add(base);
+
+            // Keyboard grooves (small cylinders)
+            const grooveGeom = new THREE.CylinderGeometry(0.05, 0.05, 0.05, 8);
+            const grooveMat = new THREE.MeshStandardMaterial({ color: 0x444444 });
+            for (let x = -1.6; x <= 1.6; x+=0.25) {
+                for (let z = -0.8; z <= 0.8; z+=0.2) {
+                    const key = new THREE.Mesh(grooveGeom, grooveMat);
+                    key.position.set(x, -1.1, z);
+                    group.add(key);
+                }
+            }
+
+            // Floating particles around
+            const particleGeo = new THREE.BufferGeometry();
+            const pCount = 60;
+            const pPos = new Float32Array(pCount * 3);
+            for (let i = 0; i < pCount*3; i+=3) {
+                pPos[i] = (Math.random() - 0.5) * 5;
+                pPos[i+1] = (Math.random() - 0.5) * 3;
+                pPos[i+2] = (Math.random() - 0.5) * 3;
+            }
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+            const particleMat = new THREE.PointsMaterial({ color: 0x00ffff, size: 0.05, blending: THREE.AdditiveBlending });
+            const particles = new THREE.Points(particleGeo, particleMat);
+            group.add(particles);
+
+            return group;
+        });
+
+        // Smart Calculator with animated digits
+        initProject3D('calc3d', () => {
+            const group = new THREE.Group();
+
+            // Body
+            const bodyGeom = new THREE.BoxGeometry(2.4, 3.6, 0.6);
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x101020, roughness: 0.15, metalness: 0.95 });
+            const body = new THREE.Mesh(bodyGeom, bodyMat);
+            group.add(body);
+
+            // Screen with animated canvas
+            const screenCanvas = document.createElement('canvas');
+            screenCanvas.width = 200;
+            screenCanvas.height = 120;
+            const ctx = screenCanvas.getContext('2d');
+            const screenTexture = new THREE.CanvasTexture(screenCanvas);
+            const screenPlane = new THREE.Mesh(
+                new THREE.PlaneGeometry(1.8, 0.7),
+                new THREE.MeshBasicMaterial({ map: screenTexture, emissive: new THREE.Color(0x3366ff), emissiveIntensity: 0.8 })
+            );
+            screenPlane.position.set(0, 0.9, 0.31);
+            group.add(screenPlane);
+
+            // Animate digits
+            function updateScreen() {
+                ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
+                ctx.fillStyle = '#0a0a1a';
+                ctx.fillRect(0, 0, screenCanvas.width, screenCanvas.height);
+                ctx.font = 'bold 40px Inter';
+                ctx.fillStyle = '#00ffff';
+                const now = new Date();
+                const digits = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+                ctx.fillText(digits, 30, 80);
+                screenTexture.needsUpdate = true;
+            }
+            setInterval(updateScreen, 1000);
+            updateScreen();
+
+            // Small buttons
+            const btnGeom = new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16);
+            const btnMat = new THREE.MeshStandardMaterial({ color: 0x444466 });
+            for (let x = -0.8; x <= 0.8; x+=0.4) {
+                for (let y = 0.3; y >= -0.9; y-=0.3) {
+                    const btn = new THREE.Mesh(btnGeom, btnMat);
+                    btn.position.set(x, y, 0.35);
+                    group.add(btn);
+                }
+            }
+
+            // LED indicator
+            const ledGeom = new THREE.SphereGeometry(0.08, 8, 8);
+            const ledMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            const led = new THREE.Mesh(ledGeom, ledMat);
+            led.position.set(1.0, 1.4, 0.35);
+            group.add(led);
+            // Make it blink
+            setInterval(() => { led.visible = !led.visible; }, 800);
+
+            return group;
+        });
+
+        // ---------- ROTATING HERO ROLES ----------
+        const roles = ['Engineer', 'Builder', 'Thinker', 'Entrepreneur', 'Philosopher'];
+        let roleIdx = 0;
+        const roleEl = document.getElementById('roleCycler');
+        setInterval(() => {
+            roleEl.textContent = roles[roleIdx];
+            roleIdx = (roleIdx + 1) % roles.length;
+        }, 1500);
     </script>
-    """, height=280)
-    st.markdown("**MarketLens AI** — Intelligent cross‑border e‑commerce agent. Real‑time market intelligence, consumer review analysis, tariff risk simulation. [Visit →](https://www.marketlens-ai.com)")
-with col2:
-    components.html("""
-    <div style="width:100%; height:280px;" id="calc3d"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-    const c2 = document.getElementById('calc3d');
-    const scene2 = new THREE.Scene();
-    const cam2 = new THREE.PerspectiveCamera(45, c2.clientWidth/280, 0.1, 100);
-    cam2.position.set(0,0.5,7);
-    const renderer2 = new THREE.WebGLRenderer({alpha:true});
-    renderer2.setSize(c2.clientWidth, 280);
-    c2.appendChild(renderer2.domElement);
-    scene2.add(new THREE.AmbientLight(0x444444));
-    const l2 = new THREE.DirectionalLight(0xffffff,0.8); l2.position.set(1,1,1); scene2.add(l2);
-    const body = new THREE.Mesh(new THREE.BoxGeometry(2.5,3.5,0.5), new THREE.MeshStandardMaterial({color:0x1a1a1a, roughness:0.2, metalness:0.9}));
-    scene2.add(body);
-    const scr = new THREE.Mesh(new THREE.PlaneGeometry(2,0.7), new THREE.MeshBasicMaterial({color:0x3366ff, transparent:true, opacity:0.8}));
-    scr.position.set(0,0.8,0.26); scene2.add(scr);
-    function animate2(){ requestAnimationFrame(animate2); body.rotation.y += 0.008; scr.rotation.y = body.rotation.y; renderer2.render(scene2,cam2); }
-    animate2();
-    </script>
-    """, height=280)
-    st.markdown("**🧮 Smart Calculator** — Educational device for low‑connectivity areas. AI assistant, offline mesh, 10+ languages, GPS. *Coming soon.*")
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# Locked projects
-st.markdown('<h2 style="margin-top:50px;">🔒 Other Projects (Under Development)</h2>', unsafe_allow_html=True)
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.markdown("""
-    <div class="locked-project">
-        <div class="lock-icon">🔒</div>
-        <h3>AI Research Tool</h3>
-        <p>Confidential</p>
-    </div>
-    """, unsafe_allow_html=True)
-with c2:
-    st.markdown("""
-    <div class="locked-project">
-        <div class="lock-icon">🔒</div>
-        <h3>Automation Dashboard</h3>
-        <p>Under NDA</p>
-    </div>
-    """, unsafe_allow_html=True)
-with c3:
-    st.markdown("""
-    <div class="locked-project">
-        <div class="lock-icon">🔒</div>
-        <h3>Philosophy Platform</h3>
-        <p>Early concept</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# ====================================================
-# ACHIEVEMENT WALL (animated counters)
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass"><h2>📊 By the Numbers</h2>', unsafe_allow_html=True)
-cols = st.columns(5)
-stats = [("15+","Seminars"),("6+","Projects"),("4+","Research Areas"),("500+","Audience"),("4","Languages")]
-for col, (num, label) in zip(cols, stats):
-    with col:
-        st.markdown(f"""
-        <div class="stat-card">
-            <div class="stat-number count-up" data-target="{num.replace('+','')}" data-suffix="+">{num}</div>
-            <div class="stat-label">{label}</div>
-        </div>
-        """, unsafe_allow_html=True)
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# ====================================================
-# PHILOSOPHY (original)
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🧠 Philosophy")
-st.markdown("""
-I believe technology should not replace human thinking; it should enhance it. My curiosity extends beyond engineering into the roots of wisdom, ethics, and civilization.
-
-I explore: Intelligence vs Wisdom, Technology vs Humanity, Wealth vs Meaning, Power vs Responsibility, Progress vs Purpose.
-
-Learning is my lifelong pursuit. Independent thought remains the most valuable ability one can cultivate — and systems that serve people, not the other way around, are what I strive to build.
-""")
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# ====================================================
-# VISION
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 🔭 Vision")
-st.markdown(f"""
-> To build technologies that combine **Artificial Intelligence, Engineering, and Education** to make knowledge more accessible, practical, and meaningful for everyone.
->
-> **Create. Inspire. Empower. Repeat.**
-""")
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# ====================================================
-# CONTACT
-# ====================================================
-st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
-st.markdown("## 📬 Contact")
-c1,c2,c3,c4 = st.columns(4)
-contacts = [
-    ("📧","Email","abdullahbinfahad.abf@gmail.com"),
-    ("💻","GitHub","github.com/abdullahbinfahad"),
-    ("📍","Location","Nanjing, China"),
-    ("📱","Phone","+86 18105180247")
-]
-for col,(icon,title,val) in zip([c1,c2,c3,c4], contacts):
-    with col:
-        st.markdown(f"""
-        <div class="contact-tile">
-            <div class="contact-icon">{icon}</div>
-            <h4>{title}</h4>
-            <p style="font-size:0.9rem;">{val}</p>
-        </div>
-        """, unsafe_allow_html=True)
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-# ====================================================
-# FOOTER
-# ====================================================
-st.markdown(f"""
-<div class="footer">
-    <span style="font-size:1.5rem; font-weight:600;">Building Tomorrow.</span><br>
-    <span style="font-size:1rem;">One Idea. One Innovation. One Step at a Time.</span><br><br>
-    © 2026 Abdullah Bin Fahad<br>
-    <a href="https://www.abdullahbinfahad.info" style="color:{text_secondary};">www.abdullahbinfahad.info</a>
-</div>
-""", unsafe_allow_html=True)
-
-# ====================================================
-# HIDDEN ROADMAP
-# ====================================================
-st.markdown(f"""
-<div id="hidden-roadmap">
-    <h3 style="color:{accent};">🚀 Secret Roadmap</h3>
-    <p>2025 – MarketLens AI</p>
-    <p>2025 – Smart Calculator</p>
-    <p>2026 – AI Research Platform</p>
-    <p>2027 – Education System</p>
-    <p>2028 – Global Startup</p>
-    <p>2030 – Impact millions</p>
-    <p style="font-size:0.8rem; color:{text_secondary};">(type 'future' anywhere to show this)</p>
-</div>
-""", unsafe_allow_html=True)
+</body>
+</html>
