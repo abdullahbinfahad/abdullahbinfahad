@@ -8,17 +8,14 @@ st.set_page_config(page_title="Abdullah Bin Fahad", page_icon="🧠", layout="wi
 # THEME SYSTEM: Light / Dark / Cyber
 # ====================================================
 if "theme" not in st.session_state:
-    st.session_state.theme = "dark"   # default: dark cinematic
+    st.session_state.theme = "dark"
 
 def cycle_theme():
     themes = ["light", "dark", "cyber"]
     idx = themes.index(st.session_state.theme)
     st.session_state.theme = themes[(idx + 1) % 3]
 
-# ----------------------------------------------------------------------
-# Random philosophy quote for each visit
-# ----------------------------------------------------------------------
-all_quotes = [
+random_quote = random.choice([
     "Technology should empower humanity, not replace it.",
     "Knowledge has little value unless it creates positive change.",
     "Dream boldly. Build patiently. Improve continuously.",
@@ -27,16 +24,17 @@ all_quotes = [
     "Character is the foundation of every lasting achievement.",
     "Success is built through discipline, consistency, and independent thinking.",
     "Humanity forges shields today for its safety; tomorrow, it shall flee from those very shields to save itself."
-]
-random_quote = random.choice(all_quotes)
+])
 
-# ---- CSS Variables based on theme ----
+# ====================================================
+# CSS Variables by Theme
+# ====================================================
 theme = st.session_state.theme
 if theme == "light":
     bg_main = "#f8f9fa"
     bg_card = "rgba(0,0,0,0.03)"
     text_primary = "#111"
-    text_secondary = "#555"
+    text_secondary = "#444"
     accent = "#111"
     border = "rgba(0,0,0,0.08)"
     progress_grad = "linear-gradient(90deg, #222, #666)"
@@ -44,19 +42,21 @@ if theme == "light":
     glow_color = "0,0,0"
     hero_gradient = "linear-gradient(135deg, #111, #444)"
     card_shadow = "0 4px 20px rgba(0,0,0,0.05)"
+    phi_bg = "rgba(255,255,255,0.7)"
 elif theme == "dark":
     bg_main = "#0a0a0a"
-    bg_card = "rgba(255,255,255,0.04)"
+    bg_card = "rgba(255,255,255,0.05)"
     text_primary = "#e0e0e0"
     text_secondary = "#aaa"
-    accent = "#fff"
+    accent = "#ffffff"
     border = "rgba(255,255,255,0.08)"
     progress_grad = "linear-gradient(90deg, #444, #aaa)"
     wave_fill = "#0a0a0a"
     glow_color = "255,255,255"
-    hero_gradient = "linear-gradient(135deg, #fff, #ccc)"
+    hero_gradient = "linear-gradient(135deg, #ffffff, #cccccc)"
     card_shadow = "0 4px 20px rgba(0,0,0,0.4)"
-else:  # cyber (neon‑dark)
+    phi_bg = "rgba(10,10,10,0.8)"
+else:  # cyber
     bg_main = "#050510"
     bg_card = "rgba(0,255,255,0.05)"
     text_primary = "#e0ffff"
@@ -68,30 +68,55 @@ else:  # cyber (neon‑dark)
     glow_color = "0,255,255"
     hero_gradient = "linear-gradient(135deg, #00ffff, #0088ff)"
     card_shadow = "0 0 25px rgba(0,255,255,0.2)"
+    phi_bg = "rgba(5,5,16,0.85)"
 
+# ====================================================
+# GLOBAL STYLES
+# ====================================================
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap');
-html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; scroll-behavior: smooth; }}
-.stApp {{ background: {bg_main}; color: {text_primary}; }}
+html, body, [class*="css"] {{
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}}
+.stApp {{
+    background: {bg_main};
+    color: {text_primary};
+}}
 
-/* ---- Hero ---- */
+/* ---------- Hero ---------- */
 .hero-name {{
-    font-size: clamp(3.5rem, 12vw, 7rem); font-weight: 900;
-    background: {hero_gradient}; -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; text-align: center; line-height: 1;
-    margin-top: 0.5em; letter-spacing: -0.02em;
+    font-size: clamp(3rem, 12vw, 7rem);
+    font-weight: 900;
+    background: {hero_gradient};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    line-height: 1;
+    margin: 0.3em 0 0.1em 0;
+    letter-spacing: -0.02em;
 }}
 .hero-roles {{
-    text-align: center; font-size: 1.3rem; color: {text_secondary};
-    min-height: 2.5em; font-weight: 500;
+    text-align: center;
+    font-size: 1.4rem;
+    color: {text_secondary};
+    min-height: 2.5em;
+    font-weight: 500;
 }}
 .hero-statement {{
-    text-align: center; font-size: 1.4rem; font-weight: 600; color: {text_primary};
-    max-width: 700px; margin: 20px auto;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: {text_primary};
+    max-width: 700px;
+    margin: 20px auto 10px;
 }}
 .scroll-indicator {{
-    text-align: center; color: {text_secondary}; margin-top: 30px;
+    text-align: center;
+    color: {text_secondary};
+    margin-top: 30px;
     animation: floatDown 2s infinite;
 }}
 @keyframes floatDown {{
@@ -99,199 +124,363 @@ html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; scroll-behavior:
     50%{{ transform: translateY(10px); opacity:1; }}
 }}
 
-/* ---- Cards & Glass ----
+/* ---------- Cards & Glass ---------- */
 .glass, .card {{
-    background: {bg_card}; backdrop-filter: blur(20px);
-    border: 1px solid {border}; border-radius: 28px; padding: 40px;
-    margin: 40px 0; box-shadow: {card_shadow}; transition: 0.3s;
-}}
-.glass:hover, .card:hover {{ transform: translateY(-5px); box-shadow: 0 15px 40px rgba({glow_color},0.15); }}
-
-/* Wave divider */
-.section-divider {{ height: 80px; margin: 40px 0 -40px 0; overflow: hidden; }}
-.section-divider svg {{ display: block; width: calc(100% + 1.3px); height: 80px; transform: rotateY(180deg); }}
-.shape-fill {{ fill: {wave_fill}; }}
-
-/* Philosophy full‑screen cards */
-.phi-card {{
-    min-height: 80vh; display: flex; align-items: center; justify-content: center;
-    padding: 40px; opacity: 0; transform: scale(0.92);
-    transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
-    scroll-snap-align: start; will-change: opacity, transform;
-}}
-.phi-card.visible {{ opacity: 1; transform: scale(1); }}
-.phi-quote {{
-    font-size: clamp(2rem, 8vw, 4.5rem); font-weight: 800; text-align: center;
-    line-height: 1.2; background: {hero_gradient}; -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; max-width: 900px;
-}}
-
-/* Principles grid */
-.principle-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }}
-.principle-tile {{
-    background: {bg_card}; border: 1px solid {border}; border-radius: 24px;
-    padding: 30px 20px; text-align: center; transition: 0.3s;
-}}
-.principle-tile:hover {{ transform: translateY(-8px); border-color: {accent}; box-shadow: 0 10px 30px rgba({glow_color},0.2); }}
-.principle-icon {{ font-size: 2.2rem; margin-bottom: 12px; }}
-
-/* Timeline (horizontal on desktop, vertical on mobile) */
-.timeline-horizontal {{
-    display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 40px;
-    padding: 30px 0; scroll-snap-type: x mandatory;
-}}
-.timeline-node {{
-    flex: 0 0 auto; width: 160px; text-align: center; position: relative;
-    padding: 20px 10px; scroll-snap-align: center;
-}}
-.timeline-node::before {{
-    content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, {accent}, transparent);
-    opacity: 0.3; z-index: -1;
-}}
-.timeline-dot {{
-    width: 20px; height: 20px; background: {accent}; border-radius: 50%;
-    margin: 0 auto 15px; box-shadow: 0 0 20px {accent};
-}}
-.timeline-year {{ font-weight: 700; color: {accent}; margin-bottom: 5px; }}
-.timeline-text {{ color: {text_secondary}; font-size: 0.9rem; }}
-
-/* Animated counters */
-.stat-card {{
-    text-align: center; padding: 20px;
-    background: {bg_card}; border-radius: 20px; border: 1px solid {border};
+    background: {bg_card};
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid {border};
+    border-radius: 28px;
+    padding: 40px;
+    margin: 40px 0;
+    box-shadow: {card_shadow};
     transition: 0.3s;
 }}
-.stat-card:hover {{ transform: scale(1.05); box-shadow: 0 10px 25px rgba({glow_color},0.15); }}
-.stat-number {{ font-size: 3rem; font-weight: 800; color: {accent}; }}
-.stat-label {{ color: {text_secondary}; font-weight: 500; }}
+.glass:hover, .card:hover {{
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba({glow_color},0.15);
+}}
 
-/* Locked projects */
+/* ---------- Wave Divider ---------- */
+.section-divider {{
+    height: 80px;
+    margin: 40px 0 -40px 0;
+    overflow: hidden;
+}}
+.section-divider svg {{
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 80px;
+    transform: rotateY(180deg);
+}}
+.shape-fill {{
+    fill: {wave_fill};
+}}
+
+/* ---------- Philosophy Full‑screen Cards ---------- */
+.phi-card {{
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    margin: 0;
+    opacity: 0;
+    transform: scale(0.94);
+    transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+    scroll-snap-align: start;
+    will-change: opacity, transform;
+    background: {phi_bg};
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 40px;
+    margin: 20px 0;
+}}
+.phi-card.visible {{
+    opacity: 1;
+    transform: scale(1);
+}}
+.phi-quote {{
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.2;
+    background: {hero_gradient};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    max-width: 900px;
+    /* Fallback for non-webkit */
+    color: {text_primary};
+}}
+
+/* ---------- Principles Grid ---------- */
+.principle-grid {{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}}
+.principle-tile {{
+    background: {bg_card};
+    border: 1px solid {border};
+    border-radius: 24px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: 0.3s;
+}}
+.principle-tile:hover {{
+    transform: translateY(-8px);
+    border-color: {accent};
+    box-shadow: 0 10px 30px rgba({glow_color},0.2);
+}}
+.principle-icon {{
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+}}
+
+/* ---------- Horizontal Timeline ---------- */
+.timeline-horizontal {{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 40px;
+    padding: 30px 0;
+    scroll-snap-type: x mandatory;
+}}
+.timeline-node {{
+    flex: 0 0 auto;
+    width: 160px;
+    text-align: center;
+    position: relative;
+    padding: 20px 10px;
+    scroll-snap-align: center;
+}}
+.timeline-node::before {{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, {accent}, transparent);
+    opacity: 0.3;
+    z-index: -1;
+}}
+.timeline-dot {{
+    width: 20px;
+    height: 20px;
+    background: {accent};
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    box-shadow: 0 0 20px {accent};
+}}
+.timeline-year {{
+    font-weight: 700;
+    color: {accent};
+    margin-bottom: 5px;
+}}
+.timeline-text {{
+    color: {text_secondary};
+    font-size: 0.9rem;
+}}
+
+/* ---------- Animated Counters ---------- */
+.stat-card {{
+    text-align: center;
+    padding: 20px;
+    background: {bg_card};
+    border-radius: 20px;
+    border: 1px solid {border};
+    transition: 0.3s;
+}}
+.stat-card:hover {{
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba({glow_color},0.15);
+}}
+.stat-number {{
+    font-size: 3rem;
+    font-weight: 800;
+    color: {accent};
+}}
+.stat-label {{
+    color: {text_secondary};
+    font-weight: 500;
+}}
+
+/* ---------- Locked Projects ---------- */
 .locked-project {{
-    background: rgba(30,30,30,0.6); border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 20px; padding: 25px; text-align: center; color: {text_secondary};
-    filter: blur(3px); user-select: none; pointer-events: none;
+    background: rgba(30,30,30,0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    color: {text_secondary};
+    filter: blur(3px);
+    user-select: none;
+    pointer-events: none;
 }}
-.lock-icon {{ font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5; }}
+.lock-icon {{
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}}
 
-/* Contact tiles */
+/* ---------- Contact Tiles ---------- */
 .contact-tile {{
-    background: {bg_card}; border: 1px solid {border}; border-radius: 20px;
-    padding: 30px; text-align: center; transition: 0.3s;
+    background: {bg_card};
+    border: 1px solid {border};
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: 0.3s;
 }}
-.contact-tile:hover {{ transform: translateY(-5px); border-color: {accent}; box-shadow: 0 10px 25px rgba({glow_color},0.15); }}
-.contact-icon {{ font-size: 2rem; margin-bottom: 12px; }}
+.contact-tile:hover {{
+    transform: translateY(-5px);
+    border-color: {accent};
+    box-shadow: 0 10px 25px rgba({glow_color},0.15);
+}}
+.contact-icon {{
+    font-size: 2rem;
+    margin-bottom: 12px;
+}}
 
-/* Footer */
+/* ---------- Footer ---------- */
 .footer {{
-    text-align: center; padding: 60px 20px; color: {text_secondary};
+    text-align: center;
+    padding: 60px 20px;
+    color: {text_secondary};
     background: linear-gradient(180deg, transparent 0%, {bg_main} 80%);
 }}
 
-/* Hidden roadmap (revealed by typing 'future') */
+/* ---------- Hidden Roadmap ---------- */
 #hidden-roadmap {{
-    display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    background: {bg_card}; backdrop-filter: blur(30px); border: 2px solid {accent};
-    border-radius: 30px; padding: 40px; z-index: 9999; color: {text_primary};
-    box-shadow: 0 0 60px rgba({glow_color},0.3); max-width: 500px;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: {bg_card};
+    backdrop-filter: blur(30px);
+    border: 2px solid {accent};
+    border-radius: 30px;
+    padding: 40px;
+    z-index: 9999;
+    color: {text_primary};
+    box-shadow: 0 0 60px rgba({glow_color},0.3);
+    max-width: 500px;
 }}
-#hidden-roadmap.visible {{ display: block; }}
+#hidden-roadmap.visible {{
+    display: block;
+}}
 
-/* Scroll reveal */
-.reveal {{ opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }}
-.reveal.visible {{ opacity: 1; transform: translateY(0); }}
+/* ---------- Reveal Animation ---------- */
+.reveal {{
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease;
+}}
+.reveal.visible {{
+    opacity: 1;
+    transform: translateY(0);
+}}
 
+/* ---------- Responsive ---------- */
 @media (max-width: 768px) {{
-    .glass, .card {{ padding: 25px; }}
-    .timeline-horizontal {{ flex-direction: column; }}
+    .glass, .card {{
+        padding: 25px;
+    }}
+    .timeline-horizontal {{
+        flex-direction: column;
+        gap: 20px;
+    }}
+    .timeline-node::before {{
+        top: 0;
+        bottom: auto;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+    }}
 }}
 </style>
 """, unsafe_allow_html=True)
 
-# ---- Theme toggle button ----
+# ====================================================
+# THEME TOGGLE BUTTON
+# ====================================================
 col_toggle = st.columns([5,1])[1]
 with col_toggle:
     theme_label = {"light":"☀️ Light","dark":"🌙 Dark","cyber":"🌀 Cyber"}
     st.button(f"Theme: {theme_label[theme]}", on_click=cycle_theme, use_container_width=True)
 
-# ---- JavaScript: scroll reveal, easter eggs, counters ----
+# ====================================================
+# JAVASCRIPT: Scroll Reveal, Philosophy Cards, Easter Eggs
+# ====================================================
 components.html(f"""
 <script>
-// Scroll reveal
-const revealObserver = new IntersectionObserver((entries) => {{
-    entries.forEach(e => {{ if(e.isIntersecting) e.target.classList.add('visible'); }});
-}}, {{ threshold: 0.2 }});
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-new MutationObserver(() => document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el)))
-.observe(document.body, {{ childList: true, subtree: true }});
-
-// Philosophy cards visibility
-const phiObserver = new IntersectionObserver((entries) => {{
-    entries.forEach(e => {{ if(e.isIntersecting) e.target.classList.add('visible'); }});
-}}, {{ threshold: 0.4 }});
-document.querySelectorAll('.phi-card').forEach(el => phiObserver.observe(el));
-
-// Animated counters
-const statObserver = new IntersectionObserver((entries) => {{
+// Unified Intersection Observer for .reveal and .phi-card
+const observer = new IntersectionObserver((entries) => {{
     entries.forEach(entry => {{
         if(entry.isIntersecting) {{
-            const counters = entry.target.querySelectorAll('.count-up');
-            counters.forEach(counter => {{
-                const target = parseInt(counter.getAttribute('data-target'));
-                if(!target) return;
-                const suffix = counter.getAttribute('data-suffix') || '';
-                let start = 0;
-                const duration = 1500;
-                const step = timestamp => {{
-                    if(!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    counter.textContent = Math.floor(progress * target) + suffix;
-                    if(progress < 1) requestAnimationFrame(step);
-                }};
-                requestAnimationFrame(step);
-            }});
-            statObserver.unobserve(entry.target);
+            entry.target.classList.add('visible');
+            // For stat-cards we trigger counters via custom event
+            if(entry.target.classList.contains('stat-card')) {{
+                const counters = entry.target.querySelectorAll('.count-up');
+                counters.forEach(counter => {{
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    if(!target) return;
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    let start = 0;
+                    const duration = 1500;
+                    const step = timestamp => {{
+                        if(!start) start = timestamp;
+                        const progress = Math.min((timestamp - start) / duration, 1);
+                        counter.textContent = Math.floor(progress * target) + suffix;
+                        if(progress < 1) requestAnimationFrame(step);
+                    }};
+                    requestAnimationFrame(step);
+                }});
+                observer.unobserve(entry.target);
+            }}
         }}
     }});
-}}, {{ threshold: 0.6 }});
-document.querySelectorAll('.stat-card').forEach(el => statObserver.observe(el));
+}}, {{ threshold: 0.2 }});
+
+// Observe existing elements
+document.querySelectorAll('.reveal, .phi-card').forEach(el => observer.observe(el));
+
+// MutationObserver for dynamically added elements
+const mutationObserver = new MutationObserver(() => {{
+    document.querySelectorAll('.reveal:not(.visible), .phi-card:not(.visible)').forEach(el => observer.observe(el));
+}});
+mutationObserver.observe(document.body, {{ childList: true, subtree: true }});
 
 // Easter egg 1: typing 'future' reveals hidden roadmap
 let typed = '';
 document.addEventListener('keydown', (e) => {{
     typed += e.key.toLowerCase();
     if(typed.includes('future')) {{
-        document.getElementById('hidden-roadmap').classList.add('visible');
+        document.getElementById('hidden-roadmap')?.classList.add('visible');
         typed = '';
-        setTimeout(() => document.getElementById('hidden-roadmap').classList.remove('visible'), 6000);
+        setTimeout(() => {{
+            const roadmap = document.getElementById('hidden-roadmap');
+            if(roadmap) roadmap.classList.remove('visible');
+        }}, 6000);
     }}
     if(typed.length > 20) typed = typed.slice(-20);
 }});
 
-// Easter egg 2: double‑click anywhere toggles theme (simulates button)
+// Easter egg 2: double‑click toggles theme
 let clickTimer;
 document.addEventListener('click', (e) => {{
     if(clickTimer) {{
         clearTimeout(clickTimer);
         clickTimer = null;
-        // double click detected – trigger the Streamlit theme toggle button
         const btns = window.parent.document.querySelectorAll('button');
         for(let btn of btns) {{
-            if(btn.innerText.includes('Theme:')) {{ btn.click(); break; }}
+            if(btn.innerText.includes('Theme:')) {{
+                btn.click();
+                break;
+            }}
         }}
     }} else {{
         clickTimer = setTimeout(() => clickTimer = null, 400);
     }}
 }});
 
-// Random quote shown as toast
+// Random toast quote
 setTimeout(() => {{
     const toast = document.createElement('div');
-    toast.style.position = 'fixed'; toast.style.bottom = '20px'; toast.style.right = '20px';
-    toast.style.background = '{bg_card}'; toast.style.color = '{text_primary}';
-    toast.style.padding = '15px 25px'; toast.style.borderRadius = '15px';
-    toast.style.border = '1px solid {border}'; toast.style.backdropFilter = 'blur(15px)';
-    toast.style.zIndex = '9999'; toast.style.fontStyle = 'italic';
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.background = '{bg_card}';
+    toast.style.color = '{text_primary}';
+    toast.style.padding = '15px 25px';
+    toast.style.borderRadius = '15px';
+    toast.style.border = '1px solid {border}';
+    toast.style.backdropFilter = 'blur(15px)';
+    toast.style.zIndex = '9999';
+    toast.style.fontStyle = 'italic';
     toast.textContent = '"{random_quote}"';
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 7000);
@@ -300,14 +489,14 @@ setTimeout(() => {{
 """, height=0)
 
 # ====================================================
-# 3D NEURAL NETWORK BACKGROUND (Three.js)
+# 3D NEURAL NETWORK BACKGROUND
 # ====================================================
 components.html(f"""
 <div id="bg-canvas" style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none;"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2({bg_main}, 0.0005);
+scene.fog = new THREE.FogExp2(0x000000, 0.0005);
 const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
 camera.position.z = 50;
 const renderer = new THREE.WebGLRenderer({{ alpha: true, antialias: true }});
@@ -315,45 +504,43 @@ renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 document.getElementById('bg-canvas').appendChild(renderer.domElement);
 
-// Particles
-const pCount = 1000;
-const pGeo = new THREE.BufferGeometry();
-const positions = new Float32Array(pCount * 3);
-for(let i=0; i<pCount*3; i+=3) {{
+const particleCount = 1000;
+const positions = new Float32Array(particleCount * 3);
+for(let i=0; i<particleCount*3; i+=3) {{
     positions[i] = (Math.random()-0.5)*120;
     positions[i+1] = (Math.random()-0.5)*60;
     positions[i+2] = (Math.random()-0.5)*60 - 20;
 }}
+const pGeo = new THREE.BufferGeometry();
 pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 const pMat = new THREE.PointsMaterial({{
     size: 0.2, color: new THREE.Color('{accent}'), transparent: true,
-    opacity: {0.4 if theme!='cyber' else 0.6}, blending: THREE.AdditiveBlending
+    opacity: 0.3, blending: THREE.AdditiveBlending
 }});
 const particles = new THREE.Points(pGeo, pMat);
 scene.add(particles);
 
-// Connecting lines
-const lineMat = new THREE.LineBasicMaterial({{ color: new THREE.Color('{accent}'), transparent: true, opacity: 0.1 }});
-const lines = [];
-const maxDist = 12;
-for(let i=0; i<pCount; i++) {{
+// Lines between close particles
+const lineMat = new THREE.LineBasicMaterial({{ color: new THREE.Color('{accent}'), transparent: true, opacity: 0.08 }});
+const linesGroup = new THREE.Group();
+for(let i=0; i<particleCount; i++) {{
     const x1 = positions[i*3], y1 = positions[i*3+1], z1 = positions[i*3+2];
-    for(let j=i+1; j<pCount; j++) {{
+    for(let j=i+1; j<particleCount; j++) {{
         const x2 = positions[j*3], y2 = positions[j*3+1], z2 = positions[j*3+2];
-        if(Math.hypot(x1-x2, y1-y2, z1-z2) < maxDist) {{
+        if(Math.hypot(x1-x2, y1-y2, z1-z2) < 12) {{
             const geo = new THREE.BufferGeometry();
             geo.setAttribute('position', new THREE.Float32BufferAttribute([x1,y1,z1, x2,y2,z2], 3));
             const line = new THREE.Line(geo, lineMat);
-            scene.add(line);
-            lines.push(line);
+            linesGroup.add(line);
         }}
     }}
 }}
+scene.add(linesGroup);
 
 function animate() {{
     requestAnimationFrame(animate);
     particles.rotation.y += 0.0002;
-    lines.forEach(l => l.rotation.y = particles.rotation.y);
+    linesGroup.rotation.y = particles.rotation.y;
     renderer.render(scene, camera);
 }}
 animate();
@@ -366,10 +553,10 @@ window.addEventListener('resize', () => {{
 """, height=0)
 
 # ====================================================
-# HERO
+# HERO (one line name)
 # ====================================================
 st.markdown(f"""
-<div class="hero-name">ABDULLAH<br>BIN FAHAD</div>
+<div class="hero-name">ABDULLAH BIN FAHAD</div>
 <div class="hero-roles" id="role-cycler"></div>
 <div class="hero-statement">Building technologies that expand human potential.</div>
 <div class="scroll-indicator">▼ &nbsp; Scroll to Discover</div>
@@ -402,14 +589,14 @@ st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
 st.markdown("## 🌐 Who Is Abdullah Bin Fahad?")
 st.markdown("""
 **Abdullah Bin Fahad** is a Bangladeshi Automation Engineering student at Nanjing Tech University in China, an AI enthusiast, entrepreneur, writer, and independent thinker.  
-His work centers on the intersection of **technology, education, philosophy, and human development**. Rather than viewing AI as a replacement, he believes it should **expand human potential, creativity, and critical thinking**.
+His work centers on the intersection of **technology, education, philosophy, and human development**. Rather than viewing AI as a replacement for people, he believes it should **expand human potential, creativity, and critical thinking**.
 
-Driven by curiosity and long‑term vision, he builds projects that combine engineering with real‑world impact. His interests span **AI, robotics, embedded systems, business, psychology, philosophy, and education**. For him, learning is a **continuous process of questioning, refining, and turning understanding into practical solutions**.
+Driven by curiosity and long‑term vision, he builds projects that combine engineering with real‑world impact. His interests span **AI, robotics, embedded systems, business, psychology, philosophy, and education**. For him, learning is a **continuous process of questioning assumptions, refining ideas, and turning understanding into practical solutions**.
 """)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ====================================================
-# PHILOSOPHY – Fullscreen cards
+# PHILOSOPHY FULL‑SCREEN CARDS (now clearly visible)
 # ====================================================
 quotes = [
     "Technology<br>should empower humanity,<br>not replace it.",
@@ -453,7 +640,7 @@ for i, (icon, title) in enumerate(principles):
 st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ====================================================
-# JOURNEY – Horizontal timeline
+# JOURNEY – Horizontal Timeline
 # ====================================================
 st.markdown('<div class="reveal"><div class="glass">', unsafe_allow_html=True)
 st.markdown("## 🛤 My Journey")
@@ -517,7 +704,7 @@ st.markdown("""
 st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ====================================================
-# TECHNICAL SKILLS (progress bars)
+# TECHNICAL SKILLS
 # ====================================================
 st.markdown('<div class="reveal"><div class="glass"><h2>⚡ Technical Skills</h2>', unsafe_allow_html=True)
 skills = [
@@ -707,7 +894,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ====================================================
-# HIDDEN ROADMAP (revealed by typing 'future')
+# HIDDEN ROADMAP (easter egg)
 # ====================================================
 st.markdown(f"""
 <div id="hidden-roadmap">
