@@ -3,1003 +3,2447 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abdullah Bin Fahad – Personal Website</title>
+    <title>Abdullah Bin Fahad</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #0a0a0a;
-            --bg-card: rgba(255,255,255,0.05);
-            --text-primary: #ffffff;
-            --text-secondary: #aaaaaa;
-            --accent: #ffffff;
-            --border: rgba(255,255,255,0.08);
-            --progress-grad: linear-gradient(90deg, #444, #aaa);
-            --wave-fill: #0a0a0a;
-            --glow-color: 255,255,255;
-            --hero-gradient: linear-gradient(135deg, #ffffff, #cccccc);
-            --card-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            --phi-bg: rgba(10,10,10,0.95);
-            --phi-text: #ffffff;
-            --quote-border: 4px solid #888;
-            --quick-links-bg: rgba(255,255,255,0.05);
-            --btn-default-bg: rgba(255,255,255,0.07);
+            --bg: #000;
+            --surface: rgba(22, 22, 26, 0.65);
+            --surface-hover: rgba(28, 28, 34, 0.8);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.13);
+            --text: #fff;
+            --text2: #A1A1AA;
+            --text3: #71717A;
+            --cyan: #0EA5E9;
+            --emerald: #10B981;
+            --violet: #8B5CF6;
+            --amber: #F59E0B;
+            --rose: #F43F5E;
+            --radius: 24px;
+            --pill: 80px;
+            --spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Satoshi', 'Inter', system-ui, sans-serif;
+            --font-body: 'Inter', system-ui, sans-serif;
         }
-        .light {
-            --bg-main: #ffffff;
-            --bg-card: rgba(0,0,0,0.03);
-            --text-primary: #111111;
-            --text-secondary: #444444;
-            --accent: #000000;
-            --border: rgba(0,0,0,0.08);
-            --progress-grad: linear-gradient(90deg, #222, #666);
-            --wave-fill: #ffffff;
-            --glow-color: 0,0,0;
-            --hero-gradient: linear-gradient(135deg, #111, #444);
-            --card-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            --phi-bg: rgba(255,255,255,0.9);
-            --phi-text: #111111;
-            --quote-border: 4px solid #333;
-            --quick-links-bg: rgba(0,0,0,0.02);
-            --btn-default-bg: rgba(0,0,0,0.04);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .cyber {
-            --bg-main: #050510;
-            --bg-card: rgba(0,255,255,0.05);
-            --text-primary: #ffffff;
-            --text-secondary: #7fdbdb;
-            --accent: #00ffff;
-            --border: rgba(0,255,255,0.2);
-            --progress-grad: linear-gradient(90deg, #00ffff, #0080ff);
-            --wave-fill: #050510;
-            --glow-color: 0,255,255;
-            --hero-gradient: linear-gradient(135deg, #00ffff, #0088ff);
-            --card-shadow: 0 0 25px rgba(0,255,255,0.2);
-            --phi-bg: rgba(5,5,16,0.95);
-            --phi-text: #ffffff;
-            --quote-border: 4px solid #00ffff;
-            --quick-links-bg: rgba(0,255,255,0.05);
-            --btn-default-bg: rgba(0,255,255,0.08);
+        html {
+            scroll-behavior: smooth;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-main);
-            color: var(--text-primary);
-            transition: background 0.3s, color 0.3s;
+            background: #000;
+            font-family: var(--font-body);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
-        }
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .theme-btn {
-            position: fixed;
-            top: 20px; right: 20px;
-            z-index: 1000;
-            background: var(--bg-card);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            padding: 10px 24px;
-            color: var(--text-primary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        .theme-btn:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(var(--glow-color),0.2);
+            min-height: 100vh;
         }
 
-        .hero {
-            min-height: 100vh;
+        /* ── Atmospheric Background ── */
+        .bg-atmos {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 900px 700px at 18% -12%, rgba(14, 165, 233, 0.15) 0%, transparent 62%),
+                radial-gradient(ellipse 750px 750px at 80% 40%, rgba(71, 85, 105, 0.12) 0%, transparent 58%),
+                radial-gradient(ellipse 600px 600px at 50% 85%, rgba(6, 182, 212, 0.14) 0%, transparent 58%),
+                radial-gradient(ellipse 450px 450px at 6% 65%, rgba(100, 116, 139, 0.09) 0%, transparent 52%);
+        }
+        .glow-orb {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.48;
+            will-change: transform;
+        }
+        .glow-orb-1 {
+            width: 720px;
+            height: 720px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, transparent 68%);
+            top: -300px;
+            left: -200px;
+        }
+        .glow-orb-2 {
+            width: 560px;
+            height: 560px;
+            background: radial-gradient(circle, rgba(71, 85, 105, 0.22) 0%, transparent 68%);
+            top: 50%;
+            right: -240px;
+            transform: translateY(-50%);
+        }
+        .glow-orb-3 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, transparent 68%);
+            bottom: -280px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ── Glass Cards ── */
+        .glass {
+            background: var(--surface);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all 0.4s var(--spring);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .glass:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+            background: var(--surface-hover);
+        }
+        .glass-sm {
+            background: rgba(20, 20, 24, 0.5);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            transition: all 0.35s var(--spring);
+        }
+        .glass-sm:hover {
+            border-color: rgba(255, 255, 255, 0.11);
+            background: rgba(26, 26, 30, 0.55);
+            transform: translateY(-2px);
+        }
+
+        /* ── Pulse Dot ── */
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 0 13px rgba(16, 185, 129, 0);
+            }
+        }
+        .pulse-dot {
+            animation: pulse-dot 2s infinite;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            display: inline-block;
+        }
+
+        /* ── Marquee ── */
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .marquee-wrap {
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            position: relative;
+            z-index: 1;
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+            gap: 2.5rem;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+        .marquee-item {
+            flex-shrink: 0;
+            opacity: 0.45;
+            transition: opacity 0.3s;
+            cursor: default;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        .marquee-item:hover {
+            opacity: 0.85;
+        }
+        .marquee-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--text3);
+            flex-shrink: 0;
+        }
+
+        /* ── Buttons ── */
+        .btn-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 13px 26px;
+            border-radius: var(--pill);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.35s var(--spring);
+            text-decoration: none;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            border: none;
+            font-family: var(--font-body);
+        }
+        .btn-primary {
+            background: #0EA5E9;
+            color: #000;
+            box-shadow: 0 7px 26px rgba(14, 165, 233, 0.28);
+        }
+        .btn-primary:hover {
+            background: #38BDF8;
+            box-shadow: 0 13px 38px rgba(14, 165, 233, 0.42);
+            transform: translateY(-3px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+        }
+        .btn-outline:hover {
+            border-color: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 24px rgba(255, 255, 255, 0.05);
+        }
+        .btn-ghost {
+            background: rgba(14, 165, 233, 0.1);
+            color: #38BDF8;
+            border: 1px solid rgba(14, 165, 233, 0.28);
+            padding: 9px 18px;
+            font-size: 0.82rem;
+        }
+        .btn-ghost:hover {
+            background: rgba(14, 165, 233, 0.2);
+            border-color: rgba(56, 189, 248, 0.55);
+            box-shadow: 0 5px 20px rgba(14, 165, 233, 0.22);
+            transform: translateY(-2px);
+            color: #7DD3FC;
+        }
+        .btn-games {
+            background: rgba(139, 92, 246, 0.1);
+            color: #A78BFA;
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            padding: 9px 18px;
+            font-size: 0.82rem;
+        }
+        .btn-games:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(167, 139, 250, 0.55);
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.22);
+            transform: translateY(-2px);
+            color: #C4B5FD;
+        }
+        .ext-arrow {
+            display: inline-block;
+            transition: transform 0.3s var(--spring);
+            font-size: 0.82em;
+        }
+        a:hover .ext-arrow,
+        .glass:hover .ext-arrow {
+            transform: translate(3px, -3px);
+        }
+
+        /* ── Nav ── */
+        .nav-link {
+            position: relative;
+            color: var(--text2);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.86rem;
+            transition: color 0.3s;
+            padding-bottom: 3px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: #fff;
+            transition: width 0.3s var(--spring);
+            border-radius: 2px;
+        }
+        .nav-link:hover {
+            color: #fff;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ── FAQ ── */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--spring), opacity 0.4s, padding 0.4s;
+            opacity: 0;
+            color: var(--text2);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            opacity: 1;
+            padding-top: 0.7rem;
+            padding-bottom: 0.2rem;
+        }
+        .faq-chevron {
+            transition: transform 0.4s var(--spring);
+            flex-shrink: 0;
+            color: var(--text3);
+        }
+        .faq-item.active .faq-chevron {
+            transform: rotate(180deg);
+            color: #fff;
+        }
+
+        /* ── Mobile Menu ── */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.96);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            z-index: 100;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            position: relative;
-        }
-        .hero-name {
-            font-size: clamp(3rem, 12vw, 7rem);
-            font-weight: 900;
-            background: var(--hero-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-align: center;
-            line-height: 1;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.2em;
-        }
-        .hero-roles {
-            text-align: center;
-            font-size: 1.4rem;
-            color: var(--text-secondary);
-            min-height: 2.5em;
-            font-weight: 500;
-        }
-        .hero-statement {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            max-width: 700px;
-            margin: 20px auto;
-        }
-        .scroll-indicator {
-            text-align: center;
-            color: var(--text-secondary);
-            margin-top: 30px;
-            animation: floatDown 2s infinite;
-        }
-        @keyframes floatDown {
-            0%,100% { transform: translateY(0); opacity: 0.6; }
-            50% { transform: translateY(10px); opacity: 1; }
-        }
-
-        /* Quick links section under hero (no floating CV) */
-        .quick-links-section {
-            max-width: 900px;
-            margin: 0 auto 20px;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .quick-links-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            background: var(--quick-links-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 80px;
-            padding: 20px 30px;
-            box-shadow: var(--card-shadow);
-            transition: 0.3s;
-        }
-        .quick-link-btn {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 26px;
-            border-radius: 60px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 0.02em;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-            border: 1.5px solid rgba(var(--glow-color),0.2);
-            white-space: nowrap;
-            font-family: 'Inter', sans-serif;
-            color: var(--text-primary);
-            background: var(--btn-default-bg);
-            overflow: hidden;
-        }
-        .quick-link-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 0; height: 0;
-            border-radius: 50%;
-            background: rgba(var(--glow-color),0.15);
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
-        }
-        .quick-link-btn:hover::before {
-            width: 350px; height: 350px;
-        }
-        .quick-link-btn > * { position: relative; z-index: 1; }
-        .btn-icon {
-            font-size: 1.4rem;
-            transition: transform 0.3s;
-        }
-        .quick-link-btn:hover .btn-icon {
-            transform: scale(1.25) rotate(-5deg);
-        }
-        .quick-link-btn:hover {
-            border-color: rgba(var(--glow-color),0.6);
-            box-shadow: 0 0 30px rgba(var(--glow-color),0.25);
-            transform: translateY(-5px);
-        }
-
-        /* Explore More button with a subtle compass pulse */
-        .btn-explore .btn-icon {
-            animation: compassPulse 2s infinite;
-        }
-        @keyframes compassPulse {
-            0%,100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.15) rotate(5deg); }
-        }
-
-        .glass {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 40px;
-            margin: 40px auto;
-            max-width: 1100px;
-            box-shadow: var(--card-shadow);
-            transition: 0.3s;
-        }
-        .glass:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(var(--glow-color),0.15);
-        }
-
-        .section-divider {
-            height: 80px;
-            margin: 40px 0 -40px 0;
-            overflow: hidden;
-        }
-        .section-divider svg {
-            display: block;
-            width: calc(100% + 1.3px);
-            height: 80px;
-            transform: rotateY(180deg);
-        }
-        .shape-fill { fill: var(--wave-fill); }
-
-        .phi-card {
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            margin: 20px auto;
-            max-width: 1000px;
+            gap: 2rem;
             opacity: 0;
-            transform: scale(0.94);
-            transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
-            background: var(--phi-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 40px;
-            border: 1px solid var(--border);
+            pointer-events: none;
+            transition: opacity 0.4s;
         }
-        .phi-card.visible {
+        .mobile-overlay.open {
             opacity: 1;
-            transform: scale(1);
+            pointer-events: auto;
         }
-        .phi-quote {
-            font-size: clamp(2rem, 8vw, 4.5rem);
-            font-weight: 800;
-            text-align: center;
-            line-height: 1.2;
-            color: var(--phi-text);
-            text-shadow: 0 0 30px rgba(var(--glow-color),0.4);
+        .mobile-overlay a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: -0.01em;
+        }
+        .mobile-overlay a:hover {
+            color: #0EA5E9;
         }
 
-        .principle-line {
-            font-size: 1.2rem;
+        /* ── Skill Bars ── */
+        .skill-row {
+            margin-bottom: 1rem;
+        }
+        .skill-row .lbl {
+            display: flex;
+            justify-content: space-between;
             font-weight: 500;
-            color: var(--text-primary);
-            margin: 12px 0;
-            padding-left: 15px;
-            border-left: 3px solid var(--accent);
+            font-size: 0.86rem;
+            margin-bottom: 4px;
+            color: var(--text2);
+        }
+        .skill-row .track {
+            height: 7px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .skill-row .fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #0EA5E9, #38BDF8);
+            transition: width 1.2s var(--spring);
+            width: 0;
+        }
+        .skill-row.visible .fill {
+            width: var(--w);
         }
 
-        .timeline-horizontal {
+        /* ── Timeline ── */
+        .timeline-wrap {
             display: flex;
             flex-wrap: nowrap;
             overflow-x: auto;
-            gap: 30px;
-            padding: 30px 10px;
+            gap: 2rem;
+            padding: 1.5rem 0.5rem;
             scroll-snap-type: x mandatory;
-            position: relative;
+            -webkit-overflow-scrolling: touch;
         }
-        .timeline-line {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            right: 10px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            opacity: 0.3;
-            transform: scaleX(0);
-            transform-origin: left center;
-            transition: transform 1.5s ease;
+        .timeline-wrap::-webkit-scrollbar {
+            height: 3px;
         }
-        .timeline-line.animated {
-            transform: scaleX(1);
+        .timeline-wrap::-webkit-scrollbar-thumb {
+            background: #27272A;
+            border-radius: 8px;
         }
         .timeline-node {
             flex: 0 0 auto;
-            width: 140px;
+            width: 125px;
             text-align: center;
-            position: relative;
-            padding: 20px 5px;
             scroll-snap-align: center;
-            z-index: 1;
+            position: relative;
         }
         .timeline-dot {
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
+            width: 14px;
+            height: 14px;
+            background: #0EA5E9;
             border-radius: 50%;
-            margin: 0 auto 15px;
-            box-shadow: 0 0 20px var(--accent);
+            margin: 0 auto 10px;
+            box-shadow: 0 0 18px rgba(14, 165, 233, 0.55);
         }
         .timeline-year {
             font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 5px;
+            color: #38BDF8;
+            font-size: 0.82rem;
+            margin-bottom: 3px;
         }
         .timeline-text {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: var(--text3);
+            font-size: 0.76rem;
             white-space: normal;
+            line-height: 1.3;
         }
 
-        .stat-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .stat-card {
+        /* ── Quotes ── */
+        .quote-card {
             text-align: center;
-            padding: 25px;
-            background: var(--bg-card);
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            min-width: 140px;
-            transition: 0.3s;
-        }
-        .stat-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(var(--glow-color),0.15);
-        }
-        .stat-number {
-            font-size: 2.8rem;
+            padding: 2.2rem 1.8rem;
             font-weight: 800;
-            color: var(--accent);
+            font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+            line-height: 1.25;
+            font-family: var(--font-display);
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-shadow: 0 0 28px rgba(14, 165, 233, 0.3);
+            background: rgba(14, 165, 233, 0.04);
+            border: 1px solid rgba(14, 165, 233, 0.1);
+            border-radius: var(--radius);
+            margin-bottom: 0.9rem;
+            transition: all 0.5s var(--spring);
         }
-        .stat-label {
-            color: var(--text-secondary);
-            font-weight: 500;
+        .quote-card:hover {
+            border-color: rgba(14, 165, 233, 0.28);
+            background: rgba(14, 165, 233, 0.07);
+            text-shadow: 0 0 42px rgba(14, 165, 233, 0.45);
+            transform: translateY(-3px);
         }
 
-        .locked-project {
-            background: rgba(30,30,30,0.6);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 25px;
+        /* ── Principle ── */
+        .principle {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            margin: 10px 0;
+            padding-left: 14px;
+            border-left: 3px solid #0EA5E9;
+            line-height: 1.5;
+        }
+
+        /* ── Locked ── */
+        .locked-box {
+            background: rgba(30, 30, 35, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 1.4rem;
             text-align: center;
-            color: var(--text-secondary);
-            filter: blur(3px);
+            color: var(--text3);
+            filter: blur(2.5px);
             user-select: none;
             pointer-events: none;
+            font-size: 0.85rem;
         }
-        .lock-icon { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5; }
-
-        .contact-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .contact-tile {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            flex: 1 1 200px;
-            transition: 0.3s;
-        }
-        .contact-tile:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 25px rgba(var(--glow-color),0.15);
-        }
-        .contact-icon { font-size: 2rem; margin-bottom: 12px; }
-
-        .footer {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-            background: linear-gradient(180deg, transparent 0%, var(--bg-main) 80%);
+        .locked-box .lock-icon {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            opacity: 0.4;
         }
 
-        #hidden-roadmap {
-            display: none;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%,-50%);
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            border: 2px solid var(--accent);
-            border-radius: 30px;
-            padding: 40px;
-            z-index: 9999;
-            color: var(--text-primary);
-            box-shadow: 0 0 60px rgba(var(--glow-color),0.3);
-            max-width: 500px;
-        }
-        #hidden-roadmap.visible { display: block; }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s ease;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .project-3d {
+        /* ── Inputs ── */
+        input,
+        textarea {
+            background: rgba(20, 20, 24, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 13px;
+            padding: 0.85rem 1rem;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.3s;
             width: 100%;
-            height: 320px;
-            margin-bottom: 15px;
-            border-radius: 20px;
-            overflow: hidden;
-            background: rgba(0,0,0,0.2);
+            outline: none;
+            resize: vertical;
+        }
+        input:focus,
+        textarea:focus {
+            border-color: rgba(14, 165, 233, 0.45);
+            box-shadow: 0 0 0 5px rgba(14, 165, 233, 0.06);
+            background: rgba(26, 26, 30, 0.65);
+        }
+        input::placeholder,
+        textarea::placeholder {
+            color: #52525B;
         }
 
-        .skill-bar { margin-bottom: 20px; }
-        .skill-bar span { display: flex; justify-content: space-between; font-weight: 500; margin-bottom: 5px; }
-        .progress { height: 8px; background: rgba(128,128,128,0.2); border-radius: 20px; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 20px; background: var(--progress-grad); transition: width 1s ease; }
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272A;
+            border-radius: 8px;
+        }
+
+        /* ── Typography ── */
+        .display {
+            font-family: var(--font-display);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+        }
+        .eyebrow {
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 0.13em;
+            color: var(--text3);
+            margin-bottom: 0.5rem;
+        }
+        .stat-num {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 2.2rem;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .stat-lbl {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text3);
+            margin-top: 3px;
+        }
+        .case-img {
+            border-radius: 14px;
+            overflow: hidden;
+            transition: transform 0.45s var(--spring);
+            will-change: transform;
+            background: rgba(30, 30, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+        }
+        .glass:hover .case-img {
+            transform: scale(1.03);
+        }
 
         @media (max-width: 768px) {
-            .glass { padding: 25px; }
-            .timeline-node { width: 120px; }
-            .quick-links-container { padding: 15px 20px; gap: 12px; border-radius: 50px; }
-            .quick-link-btn { padding: 10px 18px; font-size: 0.85rem; gap: 6px; }
+            .glass:hover {
+                transform: translateY(-2px);
+            }
+            .glass:hover .case-img {
+                transform: scale(1.01);
+            }
+            .stat-num {
+                font-size: 1.6rem;
+            }
+            .btn-pill {
+                padding: 11px 20px;
+                font-size: 0.8rem;
+            }
+            .timeline-node {
+                width: 105px;
+            }
+            .glow-orb-1 {
+                width: 350px;
+                height: 350px;
+                top: -150px;
+                left: -100px;
+            }
+            .glow-orb-2 {
+                width: 280px;
+                height: 280px;
+                right: -120px;
+            }
+            .glow-orb-3 {
+                width: 300px;
+                height: 300px;
+                bottom: -140px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="bg-canvas"></div>
 
-    <button class="theme-btn" id="themeToggle">🌀 Cyber</button>
+    <!-- ═══════════ ATMOSPHERIC BACKGROUND ═══════════ -->
+    <div class="bg-atmos"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
 
-    <!-- Hero Section (unchanged first page, no floating CV) -->
-    <section class="hero">
-        <div class="hero-name">ABDULLAH BIN FAHAD</div>
-        <div class="hero-roles" id="roleCycler">Future Engineer</div>
-        <div class="hero-statement">Building technologies that expand human potential.</div>
-        <div class="scroll-indicator">▼ &nbsp; Scroll to Discover</div>
-    </section>
+    <!-- ═══════════ STICKY NAVIGATION ═══════════ -->
+    <nav style="position:fixed;top:0;left:0;width:100%;z-index:90;padding:12px 16px;">
+        <div class="glass-sm"
+        style="max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;border-radius:60px;">
+        <a href="#"
+        style="font-family:var(--font-display);font-weight:900;font-size:1.25rem;color:#fff;text-decoration:none;letter-spacing:-0.02em;">
+        ABF<span style="color:#38BDF8;">.</span>
+    </a>
+    <div style="display:none;align-items:center;gap:1.3rem;" id="deskNav">
+        <a href="#work" class="nav-link">Work</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#journey" class="nav-link">Journey</a>
+        <a href="#blog" class="nav-link">Blog</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="https://posts.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-ghost">✍️ Writings <span
+        class="ext-arrow">↗</span></a>
+        <a href="https://games.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-games">🎮 Explore More
+        <a href="#contact" class="btn-pill btn-primary" style="padding:10px 20px;font-size:0.82rem;">Book a
+        Call</a>
+    </div>
+    <button id="hamBtn" aria-label="Menu"
+    style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;z-index:110;display:block;"
+class="ham-icon">
+<span id="hamIcon">☰</span>
+</button>
+</div>
+</nav>
 
-    <!-- Quick Links Section (Writings, CV, Explore More) -->
-    <div class="quick-links-section">
-        <div class="quick-links-container">
-            <a href="https://posts.abdullahbinfahad.info/" target="_blank" class="quick-link-btn">
-                <span class="btn-icon">✍️</span> Writings
-            </a>
-            <a href="https://cv.abdullahbinfahad.info/" target="_blank" class="quick-link-btn">
-                <span class="btn-icon">📄</span> CV
-            </a>
-            <a href="https://games.abdullahbinfahad.info/" target="_blank" class="quick-link-btn">
-                <span class="btn-icon">🧭</span> Explore More
-            </a>
+<!-- ═══════════ MOBILE MENU ═══════════ -->
+<div class="mobile-overlay" id="mobMenu">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#journey">Journey</a>
+    <a href="#blog">Blog</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://posts.abdullahbinfahad.info/" target="_blank"
+    style="color:#38BDF8;display:inline-flex;align-items:center;gap:6px;">✍️ Writings <span
+style="font-size:0.7em;">↗</span></a>
+<a href="https://games.abdullahbinfahad.info/" target="_blank"
+style="color:#A78BFA;display:inline-flex;align-items:center;gap:6px;">🎮 Explore More <span
+style="font-size:0.7em;">↗</span></a>
+<a href="#contact" class="btn-pill btn-primary" style="font-size:1rem;padding:14px 30px;">Book a Call</a>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section style="
+    position:relative;
+    z-index:10;
+    padding:150px 16px 80px;
+">
+
+    <div style="
+        max-width:1050px;
+        margin:0 auto;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:4rem;
+    ">
+
+        <!-- ═══════════ PROFILE IMAGE ═══════════ -->
+        <div style="
+            position:relative;
+            flex:0 0 auto;
+        ">
+
+            <div style="
+                width:150px;
+                height:150px;
+                border-radius:50%;
+                padding:3px;
+                background:linear-gradient(135deg,#0EA5E9,#475569);
+                box-shadow:0 20px 60px rgba(14,165,233,.16);
+            ">
+
+                <img
+                    src="https://raw.githubusercontent.com/abdullahbinfahad/writings/main/assets/uploads/abdullahbinfahad.jpg"
+                    alt="Abdullah Bin Fahad"
+                    style="
+                        width:100%;
+                        height:100%;
+                        border-radius:50%;
+                        object-fit:cover;
+                        display:block;
+                    "
+                >
+
+            </div>
+
+
+            <!-- Availability -->
+            <div style="
+                position:absolute;
+                bottom:-8px;
+                left:50%;
+                transform:translateX(-50%);
+                background:#0a0a0a;
+                border:1px solid rgba(255,255,255,.14);
+                border-radius:50px;
+                padding:6px 13px;
+                display:flex;
+                align-items:center;
+                gap:6px;
+                white-space:nowrap;
+                box-shadow:0 7px 26px rgba(0,0,0,.55);
+            ">
+
+                <span class="pulse-dot"></span>
+
+                <span style="
+                    font-size:.62rem;
+                    font-weight:700;
+                    text-transform:uppercase;
+                    letter-spacing:.1em;
+                    color:#10B981;
+                ">
+                    Available
+                </span>
+
+            </div>
+
         </div>
+
+
+        <!-- ═══════════ HERO CONTENT ═══════════ -->
+        <div style="
+            flex:1;
+            max-width:760px;
+            text-align:left;
+        ">
+
+            <p class="eyebrow" style="
+                margin-bottom:.8rem;
+            ">
+                Abdullah Bin Fahad · Automation Engineering
+            </p>
+
+
+            <h1 class="display" style="
+                font-size:clamp(2.2rem,5.2vw,4.4rem);
+                line-height:1.04;
+                margin:0;
+                letter-spacing:-.035em;
+            ">
+
+                <span style="
+                    background:linear-gradient(180deg,#fff,#cbd5e1);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;
+                    background-clip:text;
+                ">
+                    Building technology
+                </span>
+
+                <span style="
+                    background:linear-gradient(135deg,#0EA5E9,#475569);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;
+                    background-clip:text;
+                ">
+                    that expands human potential.
+                </span>
+
+            </h1>
+
+
+            <p style="
+                color:var(--text2);
+                font-size:1.02rem;
+                line-height:1.7;
+                max-width:650px;
+                margin:1.15rem 0 1.5rem;
+            ">
+                I build AI-powered products, intelligent web platforms, and
+                automation systems that turn ideas into practical solutions
+                for real-world problems.
+            </p>
+
+
+            <!-- ═══════════ ACTIONS ═══════════ -->
+            <div style="
+                display:flex;
+                flex-wrap:wrap;
+                gap:11px;
+                justify-content:flex-start;
+            ">
+
+                <a href="#contact"
+                   class="btn-pill btn-primary">
+                    Get in Touch
+                </a>
+
+                <a href="https://cv.abdullahbinfahad.info/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn-pill btn-outline">
+                    View Resume
+                    <span class="ext-arrow">↗</span>
+                </a>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="section-divider">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"/>
-        </svg>
+</section>
+
+
+<!-- ═══════════ HERO RESPONSIVE ═══════════ -->
+<style>
+
+@media (max-width: 720px) {
+
+    section:first-of-type > div {
+        flex-direction:column !important;
+        gap:2rem !important;
+        text-align:center !important;
+    }
+
+    section:first-of-type > div > div:last-child {
+        text-align:center !important;
+    }
+
+    section:first-of-type .eyebrow {
+        text-align:center !important;
+    }
+
+    section:first-of-type h1 {
+        font-size:clamp(2.2rem,10vw,3.3rem) !important;
+    }
+
+    section:first-of-type p {
+        margin-left:auto !important;
+        margin-right:auto !important;
+    }
+
+    section:first-of-type > div > div:last-child > div {
+        justify-content:center !important;
+    }
+
+}
+
+</style>
+<!-- ═══════════ SKILLS & EXPERIENCE ═══════════ -->
+<section style="position:relative;z-index:10;padding:25px 0 50px;">
+    <p style="text-align:center;font-size:0.64rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text3);margin-bottom:1rem;">
+        Skills & Experience
+    </p>
+
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+
+            <span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>HTML5</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>CSS3</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>JavaScript</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Python</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>MySQL</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Git & GitHub</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>SEO Optimization</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>WordPress Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Arduino Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>ESP32 Programming</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>FreeRTOS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>LVGL GUI Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>IoT Solutions</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Audio Editing</span>
+
+            <!-- Duplicate for seamless infinite marquee -->
+
+            <span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>HTML5</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>CSS3</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>JavaScript</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Python</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>MySQL</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Git & GitHub</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>SEO Optimization</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>WordPress Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Arduino Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>ESP32 Programming</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>FreeRTOS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>LVGL GUI Development</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>IoT Solutions</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Audio Editing</span>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FEATURED PROJECTS
+═══════════════════════════════════════════════════════════════ -->
+<section id="projects"
+    style="position:relative;z-index:10;padding:70px 16px;max-width:1000px;margin:0 auto;">
+
+    <!-- Section Header -->
+    <div style="text-align:center;margin-bottom:3rem;">
+        <p class="eyebrow">🚀 Selected Work</p>
+
+        <h2 class="display"
+            style="font-size:clamp(1.8rem,4vw,3rem);margin:0.5rem 0 0.8rem;">
+            Projects & Products
+        </h2>
+
+        <p style="
+            color:var(--text2);
+            max-width:620px;
+            margin:0 auto;
+            line-height:1.7;
+            font-size:.95rem;
+        ">
+            A selection of software, AI, automation, and embedded systems
+            I've designed and developed to explore real-world problems.
+        </p>
     </div>
 
-    <section id="about-section" class="glass reveal" style="margin-top: 80px;">
-        <h2>🌐 Who Is Abdullah Bin Fahad?</h2>
-        <p><strong>He</strong> is a mysterious person and has his own way of living his life. He believes life should be experienced, not merely watched. He values making the most of the present while consistently working towards a better future. He believes progress comes through thoughtful action, patience, and learning from every experience. He also believes <strong>knowing how to think is more valuable than knowing what to think</strong>, and he aims to turn ideas into meaningful technology that inspires others and makes a difference. One important thing about him is, he never stops questioning!  <strong>He believes curiosity is the most important reason we evolve</strong>.</p>
-    </section>
 
-    <!-- Philosophy Cards -->
-    <section class="phi-card reveal">
-        <div class="phi-quote">The most important<br> thing for us is to<br> know how to Think</div>
-    </section>
-    <section class="phi-card reveal">
-        <div class="phi-quote">ত্রুটিযুক্ত প্রচেষ্টায় <br>ত্রুটিমুক্ত ফলাফল অর্জন সম্ভব না </div>
-    </section>
-    <section class="phi-card reveal">
-        <div class="phi-quote">Dream boldly.<br>Build patiently.<br>Improve continuously.</div>
-    </section>
-    <section class="phi-card reveal">
-        <div class="phi-quote">Question assumptions.<br>Seek truth.<br>Follow evidence.</div>
-    </section>
-    <section class="phi-card reveal">
-        <div class="phi-quote">Innovation begins where<br>curiosity meets responsibility.</div>
-    </section>
-    <section class="phi-card reveal">
-        <div class="phi-quote">ধৈর্যের আরেক নাম<br>উন্নতি</div>
-    </section>
-    <section class="phi-card reveal">
-        <div class="phi-quote">Character is the foundation<br>of every lasting achievement.</div>
-    </section>
+    <!-- ═══════════════════════════════════════════════════════════
+         PROJECT 01
+    ═══════════════════════════════════════════════════════════ -->
+    <article class="glass"
+        style="
+            padding:2rem;
+            margin-bottom:1.5rem;
+            overflow:hidden;
+        ">
 
-    <section class="glass reveal">
-        <h2>I Think We Should-</h2>
-        <div class="principle-line">Use technology responsibly and ethically.</div>
-        <div class="principle-line">Think independently before following the crowd.</div>
-        <div class="principle-line"> What human creates today for its convenience and protection may become what it must protect itself from tomorrow.</div>
-        <div class="principle-line">Technology should empower humanity, not replace it.</div>
-        <div class="principle-line"> Lead with integrity, humility, and purpose.</div>
-        <div class="principle-line"> Sometimes you can't stay still. And sometimes you stay still but don't feel at peace.</div>
-        <div class="principle-line">Measure success by the positive impact left on others.</div>
-    </section>
+        <div style="
+            display:grid;
+            grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
+            gap:2.5rem;
+            align-items:center;
+        ">
 
-    <!-- Journey with animated timeline line -->
-    <section class="glass reveal" id="journey-section">
-        <h2>🛤 My Journey</h2>
-        <div class="timeline-horizontal" id="timelineContainer">
-            <div class="timeline-line" id="timelineLine"></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Bangladesh</div><div class="timeline-text">Early Curiosity</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Exploration</div><div class="timeline-text">Books, Philosophy, Technology, and Self-Discovery.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Experiment</div><div class="timeline-text">Creating through curiosity.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">New Horizons</div><div class="timeline-text">Moving to China</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Execution</div><div class="timeline-text">Turning concepts into products.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Innovation</div><div class="timeline-text">Creating impactful solutions.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Entrepreneur</div><div class="timeline-text">Startup Vision</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Future</div><div class="timeline-text">Global Impact</div></div>
+            <!-- Project Information -->
+            <div>
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:8px;
+                    margin-bottom:.7rem;
+                ">
+                    <span style="
+                        width:8px;
+                        height:8px;
+                        border-radius:50%;
+                        background:#0EA5E9;
+                        box-shadow:0 0 12px rgba(14,165,233,.6);
+                    "></span>
+
+                    <span style="
+                        color:#0EA5E9;
+                        font-size:.68rem;
+                        font-weight:700;
+                        text-transform:uppercase;
+                        letter-spacing:.12em;
+                    ">
+                        AI Platform
+                    </span>
+                </div>
+
+
+                <h3 style="
+                    font-family:var(--font-display);
+                    font-weight:900;
+                    font-size:clamp(1.6rem,3vw,2.1rem);
+                    margin:0 0 .7rem;
+                    color:#fff;
+                ">
+                    MarketLens AI
+                </h3>
+
+
+                <p style="
+                    color:var(--text2);
+                    line-height:1.75;
+                    margin:0 0 1.2rem;
+                    font-size:.92rem;
+                ">
+                    An AI-powered decision-support platform for
+                    cross-border e-commerce. Designed to combine market
+                    intelligence, consumer insights, product research,
+                    and business analysis into a unified workflow.
+                </p>
+
+
+                <!-- Technology Tags -->
+                <div style="
+                    display:flex;
+                    flex-wrap:wrap;
+                    gap:7px;
+                    margin-bottom:1.4rem;
+                ">
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        AI
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        Market Intelligence
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        Data Analysis
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        E-Commerce
+                    </span>
+
+                </div>
+
+
+                <!-- Links -->
+                <div style="
+                    display:flex;
+                    flex-wrap:wrap;
+                    gap:1.2rem;
+                    align-items:center;
+                ">
+
+                    <a href="https://www.marketlens-ai.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="
+                            color:#0EA5E9;
+                            font-weight:600;
+                            text-decoration:none;
+                            font-size:.84rem;
+                            display:inline-flex;
+                            align-items:center;
+                            gap:5px;
+                        ">
+                        Explore Project
+                        <span class="ext-arrow">↗</span>
+                    </a>
+
+                    <span style="
+                        color:var(--text3);
+                        font-size:.75rem;
+                    ">
+                        Independent Project
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Project Visual -->
+            <div style="
+                min-height:230px;
+                border-radius:16px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:
+                    radial-gradient(
+                        circle at center,
+                        rgba(14,165,233,.12),
+                        rgba(14,165,233,.02) 55%,
+                        transparent 75%
+                    );
+                border:1px solid rgba(14,165,233,.10);
+                overflow:hidden;
+            ">
+
+                <div style="
+                    width:82%;
+                    max-width:330px;
+                    padding:1rem;
+                    border:1px solid rgba(255,255,255,.08);
+                    border-radius:12px;
+                    background:rgba(15,15,18,.65);
+                    box-shadow:0 20px 50px rgba(0,0,0,.25);
+                ">
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        margin-bottom:1rem;
+                    ">
+                        <span style="
+                            font-size:.65rem;
+                            color:var(--text3);
+                        ">
+                            MARKET INTELLIGENCE
+                        </span>
+
+                        <span style="
+                            width:7px;
+                            height:7px;
+                            border-radius:50%;
+                            background:#0EA5E9;
+                        "></span>
+                    </div>
+
+                    <div style="
+                        height:7px;
+                        width:75%;
+                        border-radius:10px;
+                        background:rgba(14,165,233,.25);
+                        margin-bottom:9px;
+                    "></div>
+
+                    <div style="
+                        height:7px;
+                        width:55%;
+                        border-radius:10px;
+                        background:rgba(255,255,255,.08);
+                        margin-bottom:9px;
+                    "></div>
+
+                    <div style="
+                        height:7px;
+                        width:88%;
+                        border-radius:10px;
+                        background:rgba(255,255,255,.06);
+                        margin-bottom:1rem;
+                    "></div>
+
+                    <div style="
+                        display:grid;
+                        grid-template-columns:repeat(3,1fr);
+                        gap:7px;
+                    ">
+
+                        <div style="
+                            height:45px;
+                            border-radius:7px;
+                            background:rgba(14,165,233,.08);
+                        "></div>
+
+                        <div style="
+                            height:45px;
+                            border-radius:7px;
+                            background:rgba(14,165,233,.06);
+                        "></div>
+
+                        <div style="
+                            height:45px;
+                            border-radius:7px;
+                            background:rgba(14,165,233,.04);
+                        "></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-    </section>
 
-    <section class="glass reveal">
-        <h2>🌍 About Me</h2>
-        <p>I am Abdullah Bin Fahad, an Automation Engineering Student at Nanjing Tech University. I fuse engineering with philosophy, AI with ethics, and business with human behavior to design systems that empower decision‑making at scale.</p>
-        <p>My work spans <strong>AI product development</strong>, <strong>automation prototyping</strong>, <strong>philosophical writing</strong> (Book: "Moral Values*"), and <strong>cross‑cultural public speaking</strong>. I've delivered moral seminars to youth audiences, boosting community engagement by 40%, and authored comprehensive essays that distill complex ethical frameworks into accessible narratives.</p>
-    </section>
+    </article>
 
-    <section class="glass reveal">
-        <h2>🎓 Education</h2>
-        <p><strong>Bachelor of Science in Automation Engineering</strong><br>Nanjing Tech University, China (2025–2029 Expected)<br>Core: Control Systems, Robotics, PLC, Sensors, C/C++</p>
-        <p><strong>Higher Secondary Certificate (Science)</strong><br>Bhola Government College, Bangladesh (2022–2024)</p>
-        <p><strong>Secondary School Certificate (Science)</strong><br>Dhaligour Nagar Secondary School, Bangladesh (2020–2022)</p>
-    </section>
 
-    <section class="glass reveal">
-        <h2>🏆 Key Achievements</h2>
-        <ul>
-            <li><strong>Authored</strong> "Moral Values", synthesizing 3 ethical frameworks into a 500‑page manuscript.</li>
-            <li><strong>Delivered</strong> 15+ moral seminars, reaching 500+ attendees (95% positive feedback).</li>
-            <li><strong>Designed</strong> an automation prototype reducing lab process time by 30%.</li>
-            <li><strong>Volunteered</strong> 100+ hours in cultural exchange, presenting Bangladeshi heritage to 200+ visitors.</li>
-            <li><strong>Organized</strong> IoT‑based home automation demo at Science Fair (300+ students/faculty).</li>
+    <!-- ═══════════════════════════════════════════════════════════
+         PROJECT 02
+    ═══════════════════════════════════════════════════════════ -->
+    <article class="glass"
+        style="
+            padding:2rem;
+            margin-bottom:1.5rem;
+            overflow:hidden;
+        ">
+
+        <div style="
+            display:grid;
+            grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr);
+            gap:2.5rem;
+            align-items:center;
+        ">
+
+            <!-- Project Visual -->
+            <div style="
+                min-height:230px;
+                border-radius:16px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:
+                    radial-gradient(
+                        circle at center,
+                        rgba(16,185,129,.11),
+                        rgba(16,185,129,.02) 55%,
+                        transparent 75%
+                    );
+                border:1px solid rgba(16,185,129,.10);
+            ">
+
+                <div style="
+                    width:170px;
+                    height:205px;
+                    border-radius:18px;
+                    border:1px solid rgba(255,255,255,.12);
+                    background:rgba(15,15,18,.75);
+                    box-shadow:0 20px 50px rgba(0,0,0,.3);
+                    padding:12px;
+                    display:flex;
+                    flex-direction:column;
+                    align-items:center;
+                    justify-content:space-between;
+                ">
+
+                    <div style="
+                        width:100%;
+                        height:105px;
+                        border-radius:9px;
+                        border:1px solid rgba(16,185,129,.15);
+                        background:rgba(16,185,129,.05);
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        color:#10B981;
+                        font-size:.7rem;
+                        letter-spacing:.08em;
+                    ">
+                        SMART
+                    </div>
+
+                    <div style="
+                        display:flex;
+                        gap:7px;
+                        width:100%;
+                    ">
+                        <div style="
+                            flex:1;
+                            height:27px;
+                            border-radius:6px;
+                            background:rgba(255,255,255,.06);
+                        "></div>
+
+                        <div style="
+                            flex:1;
+                            height:27px;
+                            border-radius:6px;
+                            background:rgba(16,185,129,.12);
+                        "></div>
+
+                        <div style="
+                            flex:1;
+                            height:27px;
+                            border-radius:6px;
+                            background:rgba(255,255,255,.06);
+                        "></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Project Information -->
+            <div>
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:8px;
+                    margin-bottom:.7rem;
+                ">
+                    <span style="
+                        width:8px;
+                        height:8px;
+                        border-radius:50%;
+                        background:#10B981;
+                        box-shadow:0 0 12px rgba(16,185,129,.6);
+                    "></span>
+
+                    <span style="
+                        color:#10B981;
+                        font-size:.68rem;
+                        font-weight:700;
+                        text-transform:uppercase;
+                        letter-spacing:.12em;
+                    ">
+                        EdTech · Embedded System
+                    </span>
+                </div>
+
+
+                <h3 style="
+                    font-family:var(--font-display);
+                    font-weight:900;
+                    font-size:clamp(1.6rem,3vw,2.1rem);
+                    margin:0 0 .7rem;
+                    color:#fff;
+                ">
+                    Smart Calculator
+                </h3>
+
+
+                <p style="
+                    color:var(--text2);
+                    line-height:1.75;
+                    margin:0 0 1.2rem;
+                    font-size:.92rem;
+                ">
+                    A multifunctional educational device designed for
+                    children and students, combining calculation,
+                    learning, communication, productivity, and
+                    intelligent assistance in a compact embedded platform.
+                </p>
+
+
+                <!-- Technology Tags -->
+                <div style="
+                    display:flex;
+                    flex-wrap:wrap;
+                    gap:7px;
+                    margin-bottom:1.4rem;
+                ">
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        ESP32-S3
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        FreeRTOS
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        LVGL
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        IoT
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        AI
+                    </span>
+
+                </div>
+
+
+                <div style="
+                    color:var(--text3);
+                    font-size:.75rem;
+                ">
+                    Hardware & Software Product Concept
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PROJECT 03
+    ═══════════════════════════════════════════════════════════ -->
+    <article class="glass"
+        style="
+            padding:2rem;
+            overflow:hidden;
+        ">
+
+        <div style="
+            display:grid;
+            grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
+            gap:2.5rem;
+            align-items:center;
+        ">
+
+            <div>
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:8px;
+                    margin-bottom:.7rem;
+                ">
+                    <span style="
+                        width:8px;
+                        height:8px;
+                        border-radius:50%;
+                        background:#8B5CF6;
+                        box-shadow:0 0 12px rgba(139,92,246,.6);
+                    "></span>
+
+                    <span style="
+                        color:#8B5CF6;
+                        font-size:.68rem;
+                        font-weight:700;
+                        text-transform:uppercase;
+                        letter-spacing:.12em;
+                    ">
+                        Software · Web
+                    </span>
+                </div>
+
+
+                <h3 style="
+                    font-family:var(--font-display);
+                    font-weight:900;
+                    font-size:clamp(1.6rem,3vw,2.1rem);
+                    margin:0 0 .7rem;
+                    color:#fff;
+                ">
+                    Digital Products & Platforms
+                </h3>
+
+
+                <p style="
+                    color:var(--text2);
+                    line-height:1.75;
+                    margin:0 0 1.2rem;
+                    font-size:.92rem;
+                ">
+                    A growing collection of web applications, experimental
+                    tools, and digital platforms focused on practical
+                    problems, user experience, and accessible technology.
+                </p>
+
+
+                <div style="
+                    display:flex;
+                    flex-wrap:wrap;
+                    gap:7px;
+                    margin-bottom:1.4rem;
+                ">
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        HTML
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        CSS
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        JavaScript
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        Python
+                    </span>
+
+                    <span class="glass-sm"
+                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
+                        MySQL
+                    </span>
+
+                </div>
+
+
+                <a href="https://github.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="
+                        color:#8B5CF6;
+                        font-weight:600;
+                        text-decoration:none;
+                        font-size:.84rem;
+                        display:inline-flex;
+                        align-items:center;
+                        gap:5px;
+                    ">
+                    View Development Work
+                    <span class="ext-arrow">↗</span>
+                </a>
+
+            </div>
+
+
+            <!-- Project Visual -->
+            <div style="
+                min-height:230px;
+                border-radius:16px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:
+                    radial-gradient(
+                        circle at center,
+                        rgba(139,92,246,.11),
+                        rgba(139,92,246,.02) 55%,
+                        transparent 75%
+                    );
+                border:1px solid rgba(139,92,246,.10);
+            ">
+
+                <div style="
+                    width:82%;
+                    max-width:330px;
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:8px;
+                ">
+
+                    <div style="
+                        height:85px;
+                        border-radius:10px;
+                        background:rgba(139,92,246,.08);
+                        border:1px solid rgba(139,92,246,.10);
+                    "></div>
+
+                    <div style="
+                        height:85px;
+                        border-radius:10px;
+                        background:rgba(255,255,255,.04);
+                        border:1px solid rgba(255,255,255,.06);
+                    "></div>
+
+                    <div style="
+                        height:55px;
+                        border-radius:10px;
+                        background:rgba(255,255,255,.035);
+                        border:1px solid rgba(255,255,255,.05);
+                    "></div>
+
+                    <div style="
+                        height:55px;
+                        border-radius:10px;
+                        background:rgba(139,92,246,.06);
+                        border:1px solid rgba(139,92,246,.08);
+                    "></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     RESPONSIVE PROJECT LAYOUT
+═══════════════════════════════════════════════════════════════ -->
+<style>
+@media (max-width: 700px) {
+
+    #projects article > div {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    #projects article {
+        padding: 1.4rem !important;
+    }
+
+    #projects article > div > div:first-child {
+        order: 1;
+    }
+
+    #projects article > div > div:last-child {
+        order: 2;
+        min-height:190px !important;
+    }
+
+}
+</style>
+
+<!-- ═══════════ ABOUT ME ═══════════ -->
+<section id="about" style="position:relative;z-index:10;padding:55px 16px;max-width:780px;margin:0 auto;">
+    <p class="eyebrow" style="text-align:center;">🌍 About Me</p>
+
+    <div class="glass" style="padding:2rem;text-align:center;">
+        <p style="color:var(--text2);line-height:1.8;font-size:1rem;">
+            I'm <strong style="color:#fff;">Abdullah Bin Fahad</strong>, an Automation Engineering student at
+            <strong style="color:#fff;">Nanjing Tech University</strong> passionate about building
+            <span style="color:#38BDF8;">AI-powered software</span>,
+            <span style="color:#10B981;">intelligent systems</span>, and
+            <span style="color:#8B5CF6;">digital products</span> that solve real-world problems. I believe
+            <strong style="color:#38BDF8;">knowing how to think is more valuable than knowing what to think</strong>,
+            and that <strong style="color:#fff;">curiosity drives innovation</strong>. By combining engineering,
+            technology, and critical thinking, I strive to create meaningful solutions that make a lasting impact.
+        </p>
+    </div>
+</section>
+
+<!-- ═══════════ EDUCATION ═══════════ -->
+<section style="position:relative;z-index:10;padding:40px 16px;max-width:780px;margin:0 auto;">
+    <p class="eyebrow" style="text-align:center;">🎓 Education</p>
+    <div class="glass" style="padding:1.8rem;">
+        <div style="border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:1rem;margin-bottom:1rem;">
+            <p style="font-weight:700;">B.Sc. Automation Engineering</p>
+            <p style="color:var(--text3);font-size:0.88rem;">Nanjing Tech University, China (2025–2029 Expected)</p>
+            <p style="color:var(--text2);font-size:0.83rem;">Core: Control Systems, Robotics, PLC, Sensors, C/C++</p>
+        </div>
+        <div style="border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:1rem;margin-bottom:1rem;">
+            <p style="font-weight:700;">Higher Secondary Certificate (Science)</p>
+            <p style="color:var(--text3);font-size:0.88rem;">Bhola Government College, Bangladesh (2022–2024)</p>
+        </div>
+        <div>
+            <p style="font-weight:700;">Secondary School Certificate (Science)</p>
+            <p style="color:var(--text3);font-size:0.88rem;">Dhaligour Nagar Secondary School, Bangladesh (2020–2022)
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ HIGHLIGHTS ═══════════ -->
+<section style="position:relative;z-index:10;padding:40px 16px;max-width:780px;margin:0 auto;">
+    <p class="eyebrow" style="text-align:center;">🏆 Highlights</p>
+
+    <div class="glass" style="padding:1.8rem;">
+        <ul style="color:var(--text2);line-height:2;list-style:none;padding:0;">
+
+            <li> <strong style="color:#fff;">Automation Engineering Student</strong> at Nanjing Tech University.</li>
+
+            <li> Built AI-powered applications, modern web platforms, embedded systems, and IoT solutions.</li>
+
+            <li> Developing innovative projects including <strong style="color:#fff;">MarketLens AI</strong> and <strong style="color:#fff;">Smart Calculator</strong>.</li>
+
+            <li> Author of <strong style="color:#fff;">"Moral Values"</strong>, exploring philosophy, ethics, and critical thinking.</li>
+
+            <li> Participated in public speaking and youth seminars focused on education, values, and personal development.</li>
+
+            <li> Experienced in AI integration, automation, embedded programming, and full-stack web development.</li>
+
+            <li> Passionate about building technology that creates meaningful impact across education, business, and society.</li>
+
         </ul>
-    </section>
+    </div>
+</section>
 
-    <section class="glass reveal">
-        <h2>⚡ Technical Skills</h2>
-        <div class="skill-bar"><span>Automation & Control Systems</span><span>82%</span><div class="progress"><div class="progress-fill" style="width:82%"></div></div></div>
-        <div class="skill-bar"><span>Python Programming</span><span>78%</span><div class="progress"><div class="progress-fill" style="width:78%"></div></div></div>
-        <div class="skill-bar"><span>HTML / CSS</span><span>80%</span><div class="progress"><div class="progress-fill" style="width:80%"></div></div></div>
-        <div class="skill-bar"><span>C Programming</span><span>72%</span><div class="progress"><div class="progress-fill" style="width:72%"></div></div></div>
-        <div class="skill-bar"><span>Digital Marketing & Content Writing</span><span>88%</span><div class="progress"><div class="progress-fill" style="width:88%"></div></div></div>
-        <div class="skill-bar"><span>Video / Audio Editing</span><span>85%</span><div class="progress"><div class="progress-fill" style="width:85%"></div></div></div>
-        <div class="skill-bar"><span>Microsoft Office Suite</span><span>90%</span><div class="progress"><div class="progress-fill" style="width:90%"></div></div></div>
-    </section>
+<!-- ═══════════ PROFESSIONAL JOURNEY ═══════════ -->
+<section id="journey" style="position:relative;z-index:10;padding:50px 16px;max-width:950px;margin:0 auto;">
+    <p class="eyebrow" style="text-align:center;">📍 Professional Journey</p>
 
-    <section class="glass reveal">
-        <h2>🗣 Languages</h2>
-        <p>• Bangla – Native<br>• English – Fluent<br>• Mandarin Chinese – Intermediate (HSK 4)<br>• Hindi/Urdu – Conversational</p>
-    </section>
+    <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">
+        Academic & Professional Growth
+    </h2>
 
-    <!-- Projects with realistic 3D mockups -->
-    <section class="glass reveal">
-        <h2>🧑🏻‍💻 Featured Projects</h2>
-        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-            <div style="flex: 1 1 400px;">
-                <div class="project-3d" id="laptop3d"></div>
-                <p><strong>MarketLens AI</strong> — Intelligent cross‑border e‑commerce agent. Real‑time market intelligence, consumer review analysis, tariff risk simulation. <a href="https://www.marketlens-ai.com" target="_blank">Visit →</a></p>
-            </div>
-            <div style="flex: 1 1 400px;">
-                <div class="project-3d" id="calc3d"></div>
-                <p><strong>🧮 Smart Calculator</strong> — Educational device for low‑connectivity areas. AI assistant, offline mesh, 10+ languages, GPS. <em>Coming soon.</em></p>
-            </div>
+    <div class="timeline-wrap">
+
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">🇧🇩 Bangladesh</div>
+            <div class="timeline-text">Built a strong foundation in science, technology, and analytical thinking.</div>
         </div>
-    </section>
 
-    <h2 style="max-width:1100px; margin:40px auto 10px;">🔒 Other Projects (Under Development)</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; max-width:1100px; margin:0 auto 40px; justify-content: center;">
-        <div class="locked-project"><div class="lock-icon">🔒</div><h3>AI Research Tool</h3><p>Confidential</p></div>
-        <div class="locked-project"><div class="lock-icon">🔒</div><h3>Automation Dashboard</h3><p>Under NDA</p></div>
-        <div class="locked-project"><div class="lock-icon">🔒</div><h3>Philosophy Platform</h3><p>Early concept</p></div>
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">💻 Self Learning</div>
+            <div class="timeline-text">Developed skills in programming, web development, embedded systems, and AI.</div>
+        </div>
+
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">🔬 Hands-on Projects</div>
+            <div class="timeline-text">Designed and built software, IoT solutions, and automation projects.</div>
+        </div>
+
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">🇨🇳 Nanjing Tech University</div>
+            <div class="timeline-text">Pursuing a Bachelor's degree in Automation Engineering while expanding technical expertise.</div>
+        </div>
+
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">🤖 AI & Automation</div>
+            <div class="timeline-text">Building intelligent products that integrate AI, automation, and modern software engineering.</div>
+        </div>
+
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">🚀 Product Development</div>
+            <div class="timeline-text">Transforming ideas into scalable digital products and real-world solutions.</div>
+        </div>
+
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">🌐 Entrepreneurship</div>
+            <div class="timeline-text">Developing innovative technology ventures with a global perspective.</div>
+        </div>
+
+        <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">🎯 Future Vision</div>
+            <div class="timeline-text">Creating impactful technologies that improve lives and solve meaningful challenges worldwide.</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════ TECHNICAL EXPERTISE ═══════════ -->
+<section style="position:relative;z-index:10;padding:50px 16px;max-width:720px;margin:0 auto;">
+    <p class="eyebrow" style="text-align:center;">💻 Technical Expertise</p>
+
+    <div class="glass" style="padding:2rem;">
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>Frontend Development (HTML, CSS, JavaScript)</span>
+                <span>Advanced</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:90%;"></div></div>
+        </div>
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>Python Programming</span>
+                <span>Advanced</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:85%;"></div></div>
+        </div>
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>Embedded Systems & IoT (ESP32, Arduino)</span>
+                <span>Advanced</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:85%;"></div></div>
+        </div>
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>Automation & Control Systems</span>
+                <span>Advanced</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:75%;"></div></div>
+        </div>
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>AI Integration & Prompt Engineering</span>
+                <span>Advanced</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:80%;"></div></div>
+        </div>
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>Git, GitHub & Version Control</span>
+                <span>Advanced</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:80%;"></div></div>
+        </div>
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>MySQL & Database Design</span>
+                <span>Intermediate</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:75%;"></div></div>
+        </div>
+
+        <div class="skill-row">
+            <div class="lbl">
+                <span>Technical Writing & Documentation</span>
+                <span>Advanced</span>
+            </div>
+            <div class="track"><div class="fill" style="--w:90%;"></div></div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════ TECHNICAL EXPERTISE ═══════════ -->
+<section style="position:relative;z-index:10;padding:30px 16px;max-width:900px;margin:0 auto;text-align:center;">
+
+    <p class="eyebrow">Technical Expertise</p>
+
+    <h2 class="display" style="font-size:clamp(1.5rem,3.5vw,2.5rem);margin-bottom:1.8rem;">
+        Technologies & Skills
+    </h2>
+
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">HTML5</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">CSS3</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">JavaScript</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Python</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">C</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Embedded C/C++</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">MySQL</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Git</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">GitHub</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">AI Integration</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Prompt Engineering</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Automation Engineering</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Embedded Systems</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">ESP32</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Arduino</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">FreeRTOS</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">LVGL</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">IoT Development</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">UI/UX Design</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Responsive Web Design</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Technical Writing</span>
+        <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Video Editing</span>
+
     </div>
 
-    <section class="glass reveal">
-        <h2>📊 By the Numbers</h2>
-        <div class="stat-grid">
-            <div class="stat-card"><div class="stat-number count-up" data-target="15" data-suffix="+">0+</div><div class="stat-label">Seminars</div></div>
-            <div class="stat-card"><div class="stat-number count-up" data-target="6" data-suffix="+">0+</div><div class="stat-label">Projects</div></div>
-            <div class="stat-card"><div class="stat-number count-up" data-target="4" data-suffix="+">0+</div><div class="stat-label">Research Areas</div></div>
-            <div class="stat-card"><div class="stat-number count-up" data-target="500" data-suffix="+">0+</div><div class="stat-label">Audience</div></div>
-            <div class="stat-card"><div class="stat-number count-up" data-target="4" data-suffix="">0</div><div class="stat-label">Languages</div></div>
-        </div>
-    </section>
+</section>
 
-    <section class="glass reveal">
-        <h2>🧠 Philosophy</h2>
-        <p>I believe technology should not replace human thinking; it should enhance it. My curiosity extends beyond engineering into the roots of wisdom, ethics, and civilization.</p>
-        <p>I explore: Intelligence vs Wisdom, Technology vs Humanity, Wealth vs Meaning, Power vs Responsibility, Progress vs Purpose.</p>
-        <p>Learning is my lifelong pursuit. Independent thought remains the most valuable ability one can cultivate — and systems that serve people, not the other way around, are what I strive to build.</p>
-    </section>
 
-    <section class="glass reveal">
-        <h2>🔭 Vision</h2>
-        <blockquote style="border-left: 4px solid var(--accent); padding-left: 20px; font-size: 1.2rem;">
-            To build technologies that combine <strong>Artificial Intelligence, Engineering, and Education</strong> to make knowledge more accessible, practical, and meaningful for everyone.<br><br>
-            <strong>Create. Inspire. Empower. Repeat.</strong>
-        </blockquote>
-    </section>
 
-    <section class="glass reveal">
-        <h2>📬 Contact</h2>
-        <div class="contact-grid">
-            <div class="contact-tile"><div class="contact-icon">📧</div><h4>Email</h4><p>abdullahbinfahad.abf@gmail.com</p></div>
-            <div class="contact-tile"><div class="contact-icon">💻</div><h4>GitHub</h4><p>github.com/abdullahbinfahad</p></div>
-            <div class="contact-tile"><div class="contact-icon">📍</div><h4>Location</h4><p>Nanjing, China</p></div>
-            <div class="contact-tile"><div class="contact-icon">📱</div><h4>Phone</h4><p>+86 18105180247</p></div>
-        </div>
-    </section>
+<!-- ═══════════ PROFESSIONAL SNAPSHOT ═══════════ -->
+<p class="eyebrow" style="text-align:center;">📈 Professional Snapshot</p>
 
-    <footer class="footer">
-        <span style="font-size:1.5rem; font-weight:600;">Building Tomorrow.</span><br>
-        <span style="font-size:1rem;">One Idea. One Innovation. One Step at a Time.</span><br><br>
-        © 2026 Abdullah Bin Fahad<br>
-        <a href="https://www.abdullahbinfahad.info" style="color:var(--text-secondary);">www.abdullahbinfahad.info</a>
-    </footer>
+<h2 class="display" style="text-align:center;font-size:clamp(1.6rem,3.5vw,2.6rem);margin-bottom:2.5rem;">
+    Experience at a Glance
+</h2>
 
-    <div id="hidden-roadmap">
-        <h3 style="color:var(--accent);">🚀 Secret Roadmap</h3>
-        <p>2025 – MarketLens AI</p>
-        <p>2025 – Smart Calculator</p>
-        <p>2026 – AI Research Platform</p>
-        <p>2027 – Education System</p>
-        <p>2028 – Global Startup</p>
-        <p>2030 – Impact millions</p>
-        <p style="font-size:0.8rem; color:var(--text-secondary);">(type 'future' anywhere to show this)</p>
+<div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:1rem;
+">
+
+    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
+        <div class="stat-num">3+</div>
+        <div class="stat-lbl">Years of Development</div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // ---------- THEME MANAGEMENT ----------
-        const body = document.body;
-        const themeBtn = document.getElementById('themeToggle');
-        const themes = ['light', 'dark', 'cyber'];
-        let currentTheme = 2; // DEFAULT CYBER
-        const themeLabels = ['☀️ Light', '🌙 Dark', '🌀 Cyber'];
+    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
+        <div class="stat-num">20+</div>
+        <div class="stat-lbl">Technologies & Tools</div>
+    </div>
 
-        function applyTheme(index) {
-            body.className = '';
-            body.classList.add(themes[index]);
-            themeBtn.textContent = themeLabels[index];
-            if (window.updateBackgroundColors) window.updateBackgroundColors();
-        }
+    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
+        <div class="stat-num">6+</div>
+        <div class="stat-lbl">Projects Developed</div>
+    </div>
 
-        // Initial apply
-        applyTheme(currentTheme);
+    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
+        <div class="stat-num">4</div>
+        <div class="stat-lbl">Spoken Languages</div>
+    </div>
 
-        themeBtn.addEventListener('click', () => {
-            currentTheme = (currentTheme + 1) % 3;
-            applyTheme(currentTheme);
-        });
+    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
+        <div class="stat-num">2</div>
+        <div class="stat-lbl">AI Product Concepts</div>
+    </div>
 
-        // Double‑click toggles (manual)
-        let clickTimer;
-        document.addEventListener('click', (e) => {
-            if (clickTimer) {
-                clearTimeout(clickTimer);
-                clickTimer = null;
-                currentTheme = (currentTheme + 1) % 3;
-                applyTheme(currentTheme);
-            } else {
-                clickTimer = setTimeout(() => clickTimer = null, 400);
-            }
-        });
+    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
+        <div class="stat-num">∞</div>
+        <div class="stat-lbl">Curiosity to Learn</div>
+    </div>
 
-        // ---------- EASTER EGG: type 'future' ----------
-        let typed = '';
-        document.addEventListener('keydown', (e) => {
-            typed += e.key.toLowerCase();
-            if (typed.includes('future')) {
-                document.getElementById('hidden-roadmap').classList.add('visible');
-                typed = '';
-                setTimeout(() => document.getElementById('hidden-roadmap').classList.remove('visible'), 6000);
-            }
-            if (typed.length > 20) typed = typed.slice(-20);
-        });
+</div>
 
-        // ---------- SCROLL REVEAL + TIMELINE LINE ANIMATION ----------
-        const revealElements = document.querySelectorAll('.reveal, .phi-card');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+<!-- ═══════════ PHILOSOPHY & VISION ═══════════ -->
+<section id="philosophy" style="position:relative;z-index:10;padding:60px 16px;max-width:850px;margin:0 auto;">
 
-                    // Animate counters if present
-                    if (entry.target.querySelector('.count-up')) {
-                        const counters = entry.target.querySelectorAll('.count-up');
-                        counters.forEach(counter => {
-                            const target = parseInt(counter.getAttribute('data-target'));
-                            const suffix = counter.getAttribute('data-suffix') || '';
-                            if (!target) return;
-                            let start = 0;
-                            const duration = 1500;
-                            const step = timestamp => {
-                                if (!start) start = timestamp;
-                                const progress = Math.min((timestamp - start) / duration, 1);
-                                counter.textContent = Math.floor(progress * target) + suffix;
-                                if (progress < 1) requestAnimationFrame(step);
-                            };
-                            requestAnimationFrame(step);
-                        });
-                    }
+    <p class="eyebrow" style="text-align:center;">🧠 Philosophy & Vision</p>
 
-                    // Special: animate journey timeline line when the section is visible
-                    if (entry.target.id === 'journey-section') {
-                        const line = document.getElementById('timelineLine');
-                        if (line) {
-                            line.classList.add('animated');
-                        }
-                    }
+    <div class="glass" style="padding:2.5rem;">
+
+        <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.3rem);text-align:center;margin-bottom:1.25rem;">
+            Building Technology with Purpose
+        </h2>
+
+        <p style="color:var(--text2);line-height:1.9;text-align:center;max-width:680px;margin:0 auto 2.5rem;">
+            I believe technology should <strong style="color:#fff;">empower people</strong>, not replace them.
+            My work is driven by curiosity, critical thinking, and ethical engineering, with the goal of creating
+            intelligent solutions that solve meaningful problems and make a lasting impact.
+        </p>
+
+        <div style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+            gap:1rem;
+        ">
+
+            <div class="glass-sm" style="padding:1.25rem;">
+                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
+                    💡 Think Independently
+                </h3>
+                <p style="margin:0;color:var(--text2);line-height:1.7;">
+                    Challenge assumptions, seek understanding, and develop original ideas.
+                </p>
+            </div>
+
+            <div class="glass-sm" style="padding:1.25rem;">
+                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
+                    🔍 Stay Curious
+                </h3>
+                <p style="margin:0;color:var(--text2);line-height:1.7;">
+                    Continuous learning and experimentation are the foundation of innovation.
+                </p>
+            </div>
+
+            <div class="glass-sm" style="padding:1.25rem;">
+                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
+                    ⚖️ Build Responsibly
+                </h3>
+                <p style="margin:0;color:var(--text2);line-height:1.7;">
+                    Every technology should respect people, society, and long-term sustainability.
+                </p>
+            </div>
+
+            <div class="glass-sm" style="padding:1.25rem;">
+                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
+                    🚀 Create Meaningful Impact
+                </h3>
+                <p style="margin:0;color:var(--text2);line-height:1.7;">
+                    Focus on solving real-world challenges through practical, scalable, and human-centered solutions.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════ BLOG ═══════════ -->
+<section id="blog" style="position:relative;z-index:10;padding:50px 16px;max-width:920px;margin:0 auto;">
+    <p class="eyebrow" style="text-align:center;">✍️ Writings</p>
+    <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">Latest Blog
+    Posts</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;">
+        <a href="https://posts.abdullahbinfahad.info/at-a-certain-point-neither-happiness-nor-sorrow-holds-any-meaning-where-life-itself-is-an-illusion/"
+        target="_blank" class="glass" style="padding:1.5rem;text-decoration:none;color:inherit;display:block;">
+        <div
+        style="width:100%;height:125px;background:rgba(30,30,35,0.55);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;border:1px solid rgba(14,165,233,0.1);">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="1.5" opacity="0.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="#0EA5E9" opacity="0.3"/></svg>
+    </div>
+    <p style="color:var(--text3);font-size:0.68rem;margin-bottom:0.3rem;">Philosophical Essay</p>
+    <h4 style="font-family:var(--font-display);font-weight:700;font-size:0.98rem;color:#fff;line-height:1.35;">At a
+    Certain Point, Neither Happiness Nor Sorrow Holds Any Meaning — Where Life Itself Is an Illusion <span
+class="ext-arrow">↗</span></h4>
+</a>
+<a href="https://posts.abdullahbinfahad.info/illusion-of-existence/"
+target="_blank" class="glass" style="padding:1.5rem;text-decoration:none;color:inherit;display:block;">
+<div
+style="width:100%;height:125px;background:rgba(30,30,35,0.55);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;border:1px solid rgba(71,85,105,0.1);">
+<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" opacity="0.5"><path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><circle cx="12" cy="12" r="3" fill="#475569" opacity="0.25"/></svg>
+</div>
+<p style="color:var(--text3);font-size:0.68rem;margin-bottom:0.3rem;">Existential Reflection</p>
+<h4 style="font-family:var(--font-display);font-weight:700;font-size:0.98rem;color:#fff;line-height:1.35;">Illusion
+of Existence <span class="ext-arrow">↗</span></h4>
+</a>
+</div>
+<div style="text-align:center;margin-top:2rem;">
+    <a href="https://posts.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-outline">View All Writings
+    <span class="ext-arrow">↗</span></a>
+</div>
+</section>
+<!-- ═══════════ BLOG / WRITINGS ═══════════ -->
+<section id="blog" style="position:relative;z-index:10;padding:50px 16px;max-width:920px;margin:0 auto;">
+
+    <p class="eyebrow" style="text-align:center;">✍️ Writings</p>
+
+    <h2 class="display"
+        style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">
+        Latest Writings
+    </h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+        gap:1.2rem;
+    ">
+
+        <!-- ═══════════ POST 1 ═══════════ -->
+        <a href="https://posts.abdullahbinfahad.info/at-a-certain-point-neither-happiness-nor-sorrow-holds-any-meaning-where-life-itself-is-an-illusion/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="glass blog-card"
+           style="
+               padding:1.5rem;
+               text-decoration:none;
+               color:inherit;
+               display:block;
+               overflow:hidden;
+           ">
+
+            <div style="
+                width:100%;
+                height:180px;
+                border-radius:12px;
+                overflow:hidden;
+                margin-bottom:1rem;
+                border:1px solid rgba(14,165,233,.12);
+                background:rgba(30,30,35,.55);
+            ">
+                <img
+                    src="https://cdn.vox-cdn.com/thumbor/fvwe9t7KT4Eixb4bU-FTvvpOMo0=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19715160/GettyImages_515177654.jpg"
+                    alt="At a Certain Point, Neither Happiness Nor Sorrow Holds Any Meaning"
+                    loading="lazy"
+                    style="
+                        width:100%;
+                        height:100%;
+                        object-fit:cover;
+                        display:block;
+                        transition:transform .45s ease;
+                    ">
+            </div>
+
+            <p style="
+                color:var(--text3);
+                font-size:.68rem;
+                margin-bottom:.35rem;
+                text-transform:uppercase;
+                letter-spacing:.08em;
+            ">
+                Philosophical Essay
+            </p>
+
+            <h4 style="
+                font-family:var(--font-display);
+                font-weight:700;
+                font-size:.98rem;
+                color:#fff;
+                line-height:1.4;
+                margin:0;
+            ">
+                At a Certain Point, Neither Happiness Nor Sorrow Holds Any Meaning
+                <span class="ext-arrow">↗</span>
+            </h4>
+
+        </a>
+
+
+        <!-- ═══════════ POST 2 ═══════════ -->
+        <a href="https://posts.abdullahbinfahad.info/illusion-of-existence/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="glass blog-card"
+           style="
+               padding:1.5rem;
+               text-decoration:none;
+               color:inherit;
+               display:block;
+               overflow:hidden;
+           ">
+
+            <div style="
+                width:100%;
+                height:180px;
+                border-radius:12px;
+                overflow:hidden;
+                margin-bottom:1rem;
+                border:1px solid rgba(71,85,105,.12);
+                background:rgba(30,30,35,.55);
+            ">
+                <img
+                    src="https://posts.abdullahbinfahad.info/assets/uploads/alone-picture.png"
+                    alt="Illusion of Existence"
+                    loading="lazy"
+                    style="
+                        width:100%;
+                        height:100%;
+                        object-fit:cover;
+                        display:block;
+                        transition:transform .45s ease;
+                    ">
+            </div>
+
+            <p style="
+                color:var(--text3);
+                font-size:.68rem;
+                margin-bottom:.35rem;
+                text-transform:uppercase;
+                letter-spacing:.08em;
+            ">
+                Existential Reflection
+            </p>
+
+            <h4 style="
+                font-family:var(--font-display);
+                font-weight:700;
+                font-size:.98rem;
+                color:#fff;
+                line-height:1.4;
+                margin:0;
+            ">
+                অস্তিত্বের ভ্রম: আপনি কি শুধুই একটি কল্পিত পরিচয়?
+                <span class="ext-arrow">↗</span>
+            </h4>
+
+        </a>
+
+    </div>
+
+
+    <!-- ═══════════ VIEW ALL ═══════════ -->
+    <div style="text-align:center;margin-top:2rem;">
+
+        <a href="https://posts.abdullahbinfahad.info/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="btn-pill btn-outline">
+
+            View All Writings
+            <span class="ext-arrow">↗</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ═══════════ BLOG CARD HOVER ═══════════ -->
+<style>
+.blog-card img {
+    transition: transform .45s ease;
+}
+
+.blog-card:hover img {
+    transform: scale(1.05);
+}
+</style>
+
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section id="faq" style="position:relative;z-index:10;padding:50px 16px;max-width:700px;margin:0 auto;">
+
+    <p class="eyebrow" style="text-align:center;">Questions</p>
+
+    <h2 class="display"
+        style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">
+        Frequently Asked Questions
+    </h2>
+
+    <div style="display:flex;flex-direction:column;gap:.6rem;">
+
+        <!-- FAQ 1 -->
+        <div class="faq-item glass-sm"
+             style="padding:1rem 1.3rem;cursor:pointer;"
+             onclick="toggleFAQ(this)">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+
+                <span style="font-weight:600;color:#fff;font-size:.88rem;">
+                    What do you work on?
+                </span>
+
+                <svg class="faq-chevron"
+                     width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path d="M19 9l-7 7-7-7"/>
+                </svg>
+
+            </div>
+
+            <div class="faq-answer">
+                I work across AI-powered software, web development, automation,
+                embedded systems, IoT, and digital product development.
+            </div>
+
+        </div>
+
+
+        <!-- FAQ 2 -->
+        <div class="faq-item glass-sm"
+             style="padding:1rem 1.3rem;cursor:pointer;"
+             onclick="toggleFAQ(this)">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+
+                <span style="font-weight:600;color:#fff;font-size:.88rem;">
+                    What technologies do you use?
+                </span>
+
+                <svg class="faq-chevron"
+                     width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path d="M19 9l-7 7-7-7"/>
+                </svg>
+
+            </div>
+
+            <div class="faq-answer">
+                My technical stack includes Python, C/C++, HTML, CSS, JavaScript,
+                MySQL, Git, GitHub, ESP32, Arduino, FreeRTOS, LVGL, and other
+                tools used for AI, automation, and embedded development.
+            </div>
+
+        </div>
+
+
+        <!-- FAQ 3 -->
+        <div class="faq-item glass-sm"
+             style="padding:1rem 1.3rem;cursor:pointer;"
+             onclick="toggleFAQ(this)">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+
+                <span style="font-weight:600;color:#fff;font-size:.88rem;">
+                    What are you currently studying?
+                </span>
+
+                <svg class="faq-chevron"
+                     width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path d="M19 9l-7 7-7-7"/>
+                </svg>
+
+            </div>
+
+            <div class="faq-answer">
+                I am pursuing a Bachelor's degree in Automation Engineering at
+                Nanjing Tech University in China, with a focus on automation,
+                intelligent systems, and practical engineering.
+            </div>
+
+        </div>
+
+
+        <!-- FAQ 4 -->
+        <div class="faq-item glass-sm"
+             style="padding:1rem 1.3rem;cursor:pointer;"
+             onclick="toggleFAQ(this)">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+
+                <span style="font-weight:600;color:#fff;font-size:.88rem;">
+                    Are you open to collaborations?
+                </span>
+
+                <svg class="faq-chevron"
+                     width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path d="M19 9l-7 7-7-7"/>
+                </svg>
+
+            </div>
+
+            <div class="faq-answer">
+                Yes. I am open to meaningful collaborations involving software,
+                AI, automation, embedded systems, research, and technology-driven
+                projects.
+            </div>
+
+        </div>
+
+
+        <!-- FAQ 5 -->
+        <div class="faq-item glass-sm"
+             style="padding:1rem 1.3rem;cursor:pointer;"
+             onclick="toggleFAQ(this)">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+
+                <span style="font-weight:600;color:#fff;font-size:.88rem;">
+                    Where are you based?
+                </span>
+
+                <svg class="faq-chevron"
+                     width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path d="M19 9l-7 7-7-7"/>
+                </svg>
+
+            </div>
+
+            <div class="faq-answer">
+                I am currently based in China while pursuing my degree at
+                Nanjing Tech University and developing projects with a global
+                perspective.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section id="contact" style="position:relative;z-index:10;padding:50px 16px;max-width:700px;margin:0 auto;">
+    <div class="glass" style="padding:2.5rem;">
+        <p class="eyebrow">📬 Contact</p>
+        <h2 class="display" style="font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:1.5rem;">Let's Work Together</h2>
+        <form onsubmit="handleSubmit(event)" style="display:flex;flex-direction:column;gap:1rem;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <textarea rows="4" placeholder="Tell me about your project..." required></textarea>
+            <button type="submit" class="btn-pill btn-primary" style="align-self:flex-start;">Send Message</button>
+        </form>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.05);justify-content:center;font-size:0.83rem;">
+            <a href="mailto:abdullahbinfahad.abf@gmail.com"
+            style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.3s;">📧
+        Email</a>
+        <a href="https://github.com/abdullahbinfahad" target="_blank"
+        style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.3s;">💻
+    GitHub</a>
+    <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📍 Nanjing, China</span>
+    <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📱 +86 18105180247</span>
+</div>
+</div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer style="position:relative;z-index:10;padding:40px 16px;text-align:center;border-top:1px solid rgba(255,255,255,0.04);">
+    <div style="max-width:850px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0.8rem;font-size:0.78rem;color:var(--text3);">
+        <p>© 2026 Abdullah Bin Fahad. All rights reserved.</p>
+        <div style="display:flex;align-items:center;gap:1rem;">
+            <span style="display:flex;align-items:center;gap:5px;"><span class="pulse-dot" style="width:6px;height:6px;"></span> Nanjing, China</span>
+            <span id="localTime" style="color:#52525B;"></span>
+        </div>
+    </div>
+    <a href="https://www.abdullahbinfahad.info"
+    style="color:#52525B;text-decoration:none;font-size:0.73rem;margin-top:0.6rem;display:inline-block;">www.abdullahbinfahad.info</a>
+</footer>
+
+<script>
+    const hamBtn = document.getElementById('hamBtn');
+    const mobMenu = document.getElementById('mobMenu');
+    const hamIcon = document.getElementById('hamIcon');
+    const mobLinks = mobMenu.querySelectorAll('a');
+    hamBtn.addEventListener('click', () => {
+        const o = mobMenu.classList.contains('open');
+        mobMenu.classList.toggle('open', !o);
+        hamIcon.textContent = o ? '☰' : '✕';
+    });
+    mobLinks.forEach(l => l.addEventListener('click', () => { mobMenu.classList.remove('open');
+        hamIcon.textContent = '☰'; }));
+
+    function toggleFAQ(el) {
+        const act = el.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!act) el.classList.add('active');
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const b = e.target.querySelector('button');
+        const t = b.textContent;
+        b.textContent = 'Sent! ✓';
+        b.style.background = '#10B981';
+        setTimeout(() => { b.textContent = t;
+            b.style.background = '#0EA5E9';
+            e.target.reset(); }, 2800);
+    }
+
+    function updTime() {
+        const n = new Date();
+        document.getElementById('localTime').textContent = '🕐 ' + n.toLocaleTimeString('en-US', { hour: '2-digit',
+            minute: '2-digit', second: '2-digit', timeZone: 'Asia/Shanghai', hour12: true }) + ' CST';
+    }
+    updTime();
+    setInterval(updTime, 1000);
+
+    function handleNav() {
+        const d = document.getElementById('deskNav');
+        const h = document.querySelector('.ham-icon');
+        if (window.innerWidth >= 768) { d.style.display = 'flex';
+            h.style.display = 'none'; } else { d.style.display = 'none';
+            h.style.display = 'block'; }
+    }
+    handleNav();
+    window.addEventListener('resize', handleNav);
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                if (e.target.querySelector('.fill')) {
+                    e.target.querySelectorAll('.fill').forEach(f => f.style.width = f.style.getPropertyValue(
+                        '--w'));
                 }
-            });
-        }, { threshold: 0.2 });
-
-        revealElements.forEach(el => observer.observe(el));
-
-        // ---------- 3D BACKGROUND ----------
-        const canvasContainer = document.getElementById('bg-canvas');
-        const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x000000, 0.0005);
-        const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
-        camera.position.z = 50;
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(innerWidth, innerHeight);
-        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-        canvasContainer.appendChild(renderer.domElement);
-
-        const particleCount = 1000;
-        const positions = new Float32Array(particleCount * 3);
-        for (let i = 0; i < particleCount * 3; i += 3) {
-            positions[i] = (Math.random() - 0.5) * 120;
-            positions[i + 1] = (Math.random() - 0.5) * 60;
-            positions[i + 2] = (Math.random() - 0.5) * 60 - 20;
-        }
-        const pGeo = new THREE.BufferGeometry();
-        pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const getAccentColor = () => {
-            const style = getComputedStyle(document.body);
-            return new THREE.Color(style.getPropertyValue('--accent').trim() || '#00ffff');
-        };
-        const pMat = new THREE.PointsMaterial({
-            size: 0.2,
-            color: getAccentColor(),
-            transparent: true,
-            opacity: 0.3,
-            blending: THREE.AdditiveBlending
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+            }
         });
-        const particles = new THREE.Points(pGeo, pMat);
-        scene.add(particles);
+    }, { threshold: 0.18 });
 
-        const lineMat = new THREE.LineBasicMaterial({ color: getAccentColor(), transparent: true, opacity: 0.08 });
-        const linesGroup = new THREE.Group();
-        for (let i = 0; i < particleCount; i++) {
-            const x1 = positions[i * 3], y1 = positions[i * 3 + 1], z1 = positions[i * 3 + 2];
-            for (let j = i + 1; j < particleCount; j++) {
-                const x2 = positions[j * 3], y2 = positions[j * 3 + 1], z2 = positions[j * 3 + 2];
-                if (Math.hypot(x1 - x2, y1 - y2, z1 - z2) < 12) {
-                    const geo = new THREE.BufferGeometry();
-                    geo.setAttribute('position', new THREE.Float32BufferAttribute([x1, y1, z1, x2, y2, z2], 3));
-                    const line = new THREE.Line(geo, lineMat);
-                    linesGroup.add(line);
-                }
-            }
-        }
-        scene.add(linesGroup);
+    document.querySelectorAll('.skill-row').forEach(el => obs.observe(el));
+    document.querySelectorAll('.glass,.glass-sm,.quote-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(22px)';
+        el.style.transition =
+        'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
+        obs.observe(el);
+    });
 
-        function animate() {
-            requestAnimationFrame(animate);
-            particles.rotation.y += 0.0002;
-            linesGroup.rotation.y = particles.rotation.y;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = innerWidth / innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(innerWidth, innerHeight);
+    setTimeout(() => {
+        document.querySelectorAll('.glass,.glass-sm,.quote-card').forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight) { el.style.opacity = '1';
+                el.style.transform = 'translateY(0)'; }
         });
-
-        window.updateBackgroundColors = () => {
-            const accentCol = getAccentColor();
-            pMat.color = accentCol;
-            lineMat.color = accentCol;
-        };
-
-        // ---------- 3D PROJECTS (REALISTIC) ----------
-        function initProject3D(containerId, createGroup) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / 320, 0.1, 100);
-            camera.position.set(0, 1.5, 8);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(container.clientWidth, 320);
-            container.appendChild(renderer.domElement);
-            scene.add(new THREE.AmbientLight(0x444444));
-            const light1 = new THREE.DirectionalLight(0xffffff, 1);
-            light1.position.set(1, 1, 1);
-            scene.add(light1);
-            const light2 = new THREE.PointLight(0x3366ff, 0.6, 10);
-            light2.position.set(0, 0, 2);
-            scene.add(light2);
-
-            const group = createGroup();
-            scene.add(group);
-
-            function animate() {
-                requestAnimationFrame(animate);
-                group.rotation.y += 0.005;
-                renderer.render(scene, camera);
-            }
-            animate();
-            window.addEventListener('resize', () => {
-                if (container.clientWidth > 0) {
-                    renderer.setSize(container.clientWidth, 320);
-                    camera.aspect = container.clientWidth / 320;
-                    camera.updateProjectionMatrix();
-                }
-            });
-        }
-
-        // Laptop with dashboard screen & keyboard details
-        initProject3D('laptop3d', () => {
-            const group = new THREE.Group();
-
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 256;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#0a0a1a';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#00ffff';
-            ctx.lineWidth = 3;
-            for (let i=0; i<6; i++) {
-                const y = 40 + i*35;
-                ctx.beginPath();
-                ctx.moveTo(30, y);
-                ctx.lineTo(480, y + Math.sin(i)*20);
-                ctx.strokeStyle = `hsl(${180+i*20}, 70%, 60%)`;
-                ctx.stroke();
-            }
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 20px Inter';
-            ctx.fillText('MarketLens AI', 180, 30);
-            ctx.fillStyle = '#aaa';
-            ctx.font = '14px Inter';
-            ctx.fillText('Live Dashboard', 210, 230);
-            const texture = new THREE.CanvasTexture(canvas);
-
-            const frameGeom = new THREE.BoxGeometry(3.6, 2.4, 0.1);
-            const frameMat = new THREE.MeshStandardMaterial({ color: 0x222233, roughness: 0.2, metalness: 0.8 });
-            const frame = new THREE.Mesh(frameGeom, frameMat);
-            frame.position.set(0, 0.4, -1.1);
-            frame.rotation.x = -0.3;
-            group.add(frame);
-
-            const screenGeom = new THREE.PlaneGeometry(3.3, 2.2);
-            const screenMat = new THREE.MeshBasicMaterial({ map: texture, emissive: new THREE.Color(0x001122), emissiveIntensity: 0.5 });
-            const screen = new THREE.Mesh(screenGeom, screenMat);
-            screen.position.copy(frame.position);
-            screen.position.z += 0.06;
-            screen.rotation.x = -0.3;
-            group.add(screen);
-
-            const baseGeom = new THREE.BoxGeometry(3.8, 0.2, 2.4);
-            const baseMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.4, metalness: 0.9 });
-            const base = new THREE.Mesh(baseGeom, baseMat);
-            base.position.y = -1.2;
-            group.add(base);
-
-            const grooveGeom = new THREE.CylinderGeometry(0.05, 0.05, 0.05, 8);
-            const grooveMat = new THREE.MeshStandardMaterial({ color: 0x444444 });
-            for (let x = -1.6; x <= 1.6; x+=0.25) {
-                for (let z = -0.8; z <= 0.8; z+=0.2) {
-                    const key = new THREE.Mesh(grooveGeom, grooveMat);
-                    key.position.set(x, -1.1, z);
-                    group.add(key);
-                }
-            }
-
-            const particleGeo = new THREE.BufferGeometry();
-            const pCount = 60;
-            const pPos = new Float32Array(pCount * 3);
-            for (let i = 0; i < pCount*3; i+=3) {
-                pPos[i] = (Math.random() - 0.5) * 5;
-                pPos[i+1] = (Math.random() - 0.5) * 3;
-                pPos[i+2] = (Math.random() - 0.5) * 3;
-            }
-            particleGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-            const particleMat = new THREE.PointsMaterial({ color: 0x00ffff, size: 0.05, blending: THREE.AdditiveBlending });
-            const particles = new THREE.Points(particleGeo, particleMat);
-            group.add(particles);
-
-            return group;
+        document.querySelectorAll('.skill-row').forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight) { el.classList.add('visible');
+                el.querySelectorAll('.fill').forEach(f => f.style.width = f.style.getPropertyValue('--w')); }
         });
-
-        // Smart Calculator with animated digits
-        initProject3D('calc3d', () => {
-            const group = new THREE.Group();
-
-            const bodyGeom = new THREE.BoxGeometry(2.4, 3.6, 0.6);
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x101020, roughness: 0.15, metalness: 0.95 });
-            const body = new THREE.Mesh(bodyGeom, bodyMat);
-            group.add(body);
-
-            const screenCanvas = document.createElement('canvas');
-            screenCanvas.width = 200;
-            screenCanvas.height = 120;
-            const ctx = screenCanvas.getContext('2d');
-            const screenTexture = new THREE.CanvasTexture(screenCanvas);
-            const screenPlane = new THREE.Mesh(
-                new THREE.PlaneGeometry(1.8, 0.7),
-                new THREE.MeshBasicMaterial({ map: screenTexture, emissive: new THREE.Color(0x3366ff), emissiveIntensity: 0.8 })
-            );
-            screenPlane.position.set(0, 0.9, 0.31);
-            group.add(screenPlane);
-
-            function updateScreen() {
-                ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
-                ctx.fillStyle = '#0a0a1a';
-                ctx.fillRect(0, 0, screenCanvas.width, screenCanvas.height);
-                ctx.font = 'bold 40px Inter';
-                ctx.fillStyle = '#00ffff';
-                const now = new Date();
-                const digits = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-                ctx.fillText(digits, 30, 80);
-                screenTexture.needsUpdate = true;
-            }
-            setInterval(updateScreen, 1000);
-            updateScreen();
-
-            const btnGeom = new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16);
-            const btnMat = new THREE.MeshStandardMaterial({ color: 0x444466 });
-            for (let x = -0.8; x <= 0.8; x+=0.4) {
-                for (let y = 0.3; y >= -0.9; y-=0.3) {
-                    const btn = new THREE.Mesh(btnGeom, btnMat);
-                    btn.position.set(x, y, 0.35);
-                    group.add(btn);
-                }
-            }
-
-            const ledGeom = new THREE.SphereGeometry(0.08, 8, 8);
-            const ledMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            const led = new THREE.Mesh(ledGeom, ledMat);
-            led.position.set(1.0, 1.4, 0.35);
-            group.add(led);
-            setInterval(() => { led.visible = !led.visible; }, 800);
-
-            return group;
-        });
-
-        // ---------- ROTATING HERO ROLES ----------
-        const roles = ['a good person', 'Writer', 'Student', 'Thinker', 'Entrepreneur', 'Philosopher'];
-        let roleIdx = 0;
-        const roleEl = document.getElementById('roleCycler');
-        setInterval(() => {
-            roleEl.textContent = roles[roleIdx];
-            roleIdx = (roleIdx + 1) % roles.length;
-        }, 1500);
-    </script>
+    }, 400);
+</script>
 </body>
 </html>
