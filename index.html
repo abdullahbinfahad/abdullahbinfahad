@@ -22,125 +22,526 @@
             --cyan: #0EA5E9;
             --emerald: #10B981;
             --violet: #8B5CF6;
-            --amber: #F59E0B;
             --radius: 24px;
             --pill: 80px;
             --spring: cubic-bezier(0.16, 1, 0.3, 1);
             --font-display: 'Satoshi', 'Inter', system-ui, sans-serif;
             --font-body: 'Inter', system-ui, sans-serif;
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
-            background: #000; font-family: var(--font-body); color: var(--text);
-            -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh;
+            background: #000;
+            font-family: var(--font-body);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
         }
-        #bg3d { position: fixed; inset:0; z-index:0; pointer-events: none; }
+        #bg3d {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
         .bg-atmos {
-            position: fixed; inset:0; pointer-events: none; z-index:0;
-            background: radial-gradient(ellipse 900px 700px at 18% -12%, rgba(14,165,233,0.14) 0%, transparent 62%),
-                radial-gradient(ellipse 750px 750px at 80% 40%, rgba(71,85,105,0.11) 0%, transparent 58%),
-                radial-gradient(ellipse 600px 600px at 50% 85%, rgba(6,182,212,0.13) 0%, transparent 58%),
-                radial-gradient(ellipse 450px 450px at 6% 65%, rgba(100,116,139,0.08) 0%, transparent 52%);
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(ellipse 900px 700px at 18% -12%, rgba(14, 165, 233, 0.14) 0%, transparent 62%),
+                radial-gradient(ellipse 750px 750px at 80% 40%, rgba(71, 85, 105, 0.11) 0%, transparent 58%),
+                radial-gradient(ellipse 600px 600px at 50% 85%, rgba(6, 182, 212, 0.13) 0%, transparent 58%),
+                radial-gradient(ellipse 450px 450px at 6% 65%, rgba(100, 116, 139, 0.08) 0%, transparent 52%);
         }
-        .glow-orb { position: fixed; pointer-events: none; z-index:0; border-radius:50%; filter:blur(140px); opacity:0.45; }
-        .glow-orb-1 { width:720px; height:720px; background: radial-gradient(circle, rgba(14,165,233,0.26) 0%, transparent 68%); top:-300px; left:-200px; }
-        .glow-orb-2 { width:560px; height:560px; background: radial-gradient(circle, rgba(71,85,105,0.20) 0%, transparent 68%); top:50%; right:-240px; transform:translateY(-50%); }
-        .glow-orb-3 { width:600px; height:600px; background: radial-gradient(circle, rgba(6,182,212,0.20) 0%, transparent 68%); bottom:-280px; left:50%; transform:translateX(-50%); }
+        .glow-orb {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.45;
+        }
+        .glow-orb-1 {
+            width: 720px;
+            height: 720px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.26) 0%, transparent 68%);
+            top: -300px;
+            left: -200px;
+        }
+        .glow-orb-2 {
+            width: 560px;
+            height: 560px;
+            background: radial-gradient(circle, rgba(71, 85, 105, 0.20) 0%, transparent 68%);
+            top: 50%;
+            right: -240px;
+            transform: translateY(-50%);
+        }
+        .glow-orb-3 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.20) 0%, transparent 68%);
+            bottom: -280px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
         .glass {
-            background: var(--surface); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
-            border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--surface);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             transition: border-color 0.4s var(--spring), box-shadow 0.4s var(--spring), background 0.4s var(--spring);
-            position: relative; z-index:1; overflow: hidden;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transform: translateZ(0);
         }
-        .glass:hover { border-color: var(--border-hover); box-shadow: 0 20px 55px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset; background: var(--surface-hover); }
+        .glass:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+            background: var(--surface-hover);
+        }
         .glass-sm {
-            background: rgba(20,20,24,0.5); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255,255,255,0.05); border-radius: 18px;
+            background: rgba(20, 20, 24, 0.5);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
             transition: border-color 0.35s var(--spring), background 0.35s var(--spring);
+            transform: translateZ(0);
         }
-        .glass-sm:hover { border-color: rgba(255,255,255,0.11); background: rgba(26,26,30,0.55); }
-        @keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.8); } 50% { box-shadow: 0 0 0 13px rgba(16,185,129,0); } }
-        .pulse-dot { animation: pulse-dot 2s infinite; width:8px; height:8px; border-radius:50%; background:#10B981; display:inline-block; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .marquee-wrap { overflow: hidden; mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%); position: relative; z-index:1; }
-        .marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; gap:2.5rem; }
-        .marquee-track:hover { animation-play-state: paused; }
-        .marquee-item { flex-shrink: 0; opacity:0.45; transition: opacity 0.3s; cursor:default; white-space:nowrap; display:flex; align-items:center; gap:8px; font-weight:500; }
-        .marquee-item:hover { opacity:0.85; }
-        .marquee-dot { width:5px; height:5px; border-radius:50%; background: var(--text3); }
+        .glass-sm:hover {
+            border-color: rgba(255, 255, 255, 0.11);
+            background: rgba(26, 26, 30, 0.55);
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 0 13px rgba(16, 185, 129, 0);
+            }
+        }
+        .pulse-dot {
+            animation: pulse-dot 2s infinite;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            display: inline-block;
+        }
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .marquee-wrap {
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            position: relative;
+            z-index: 1;
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+            gap: 2.5rem;
+            will-change: transform;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+        .marquee-item {
+            flex-shrink: 0;
+            opacity: 0.45;
+            transition: opacity 0.3s;
+            cursor: default;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        .marquee-item:hover {
+            opacity: 0.85;
+        }
+        .marquee-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--text3);
+        }
         .btn-pill {
-            display:inline-flex; align-items:center; gap:7px; padding:13px 26px; border-radius:var(--pill);
-            font-weight:600; font-size:0.9rem; cursor:pointer; transition: all 0.35s var(--spring);
-            text-decoration:none; white-space:nowrap; letter-spacing:0.01em; border:none; font-family:var(--font-body);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 13px 26px;
+            border-radius: var(--pill);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.35s var(--spring);
+            text-decoration: none;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            border: none;
+            font-family: var(--font-body);
         }
-        .btn-primary { background:#0EA5E9; color:#000; box-shadow:0 7px 26px rgba(14,165,233,0.28); }
-        .btn-primary:hover { background:#38BDF8; box-shadow:0 13px 38px rgba(14,165,233,0.42); }
-        .btn-outline { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.22); }
-        .btn-outline:hover { border-color:rgba(255,255,255,0.55); background:rgba(255,255,255,0.04); box-shadow:0 7px 24px rgba(255,255,255,0.05); }
-        .btn-ghost { background:rgba(14,165,233,0.1); color:#38BDF8; border:1px solid rgba(14,165,233,0.28); padding:9px 18px; font-size:0.82rem; }
-        .btn-ghost:hover { background:rgba(14,165,233,0.2); border-color:rgba(56,189,248,0.55); box-shadow:0 5px 20px rgba(14,165,233,0.22); color:#7DD3FC; }
-        .btn-games { background:rgba(139,92,246,0.1); color:#A78BFA; border:1px solid rgba(139,92,246,0.28); padding:9px 18px; font-size:0.82rem; }
-        .btn-games:hover { background:rgba(139,92,246,0.2); border-color:rgba(167,139,250,0.55); box-shadow:0 5px 20px rgba(139,92,246,0.22); color:#C4B5FD; }
+        .btn-primary {
+            background: #0EA5E9;
+            color: #000;
+            box-shadow: 0 7px 26px rgba(14, 165, 233, 0.28);
+        }
+        .btn-primary:hover {
+            background: #38BDF8;
+            box-shadow: 0 13px 38px rgba(14, 165, 233, 0.42);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+        }
+        .btn-outline:hover {
+            border-color: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 7px 24px rgba(255, 255, 255, 0.05);
+        }
+        .btn-ghost {
+            background: rgba(14, 165, 233, 0.1);
+            color: #38BDF8;
+            border: 1px solid rgba(14, 165, 233, 0.28);
+            padding: 9px 18px;
+            font-size: 0.82rem;
+        }
+        .btn-ghost:hover {
+            background: rgba(14, 165, 233, 0.2);
+            border-color: rgba(56, 189, 248, 0.55);
+            box-shadow: 0 5px 20px rgba(14, 165, 233, 0.22);
+            color: #7DD3FC;
+        }
+        .btn-games {
+            background: rgba(139, 92, 246, 0.1);
+            color: #A78BFA;
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            padding: 9px 18px;
+            font-size: 0.82rem;
+        }
+        .btn-games:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(167, 139, 250, 0.55);
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.22);
+            color: #C4B5FD;
+        }
         .nav-link {
-            position:relative; color:var(--text2); text-decoration:none; font-weight:500; font-size:0.86rem;
-            transition: color 0.3s; padding-bottom:3px;
+            position: relative;
+            color: var(--text2);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.86rem;
+            transition: color 0.3s;
+            padding-bottom: 3px;
         }
-        .nav-link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px; background:#fff; transition: width 0.3s var(--spring); border-radius:2px; }
-        .nav-link:hover { color:#fff; } .nav-link:hover::after { width:100%; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: #fff;
+            transition: width 0.3s var(--spring);
+            border-radius: 2px;
+        }
+        .nav-link:hover {
+            color: #fff;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
         .faq-answer {
-            max-height:0; overflow:hidden; transition: max-height 0.5s var(--spring), opacity 0.4s, padding 0.4s;
-            opacity:0; color:var(--text2); font-size:0.9rem; line-height:1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--spring), opacity 0.4s, padding 0.4s;
+            opacity: 0;
+            color: var(--text2);
+            font-size: 0.9rem;
+            line-height: 1.7;
         }
-        .faq-item.active .faq-answer { max-height:300px; opacity:1; padding-top:0.7rem; }
-        .faq-chevron { transition: transform 0.4s var(--spring); flex-shrink:0; color:var(--text3); }
-        .faq-item.active .faq-chevron { transform: rotate(180deg); color:#fff; }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            opacity: 1;
+            padding-top: 0.7rem;
+            padding-bottom: 0.2rem;
+        }
+        .faq-chevron {
+            transition: transform 0.4s var(--spring);
+            flex-shrink: 0;
+            color: var(--text3);
+        }
+        .faq-item.active .faq-chevron {
+            transform: rotate(180deg);
+            color: #fff;
+        }
         .mobile-overlay {
-            position:fixed; inset:0; background:rgba(0,0,0,0.96); backdrop-filter:blur(28px);
-            z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center;
-            gap:2rem; opacity:0; pointer-events:none; transition: opacity 0.4s; cursor:pointer;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.96);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            cursor: pointer;
         }
-        .mobile-overlay.open { opacity:1; pointer-events:auto; }
-        .mobile-overlay a { font-size:1.5rem; font-weight:700; font-family:var(--font-display); color:#fff; text-decoration:none; }
-        .mobile-overlay a:hover { color:#0EA5E9; }
-        .skill-row { margin-bottom:1rem; }
-        .skill-row .lbl { display:flex; justify-content:space-between; font-weight:500; font-size:0.86rem; margin-bottom:4px; color:var(--text2); }
-        .skill-row .track { height:7px; background:rgba(255,255,255,0.06); border-radius:20px; overflow:hidden; }
-        .skill-row .fill { height:100%; border-radius:20px; background:linear-gradient(90deg,#0EA5E9,#38BDF8); transition: width 1.2s var(--spring); width:0; }
-        .timeline-wrap { display:flex; overflow-x:auto; gap:2rem; padding:1.5rem 0.5rem; scroll-snap-type:x mandatory; }
-        .timeline-node { flex:0 0 auto; width:125px; text-align:center; scroll-snap-align:center; }
-        .timeline-dot { width:14px; height:14px; background:#0EA5E9; border-radius:50%; margin:0 auto 10px; box-shadow:0 0 18px rgba(14,165,233,0.55); }
-        .timeline-year { font-weight:700; color:#38BDF8; font-size:0.82rem; margin-bottom:3px; }
-        .timeline-text { color:var(--text3); font-size:0.76rem; white-space:normal; line-height:1.3; }
-        input, textarea {
-            background:rgba(20,20,24,0.55); border:1px solid rgba(255,255,255,0.07); border-radius:13px;
-            padding:0.85rem 1rem; color:#fff; font-family:var(--font-body); font-size:0.9rem;
-            transition: all 0.3s; width:100%; outline:none; resize:vertical;
+        .mobile-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
         }
-        input:focus, textarea:focus { border-color:rgba(14,165,233,0.45); box-shadow:0 0 0 5px rgba(14,165,233,0.06); background:rgba(26,26,30,0.65); }
-        .display { font-family:var(--font-display); font-weight:900; letter-spacing:-0.03em; line-height:1.05; }
-        .eyebrow { font-size:0.66rem; text-transform:uppercase; letter-spacing:0.13em; color:var(--text3); margin-bottom:0.5rem; }
-        .stat-num { font-family:var(--font-display); font-weight:900; font-size:1.8rem; line-height:1; }
-        .stat-lbl { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--text3); margin-top:2px; }
-        .highlight-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#fff; margin-right:9px; box-shadow:0 0 6px rgba(255,255,255,0.5); vertical-align:middle; }
-        .case-img { border-radius:14px; overflow:hidden; background:rgba(30,30,35,0.6); border:1px solid rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:center; min-height:220px; }
-        .desktop-only { display:block; }
-        .mobile-only { display:none; }
+        .mobile-overlay a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: -0.01em;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        .mobile-overlay a:hover {
+            color: #0EA5E9;
+        }
+        .skill-row {
+            margin-bottom: 1rem;
+        }
+        .skill-row .lbl {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 0.86rem;
+            margin-bottom: 4px;
+            color: var(--text2);
+        }
+        .skill-row .track {
+            height: 7px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .skill-row .fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #0EA5E9, #38BDF8);
+            transition: width 1.2s var(--spring);
+            width: 0;
+        }
+        .skill-row.visible .fill {
+            width: var(--w);
+        }
+        .timeline-wrap {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 2rem;
+            padding: 1.5rem 0.5rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            z-index: 1;
+        }
+        .timeline-node {
+            flex: 0 0 auto;
+            width: 125px;
+            text-align: center;
+            scroll-snap-align: center;
+        }
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            background: #0EA5E9;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            box-shadow: 0 0 18px rgba(14, 165, 233, 0.55);
+        }
+        .timeline-year {
+            font-weight: 700;
+            color: #38BDF8;
+            font-size: 0.82rem;
+            margin-bottom: 3px;
+        }
+        .timeline-text {
+            color: var(--text3);
+            font-size: 0.76rem;
+            white-space: normal;
+            line-height: 1.3;
+        }
+        input,
+        textarea {
+            background: rgba(20, 20, 24, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 13px;
+            padding: 0.85rem 1rem;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            width: 100%;
+            outline: none;
+            resize: vertical;
+        }
+        input:focus,
+        textarea:focus {
+            border-color: rgba(14, 165, 233, 0.45);
+            box-shadow: 0 0 0 5px rgba(14, 165, 233, 0.06);
+            background: rgba(26, 26, 30, 0.65);
+        }
+        .display {
+            font-family: var(--font-display);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+        }
+        .eyebrow {
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 0.13em;
+            color: var(--text3);
+            margin-bottom: 0.5rem;
+        }
+        .stat-num {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .stat-lbl {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+        .highlight-dot {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #fff;
+            margin-right: 9px;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        .case-img {
+            border-radius: 14px;
+            overflow: hidden;
+            background: rgba(30, 30, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+        }
+        .desktop-only {
+            display: block;
+        }
+        .mobile-only {
+            display: none;
+        }
         @media (max-width: 768px) {
-            .desktop-only { display:none !important; }
-            .mobile-only { display:block !important; }
-            .btn-pill { padding:11px 20px; font-size:0.8rem; }
-            .glass { padding:1.4rem !important; }
-            .case-img { min-height:160px; }
-            .hero-flex { flex-direction:column !important; text-align:center !important; gap:1.5rem !important; }
-            .hero-flex>div:last-child { text-align:center !important; }
-            .hero-flex h1 { font-size:clamp(2rem,9vw,3rem) !important; }
-            .hero-flex .btn-row { justify-content:center !important; }
-            .about-edu-grid, .faq-contact-grid { grid-template-columns:1fr !important; gap:2.5rem !important; }
-            .philosophy-grid { grid-template-columns:1fr 1fr !important; gap:1rem !important; }
-            footer>div { flex-direction:column !important; gap:6px !important; }
-            .timeline-node { width:105px; }
-            .stat-num { font-size:1.4rem; }
+            .desktop-only {
+                display: none !important;
+            }
+            .mobile-only {
+                display: block !important;
+            }
+            .btn-pill {
+                padding: 11px 20px;
+                font-size: 0.8rem;
+            }
+            .timeline-node {
+                width: 105px;
+            }
+            .stat-num {
+                font-size: 1.4rem;
+            }
+            .glass {
+                padding: 1.4rem !important;
+            }
+            .case-img {
+                min-height: 160px;
+            }
+            .about-edu-grid {
+                grid-template-columns: 1fr !important;
+                gap: 2.5rem !important;
+            }
+            .hero-flex {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 1.5rem !important;
+            }
+            .hero-flex>div:last-child {
+                text-align: center !important;
+            }
+            .hero-flex h1 {
+                font-size: clamp(2rem, 9vw, 3rem) !important;
+            }
+            .hero-flex .btn-row {
+                justify-content: center !important;
+            }
+            footer>div {
+                flex-direction: column !important;
+                gap: 6px !important;
+            }
+            .two-col-grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .philosophy-cards {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .philosophy-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        @media (max-width: 900px) {
+            .philosophy-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .hamburger-btn {
+            display: none !important;
+        }
+        @media (max-width: 768px) {
+            .hamburger-btn {
+                display: block !important;
+            }
         }
     </style>
 </head>
@@ -155,13 +556,17 @@
     <nav style="position:fixed;top:0;left:0;width:100%;z-index:90;padding:12px 16px;">
         <div class="glass-sm" style="max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;border-radius:60px;">
             <a href="#" style="font-family:var(--font-display);font-weight:900;font-size:1.25rem;color:#fff;text-decoration:none;">ABF<span style="color:#38BDF8;">.</span></a>
-            <div style="display:none;align-items:center;gap:1.3rem;margin-left:auto;" id="deskNav">
-                <a href="#work" class="nav-link">Work</a><a href="#about" class="nav-link">About</a><a href="#journey" class="nav-link">Journey</a><a href="#blog" class="nav-link">Blog</a><a href="#faq" class="nav-link">FAQ</a>
+            <div style="display:flex;align-items:center;gap:1.5rem;margin-left:auto;" id="deskNav">
+                <a href="#work" class="nav-link">Work</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#journey" class="nav-link">Journey</a>
+                <a href="#blog" class="nav-link">Blog</a>
+                <a href="#faq" class="nav-link">FAQ</a>
                 <a href="https://posts.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-ghost">✍️ Writings <span class="ext-arrow">↗</span></a>
                 <a href="https://games.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-games">🎮 Explore More <span class="ext-arrow">↗</span></a>
                 <a href="#contact" class="btn-pill btn-primary" style="padding:10px 20px;font-size:0.82rem;">Book a Call</a>
             </div>
-            <button id="hamBtn" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;z-index:110;display:none;" class="ham-icon"><span id="hamIcon">☰</span></button>
+            <button id="hamBtn" class="hamburger-btn" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;z-index:110;"><span id="hamIcon">☰</span></button>
         </div>
     </nav>
 
@@ -183,8 +588,8 @@
             <div style="flex:1;max-width:760px;text-align:left;">
                 <p class="eyebrow">Abdullah Bin Fahad · Automation Engineering</p>
                 <h1 class="display" style="font-size:clamp(2.2rem,5.2vw,4.4rem);"><span style="background:linear-gradient(180deg,#fff,#cbd5e1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Building technology</span> <span style="background:linear-gradient(135deg,#0EA5E9,#475569);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">that expands human potential.</span></h1>
-                <p style="color:var(--text2);margin:1rem 0 1.5rem;">I build AI-powered products, intelligent web platforms, and automation systems.</p>
-                <div class="btn-row" style="display:flex;gap:12px;"><a href="#contact" class="btn-pill btn-primary">Get in Touch</a><a href="https://cv.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-outline">View Resume ↗</a></div>
+                <p style="color:var(--text2);margin:1rem 0 1.5rem;">I build AI-powered products, intelligent web platforms, and automation systems that turn ideas into practical solutions for real-world problems.</p>
+                <div class="btn-row" style="display:flex;gap:12px;"><a href="#contact" class="btn-pill btn-primary">Get in Touch</a><a href="https://cv.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-outline">View Resume <span class="ext-arrow">↗</span></a></div>
             </div>
         </div>
     </section>
@@ -192,135 +597,180 @@
     <!-- SKILLS MARQUEE -->
     <section style="position:relative;z-index:10;padding:25px 0 50px;">
         <p style="text-align:center;font-size:0.64rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text3);margin-bottom:1rem;">Skills & Experience</p>
-        <div class="marquee-wrap"><div class="marquee-track"><span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span><span class="marquee-item"><span class="marquee-dot"></span>HTML5</span><span class="marquee-item"><span class="marquee-dot"></span>CSS3</span><span class="marquee-item"><span class="marquee-dot"></span>JavaScript</span><span class="marquee-item"><span class="marquee-dot"></span>Python</span><span class="marquee-item"><span class="marquee-dot"></span>MySQL</span><span class="marquee-item"><span class="marquee-dot"></span>Git & GitHub</span><span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span><span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span><span class="marquee-item"><span class="marquee-dot"></span>SEO Optimization</span><span class="marquee-item"><span class="marquee-dot"></span>WordPress Development</span><span class="marquee-item"><span class="marquee-dot"></span>Arduino Development</span><span class="marquee-item"><span class="marquee-dot"></span>ESP32 Programming</span><span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span><span class="marquee-item"><span class="marquee-dot"></span>FreeRTOS</span><span class="marquee-item"><span class="marquee-dot"></span>LVGL GUI Development</span><span class="marquee-item"><span class="marquee-dot"></span>IoT Solutions</span><span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span><span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span><span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span><span class="marquee-item"><span class="marquee-dot"></span>Journalism</span><span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span><span class="marquee-item"><span class="marquee-dot"></span>Audio Editing</span><span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span><span class="marquee-item"><span class="marquee-dot"></span>HTML5</span><span class="marquee-item"><span class="marquee-dot"></span>CSS3</span><span class="marquee-item"><span class="marquee-dot"></span>JavaScript</span><span class="marquee-item"><span class="marquee-dot"></span>Python</span><span class="marquee-item"><span class="marquee-dot"></span>MySQL</span><span class="marquee-item"><span class="marquee-dot"></span>Git & GitHub</span><span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span><span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span><span class="marquee-item"><span class="marquee-dot"></span>SEO Optimization</span><span class="marquee-item"><span class="marquee-dot"></span>WordPress Development</span><span class="marquee-item"><span class="marquee-dot"></span>Arduino Development</span><span class="marquee-item"><span class="marquee-dot"></span>ESP32 Programming</span><span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span><span class="marquee-item"><span class="marquee-dot"></span>FreeRTOS</span><span class="marquee-item"><span class="marquee-dot"></span>LVGL GUI Development</span><span class="marquee-item"><span class="marquee-dot"></span>IoT Solutions</span><span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span><span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span><span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span><span class="marquee-item"><span class="marquee-dot"></span>Journalism</span><span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span><span class="marquee-item"><span class="marquee-dot"></span>Audio Editing</span></div></div>
+        <div class="marquee-wrap"><div class="marquee-track">
+            <span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span><span class="marquee-item"><span class="marquee-dot"></span>HTML5</span><span class="marquee-item"><span class="marquee-dot"></span>CSS3</span><span class="marquee-item"><span class="marquee-dot"></span>JavaScript</span><span class="marquee-item"><span class="marquee-dot"></span>Python</span><span class="marquee-item"><span class="marquee-dot"></span>MySQL</span><span class="marquee-item"><span class="marquee-dot"></span>Git & GitHub</span><span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span><span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span><span class="marquee-item"><span class="marquee-dot"></span>Arduino</span><span class="marquee-item"><span class="marquee-dot"></span>ESP32</span><span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span><span class="marquee-item"><span class="marquee-dot"></span>FreeRTOS</span><span class="marquee-item"><span class="marquee-dot"></span>LVGL</span><span class="marquee-item"><span class="marquee-dot"></span>IoT</span><span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span><span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span><span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span><span class="marquee-item"><span class="marquee-dot"></span>Journalism</span><span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span><span class="marquee-item"><span class="marquee-dot"></span>HTML5</span><span class="marquee-item"><span class="marquee-dot"></span>CSS3</span><span class="marquee-item"><span class="marquee-dot"></span>JavaScript</span><span class="marquee-item"><span class="marquee-dot"></span>Python</span><span class="marquee-item"><span class="marquee-dot"></span>MySQL</span><span class="marquee-item"><span class="marquee-dot"></span>Git & GitHub</span><span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span><span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span><span class="marquee-item"><span class="marquee-dot"></span>Arduino</span><span class="marquee-item"><span class="marquee-dot"></span>ESP32</span><span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span><span class="marquee-item"><span class="marquee-dot"></span>FreeRTOS</span><span class="marquee-item"><span class="marquee-dot"></span>LVGL</span><span class="marquee-item"><span class="marquee-dot"></span>IoT</span><span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span><span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span><span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span><span class="marquee-item"><span class="marquee-dot"></span>Journalism</span><span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span>
+        </div></div>
     </section>
 
     <!-- PROJECTS -->
     <section id="work" style="position:relative;z-index:10;padding:70px 16px;max-width:1000px;margin:0 auto;">
-        <div style="text-align:center;margin-bottom:3rem;"><p class="eyebrow">🚀 Selected Work</p><h2 class="display" style="font-size:clamp(1.8rem,4vw,3rem);">Projects & Products</h2><p style="color:var(--text2);max-width:620px;margin:0 auto;line-height:1.7;font-size:.95rem;">A selection of software, AI, automation, and embedded systems I've designed and developed to explore real-world problems.</p></div>
-        <article class="glass" style="padding:2rem;margin-bottom:1.5rem;display:flex;flex-wrap:wrap;gap:2.5rem;align-items:center;">
-            <div style="flex:1 1 320px;"><span style="color:#0EA5E9;font-size:0.73rem;font-weight:700;">AI Platform</span><h3 style="font-family:var(--font-display);font-weight:900;font-size:1.7rem;margin:0.3rem 0 0.5rem;">MarketLens AI</h3><p style="color:var(--text2);line-height:1.65;margin-bottom:1rem;font-size:.92rem;">An AI-powered decision-support platform for cross-border e-commerce.</p><div style="display:flex;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;">AI</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;">E-Commerce</span></div><a href="https://www.marketlens-ai.com" target="_blank" style="color:#0EA5E9;font-weight:600;">Explore Project ↗</a></div>
-            <div class="case-img" style="flex:1 1 280px;background:radial-gradient(circle at center,rgba(14,165,233,.12),rgba(14,165,233,.02) 55%,transparent 75%);border:1px solid rgba(14,165,233,.10);"><svg width="130" height="90" viewBox="0 0 130 90" fill="none" style="opacity:0.5;"><rect x="7" y="4" width="116" height="72" rx="5" stroke="#0EA5E9" stroke-width="2" fill="none"/><rect x="13" y="13" width="104" height="11" rx="2" fill="#0EA5E9" opacity="0.25"/></svg></div>
-        </article>
-        <article class="glass" style="padding:2rem;margin-bottom:1.5rem;display:flex;flex-wrap:wrap;gap:2.5rem;align-items:center;">
-            <div class="case-img" style="flex:1 1 280px;background:radial-gradient(circle at center,rgba(16,185,129,.11),rgba(16,185,129,.02) 55%,transparent 75%);border:1px solid rgba(16,185,129,.10);"><svg width="90" height="115" viewBox="0 0 90 115" fill="none" style="opacity:0.5;"><rect x="9" y="9" width="72" height="97" rx="10" stroke="#10B981" stroke-width="2.5" fill="none"/></svg></div>
-            <div style="flex:1 1 320px;"><span style="color:#10B981;font-size:0.73rem;font-weight:700;">EdTech</span><h3 style="font-family:var(--font-display);font-weight:900;font-size:1.7rem;margin:0.3rem 0 0.5rem;">Smart Calculator</h3><p style="color:var(--text2);line-height:1.65;">Educational device with AI, offline mesh, GPS.</p><span style="color:var(--text3);font-style:italic;">Coming Soon</span></div>
-        </article>
-        <article class="glass" style="padding:2rem;display:flex;flex-wrap:wrap;gap:2.5rem;align-items:center;">
-            <div style="flex:1 1 320px;"><span style="color:#8B5CF6;font-size:0.73rem;font-weight:700;">Software · Web</span><h3 style="font-family:var(--font-display);font-weight:900;font-size:1.7rem;margin:0.3rem 0 0.5rem;">Digital Platforms</h3><p style="color:var(--text2);line-height:1.65;">Web applications and experimental tools.</p><a href="https://github.com/" target="_blank" style="color:#8B5CF6;font-weight:600;">View Work ↗</a></div>
-            <div class="case-img" style="flex:1 1 280px;background:radial-gradient(circle at center,rgba(139,92,246,.11),rgba(139,92,246,.02) 55%,transparent 75%);border:1px solid rgba(139,92,246,.10);"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:80%;"><div style="height:45px;border-radius:10px;background:rgba(139,92,246,.08);"></div><div style="height:45px;border-radius:10px;background:rgba(255,255,255,.04);"></div></div></div>
-        </article>
+        <div style="text-align:center;margin-bottom:3rem;"><p class="eyebrow">🚀 Selected Work</p><h2 class="display" style="font-size:clamp(1.8rem,4vw,3rem);margin:0.5rem 0 0.8rem;">Projects & Products</h2><p style="color:var(--text2);max-width:620px;margin:0 auto;line-height:1.7;font-size:.95rem;">A selection of software, AI, automation, and embedded systems I've designed and developed to explore real-world problems.</p></div>
+        <article class="glass" style="padding:2rem;margin-bottom:1.5rem;overflow:hidden;"><div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:2.5rem;align-items:center;"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#0EA5E9;box-shadow:0 0 12px rgba(14,165,233,.6);"></span><span style="color:#0EA5E9;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">AI Platform</span></div><h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">MarketLens AI</h3><p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">An AI-powered decision-support platform for cross-border e-commerce. Designed to combine market intelligence, consumer insights, product research, and business analysis into a unified workflow.</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">AI</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Market Intelligence</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Data Analysis</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">E-Commerce</span></div><div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;"><a href="https://www.marketlens-ai.com" target="_blank" rel="noopener noreferrer" style="color:#0EA5E9;font-weight:600;text-decoration:none;font-size:.84rem;display:inline-flex;align-items:center;gap:5px;">Explore Project <span class="ext-arrow">↗</span></a><span style="color:var(--text3);font-size:.75rem;">Independent Project</span></div></div><div class="case-img" style="min-height:230px;background:radial-gradient(circle at center,rgba(14,165,233,.12),rgba(14,165,233,.02) 55%,transparent 75%);border:1px solid rgba(14,165,233,.10);"><div style="width:82%;max-width:330px;padding:1rem;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(15,15,18,.65);box-shadow:0 20px 50px rgba(0,0,0,.25);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span style="font-size:.65rem;color:var(--text3);">MARKET INTELLIGENCE</span><span style="width:7px;height:7px;border-radius:50%;background:#0EA5E9;"></span></div><div style="height:7px;width:75%;border-radius:10px;background:rgba(14,165,233,.25);margin-bottom:9px;"></div><div style="height:7px;width:55%;border-radius:10px;background:rgba(255,255,255,.08);margin-bottom:9px;"></div><div style="height:7px;width:88%;border-radius:10px;background:rgba(255,255,255,.06);margin-bottom:1rem;"></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;"><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.08);"></div><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.06);"></div><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.04);"></div></div></div></div></div></article>
+        <article class="glass" style="padding:2rem;margin-bottom:1.5rem;overflow:hidden;"><div style="display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr);gap:2.5rem;align-items:center;"><div class="case-img" style="min-height:230px;background:radial-gradient(circle at center,rgba(16,185,129,.11),rgba(16,185,129,.02) 55%,transparent 75%);border:1px solid rgba(16,185,129,.10);"><div style="width:170px;height:205px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(15,15,18,.75);box-shadow:0 20px 50px rgba(0,0,0,.3);padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;"><div style="width:100%;height:105px;border-radius:9px;border:1px solid rgba(16,185,129,.15);background:rgba(16,185,129,.05);display:flex;align-items:center;justify-content:center;color:#10B981;font-size:.7rem;letter-spacing:.08em;">SMART</div><div style="display:flex;gap:7px;width:100%;"><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(16,185,129,.12);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div></div></div></div><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#10B981;box-shadow:0 0 12px rgba(16,185,129,.6);"></span><span style="color:#10B981;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">EdTech · Embedded System</span></div><h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">Smart Calculator</h3><p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">A multifunctional educational device designed for children and students, combining calculation, learning, communication, productivity, and intelligent assistance in a compact embedded platform.</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">ESP32-S3</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">FreeRTOS</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">LVGL</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">IoT</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">AI</span></div><div style="color:var(--text3);font-size:.75rem;">Hardware & Software Product Concept</div></div></div></article>
+        <article class="glass" style="padding:2rem;overflow:hidden;"><div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:2.5rem;align-items:center;"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#8B5CF6;box-shadow:0 0 12px rgba(139,92,246,.6);"></span><span style="color:#8B5CF6;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">Software · Web</span></div><h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">Digital Products & Platforms</h3><p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">A growing collection of web applications, experimental tools, and digital platforms focused on practical problems, user experience, and accessible technology.</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">HTML</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">CSS</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">JavaScript</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Python</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">MySQL</span></div><a href="https://github.com/abdullahbinfahad" target="_blank" rel="noopener noreferrer" style="color:#8B5CF6;font-weight:600;text-decoration:none;font-size:.84rem;display:inline-flex;align-items:center;gap:5px;">View Development Work <span class="ext-arrow">↗</span></a></div><div class="case-img" style="min-height:230px;background:radial-gradient(circle at center,rgba(139,92,246,.11),rgba(139,92,246,.02) 55%,transparent 75%);border:1px solid rgba(139,92,246,.10);"><div style="width:82%;max-width:330px;display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="height:85px;border-radius:10px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.10);"></div><div style="height:85px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);"></div><div style="height:55px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.05);"></div><div style="height:55px;border-radius:10px;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.08);"></div></div></div></div></article>
     </section>
+
+    <style>
+        @media (max-width:700px) {
+            #work article>div {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            #work article {
+                padding: 1.4rem !important;
+            }
+        }
+    </style>
 
     <!-- ABOUT & EDUCATION -->
     <section id="about" style="position:relative;z-index:10;padding:55px 16px;max-width:1000px;margin:0 auto;">
-        <p class="eyebrow desktop-only" style="text-align:center;">🌍 About & Education</p>
-        <div class="about-edu-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
-            <div><p class="eyebrow mobile-only" style="text-align:center;">🌍 About</p><div class="glass" style="padding:2rem;"><p style="color:var(--text2);line-height:1.8;">I'm <strong>Abdullah Bin Fahad</strong>, an Automation Engineering student at <strong>Nanjing Tech University</strong> passionate about building AI-powered software, intelligent systems, and digital products that solve real-world problems. I believe knowing how to think is more valuable than knowing what to think, and that curiosity drives innovation.</p></div></div>
-            <div><p class="eyebrow mobile-only" style="text-align:center;">🎓 Education</p><div class="glass" style="padding:1.8rem;"><div><strong>B.Sc. Automation Engineering</strong><br>Nanjing Tech University (2025–2029)</div><div style="margin-top:1rem;"><strong>HSC (Science)</strong><br>Bhola Government College (2022–2024)</div><div style="margin-top:1rem;"><strong>SSC (Science)</strong><br>Dhaligour Nagar Secondary School (2020–2022)</div></div></div>
+        <p class="eyebrow desktop-only" style="text-align:center;"> About Me</p>
+        <div class="about-edu-grid two-col-grid">
+            <div>
+                <p class="eyebrow mobile-only" style="text-align:center;"> About Me </p>
+                <div class="glass" style="padding:2rem;height:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <p style="color:var(--text2);line-height:1.8;font-size:0.98rem;">I'm <strong style="color:#fff;">Abdullah Bin Fahad</strong>, an Automation Engineering student at <strong style="color:#fff;">Nanjing Tech University</strong> passionate about building <span style="color:#38BDF8;">AI-powered software</span>, <span style="color:#10B981;">intelligent systems</span>, and <span style="color:#8B5CF6;">digital products</span> that solve real-world problems. I believe <strong style="color:#38BDF8;">knowing how to think is more valuable than knowing what to think</strong>, and that <strong style="color:#fff;">curiosity drives innovation</strong>.</p>
+                </div>
+            </div>
+            <div>
+                <p class="eyebrow mobile-only" style="text-align:center;"> Education</p>
+                <div class="glass" style="padding:1.8rem;height:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <div style="border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.9rem;margin-bottom:0.9rem;">
+                        <p style="font-weight:700;font-size:0.9rem;">B.Sc. Automation Engineering</p>
+                        <p style="color:var(--text3);font-size:0.8rem;">Nanjing Tech University, China (2025–2029 Expected)</p>
+                        <p style="color:var(--text2);font-size:0.76rem;">Core: Control Systems, Robotics, PLC, Sensors, C/C++</p>
+                    </div>
+                    <div style="border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.9rem;margin-bottom:0.9rem;">
+                        <p style="font-weight:700;font-size:0.9rem;">Higher Secondary Certificate (Science)</p>
+                        <p style="color:var(--text3);font-size:0.8rem;">Bhola Government College, Bangladesh (2022–2024)</p>
+                    </div>
+                    <div>
+                        <p style="font-weight:700;font-size:0.9rem;">Secondary School Certificate (Science)</p>
+                        <p style="color:var(--text3);font-size:0.8rem;">Dhaligour Nagar Secondary School, Bangladesh (2020–2022)</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- HIGHLIGHTS -->
     <section style="position:relative;z-index:10;padding:40px 16px;max-width:780px;margin:0 auto;">
-        <p class="eyebrow" style="text-align:center;">🏆 Key Achievements</p>
-        <div class="glass" style="padding:1.8rem;"><ul style="color:var(--text2);line-height:2.2;list-style:none;"><li><span class="highlight-dot"></span><strong>Automation Engineering Student</strong> at Nanjing Tech University.</li><li><span class="highlight-dot"></span>Built AI-powered apps, web platforms, embedded systems.</li><li><span class="highlight-dot"></span>Developing MarketLens AI and Smart Calculator.</li><li><span class="highlight-dot"></span>Author of "Moral Values".</li><li><span class="highlight-dot"></span>Delivered 15+ moral seminars, 500+ attendees.</li><li><span class="highlight-dot"></span>Volunteered 100+ hours in cultural exchange.</li><li><span class="highlight-dot"></span>Organized IoT home automation demo at Science Fair.</li></ul></div>
+        <p class="eyebrow" style="text-align:center;"> Key Achievements</p>
+        <div class="glass" style="padding:1.8rem;">
+            <ul style="color:var(--text2);line-height:2.2;list-style:none;padding:0;">
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span><strong style="color:#fff;">Automation Engineering Student</strong> at Nanjing Tech University.</span></li>
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Built AI-powered applications, modern web platforms, embedded systems, and IoT solutions.</span></li>
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Developing innovative projects including <strong style="color:#fff;">MarketLens AI</strong> and <strong style="color:#fff;">Smart Calculator</strong>.</span></li>
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Author of <strong style="color:#fff;">"Moral Values"</strong>, exploring philosophy, ethics, and critical thinking.</span></li>
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Delivered 15+ moral seminars, reaching 500+ attendees (95% positive feedback).</span></li>
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Volunteered 100+ hours in cultural exchange, presenting Bangladeshi heritage to 200+ visitors.</span></li>
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Organized IoT‑based home automation demo at Science Fair (300+ students/faculty).</span></li>
+            </ul>
+        </div>
     </section>
 
-    <!-- JOURNEY WITH ROCKET -->
+    <!-- PROFESSIONAL JOURNEY -->
     <section id="journey" style="position:relative;z-index:10;padding:50px 16px;max-width:950px;margin:0 auto;">
         <p class="eyebrow" style="text-align:center;">📍 Professional Journey</p>
-        <h2 class="display" style="text-align:center;margin-bottom:0.3rem;">Academic & Professional Growth</h2>
-        <div style="position:relative;width:100%;height:160px;overflow:hidden;margin-bottom:-20px;" id="planeContainer"><canvas id="rocketCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas></div>
-        <div class="timeline-wrap"><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🇧🇩 Bangladesh</div><div class="timeline-text">Foundation in science & analytical thinking</div></div><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">💻 Self Learning</div><div class="timeline-text">Programming, web, embedded & AI</div></div><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🔬 Hands-on Projects</div><div class="timeline-text">Software, IoT, automation</div></div><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🇨🇳 Nanjing Tech</div><div class="timeline-text">Pursuing Automation Engineering</div></div><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🤖 AI & Automation</div><div class="timeline-text">Intelligent products</div></div><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🚀 Product Dev</div><div class="timeline-text">Scalable digital solutions</div></div><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🌐 Entrepreneurship</div><div class="timeline-text">Global tech ventures</div></div><div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🎯 Future Vision</div><div class="timeline-text">Impactful technologies</div></div></div>
+        <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:0.3rem;">Academic & Professional Growth</h2>
+        <div style="position:relative;width:100%;height:150px;overflow:hidden;margin-bottom:-10px;" id="planeContainer"><canvas id="rocketCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas></div>
+        <div class="timeline-wrap">
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🇧🇩 Bangladesh</div><div class="timeline-text">Built a strong foundation in science, technology, and analytical thinking.</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">💻 Self Learning</div><div class="timeline-text">Developed skills in programming, web development, embedded systems, and AI.</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🔬 Hands-on Projects</div><div class="timeline-text">Designed and built software, IoT solutions, and automation projects.</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🇨🇳 Nanjing Tech</div><div class="timeline-text">Pursuing Automation Engineering while expanding technical expertise.</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🤖 AI & Automation</div><div class="timeline-text">Building intelligent products integrating AI, automation, and modern software.</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🚀 Product Development</div><div class="timeline-text">Transforming ideas into scalable digital products and real-world solutions.</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🌐 Entrepreneurship</div><div class="timeline-text">Developing innovative technology ventures with a global perspective.</div></div>
+            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🎯 Future Vision</div><div class="timeline-text">Creating impactful technologies that improve lives worldwide.</div></div>
+        </div>
     </section>
 
     <!-- TECHNICAL EXPERTISE -->
     <section style="position:relative;z-index:10;padding:50px 16px;max-width:720px;margin:0 auto;">
-        <p class="eyebrow" style="text-align:center;">💻 Technical Expertise</p>
+        <p class="eyebrow" style="text-align:center;"> Technical Expertise</p>
         <div class="glass" style="padding:2rem;">
-            <div class="skill-row"><div class="lbl"><span>Frontend Development (HTML, CSS, JS)</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:90%;"></div></div></div>
+            <div class="skill-row"><div class="lbl"><span>Frontend Development (HTML, CSS, JavaScript)</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:90%;"></div></div></div>
             <div class="skill-row"><div class="lbl"><span>Python Programming</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:85%;"></div></div></div>
-            <div class="skill-row"><div class="lbl"><span>Embedded Systems & IoT</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:85%;"></div></div></div>
+            <div class="skill-row"><div class="lbl"><span>Embedded Systems & IoT (ESP32, Arduino)</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:85%;"></div></div></div>
+            <div class="skill-row"><div class="lbl"><span>Automation & Control Systems</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:75%;"></div></div></div>
             <div class="skill-row"><div class="lbl"><span>AI Integration & Prompt Engineering</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:80%;"></div></div></div>
             <div class="skill-row"><div class="lbl"><span>Git, GitHub & Version Control</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:80%;"></div></div></div>
             <div class="skill-row"><div class="lbl"><span>MySQL & Database Design</span><span>Intermediate</span></div><div class="track"><div class="fill" style="--w:75%;"></div></div></div>
-            <div class="skill-row"><div class="lbl"><span>Technical Writing</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:90%;"></div></div></div>
+            <div class="skill-row"><div class="lbl"><span>Technical Writing & Documentation</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:90%;"></div></div></div>
         </div>
     </section>
 
     <!-- TECHNOLOGIES & SKILLS -->
     <section style="position:relative;z-index:10;padding:30px 16px;max-width:900px;margin:0 auto;text-align:center;">
-        <p class="eyebrow">Technologies & Skills</p>
-        <h2 class="display" style="font-size:clamp(1.5rem,3.5vw,2.5rem);margin-bottom:1.8rem;">Core Competencies</h2>
-        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;"><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">HTML5</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">CSS3</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">JavaScript</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Python</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Embedded C/C++</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">MySQL</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Git & GitHub</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">AI Integration</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">ESP32</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">FreeRTOS</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">LVGL</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">IoT</span></div>
+        <p class="eyebrow">Technical Expertise</p>
+        <h2 class="display" style="font-size:clamp(1.5rem,3.5vw,2.5rem);margin-bottom:1.8rem;">Technologies & Skills</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+            <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">HTML5</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">CSS3</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">JavaScript</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Python</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">C</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Embedded C/C++</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">MySQL</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Git</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">GitHub</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">AI Integration</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Prompt Engineering</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Automation Engineering</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Embedded Systems</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">ESP32</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Arduino</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">FreeRTOS</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">LVGL</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">IoT Development</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">UI/UX Design</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Responsive Web Design</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Technical Writing</span><span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Video Editing</span>
+        </div>
     </section>
 
     <!-- EXPERIENCE AT A GLANCE -->
     <section style="position:relative;z-index:10;padding:40px 16px;max-width:1100px;margin:0 auto;">
-        <p class="eyebrow" style="text-align:center;">📈 Professional Snapshot</p>
-        <h2 class="display" style="text-align:center;margin-bottom:2rem;">Experience at a Glance</h2>
-        <div style="display:flex;gap:10px;overflow-x:auto;"><div class="glass-sm" style="flex:1;min-width:110px;padding:1.2rem;text-align:center;"><div class="stat-num">3+</div><div class="stat-lbl">Years of Dev</div></div><div class="glass-sm" style="flex:1;min-width:110px;padding:1.2rem;text-align:center;"><div class="stat-num">20+</div><div class="stat-lbl">Tech & Tools</div></div><div class="glass-sm" style="flex:1;min-width:110px;padding:1.2rem;text-align:center;"><div class="stat-num">6+</div><div class="stat-lbl">Projects</div></div><div class="glass-sm" style="flex:1;min-width:110px;padding:1.2rem;text-align:center;"><div class="stat-num">4</div><div class="stat-lbl">Languages</div></div><div class="glass-sm" style="flex:1;min-width:110px;padding:1.2rem;text-align:center;"><div class="stat-num">∞</div><div class="stat-lbl">Curiosity</div></div></div>
+        <p class="eyebrow" style="text-align:center;"> Professional Snapshot</p>
+        <h2 class="display" style="text-align:center;font-size:clamp(1.6rem,3.5vw,2.6rem);margin-bottom:2rem;">Experience at a Glance</h2>
+        <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;">
+            <div class="glass-sm" style="flex:1 1 0;min-width:110px;padding:1.2rem 0.8rem;text-align:center;"><div class="stat-num">3+</div><div class="stat-lbl">Years of Dev</div></div>
+            <div class="glass-sm" style="flex:1 1 0;min-width:110px;padding:1.2rem 0.8rem;text-align:center;"><div class="stat-num">20+</div><div class="stat-lbl">Tech & Tools</div></div>
+            <div class="glass-sm" style="flex:1 1 0;min-width:110px;padding:1.2rem 0.8rem;text-align:center;"><div class="stat-num">6+</div><div class="stat-lbl">Projects</div></div>
+            <div class="glass-sm" style="flex:1 1 0;min-width:110px;padding:1.2rem 0.8rem;text-align:center;"><div class="stat-num">4</div><div class="stat-lbl">Languages</div></div>
+            <div class="glass-sm" style="flex:1 1 0;min-width:110px;padding:1.2rem 0.8rem;text-align:center;"><div class="stat-num">2</div><div class="stat-lbl">AI Concepts</div></div>
+            <div class="glass-sm" style="flex:1 1 0;min-width:110px;padding:1.2rem 0.8rem;text-align:center;"><div class="stat-num">∞</div><div class="stat-lbl">Curiosity</div></div>
+        </div>
     </section>
 
-    <!-- PHILOSOPHY & VISION (single row on desktop) -->
-    <section style="position:relative;z-index:10;padding:60px 16px;max-width:1100px;margin:0 auto;">
-        <p class="eyebrow" style="text-align:center;">🧠 Philosophy & Vision</p>
+    <!-- PHILOSOPHY & VISION -->
+    <section style="position:relative;z-index:10;padding:60px 16px;max-width:1000px;margin:0 auto;">
+        <p class="eyebrow" style="text-align:center;">Philosophy & Vision</p>
         <div class="glass" style="padding:2.5rem;">
-            <h2 class="display" style="text-align:center;margin-bottom:2rem;">Building Technology with Purpose</h2>
-            <div class="philosophy-grid" style="display:flex;gap:1rem;flex-wrap:nowrap;overflow-x:auto;">
-                <div class="glass-sm" style="flex:1;min-width:160px;padding:1.25rem;text-align:center;"><h3 style="margin:0 0 .5rem;font-size:1rem;color:#fff;">💡 Think</h3><p style="margin:0;color:var(--text2);">Challenge assumptions.</p></div>
-                <div class="glass-sm" style="flex:1;min-width:160px;padding:1.25rem;text-align:center;"><h3 style="margin:0 0 .5rem;font-size:1rem;color:#fff;">🔍 Stay Curious</h3><p style="margin:0;color:var(--text2);">Continuous learning.</p></div>
-                <div class="glass-sm" style="flex:1;min-width:160px;padding:1.25rem;text-align:center;"><h3 style="margin:0 0 .5rem;font-size:1rem;color:#fff;">⚖️ Build Responsibly</h3><p style="margin:0;color:var(--text2);">Respect people & society.</p></div>
-                <div class="glass-sm" style="flex:1;min-width:160px;padding:1.25rem;text-align:center;"><h3 style="margin:0 0 .5rem;font-size:1rem;color:#fff;">🚀 Create Impact</h3><p style="margin:0;color:var(--text2);">Solve real challenges.</p></div>
+            <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.3rem);text-align:center;margin-bottom:1.25rem;">Building Technology with Purpose</h2>
+            <p style="color:var(--text2);line-height:1.9;text-align:center;max-width:680px;margin:0 auto 2.5rem;">I believe technology should <strong style="color:#fff;">empower people</strong>, not replace them.That's why my work is driven by curiosity, critical thinking, and ethical engineering.</p>
+            <div class="philosophy-cards">
+                <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">💡 Think Independently</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Challenge assumptions and develop original ideas.</p></div>
+                <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">🔍 Stay Curious</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Continuous learning drives innovation.</p></div>
+                <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">⚖️ Build Responsibly</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Technology should respect people and society.</p></div>
+                <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">🚀 Create Impact</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Solve real-world challenges through scalable solutions.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- LATEST WRITINGS -->
-    <section id="blog" style="position:relative;z-index:10;padding:50px 16px;max-width:1000px;margin:0 auto;">
-        <p class="eyebrow" style="text-align:center;">✍️ Writings</p>
-        <h2 class="display" style="text-align:center;margin-bottom:2rem;">Latest Writings</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;">
-            <a href="https://posts.abdullahbinfahad.info/at-a-certain-point-neither-happiness-nor-sorrow-holds-any-meaning-where-life-itself-is-an-illusion/" target="_blank" class="glass" style="padding:1.5rem;text-decoration:none;color:inherit;"><div style="height:160px;border-radius:12px;overflow:hidden;margin-bottom:1rem;"><img src="https://cdn.vox-cdn.com/thumbor/fvwe9t7KT4Eixb4bU-FTvvpOMo0=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19715160/GettyImages_515177654.jpg" style="width:100%;height:100%;object-fit:cover;"></div><h4>At a Certain Point... ↗</h4></a>
-            <a href="https://posts.abdullahbinfahad.info/illusion-of-existence/" target="_blank" class="glass" style="padding:1.5rem;text-decoration:none;color:inherit;"><div style="height:160px;border-radius:12px;overflow:hidden;margin-bottom:1rem;"><img src="https://posts.abdullahbinfahad.info/assets/uploads/alone-picture.png" style="width:100%;height:100%;object-fit:cover;"></div><h4>Illusion of Existence ↗</h4></a>
-            <a href="https://posts.abdullahbinfahad.info/how-love-really-looks-like/" target="_blank" class="glass" style="padding:1.5rem;text-decoration:none;color:inherit;"><div style="height:160px;border-radius:12px;overflow:hidden;margin-bottom:1rem;"><img src="https://webneel.com/daily/sites/default/files/images/daily/02-2013/6-romantic-couple-photography.jpg" style="width:100%;height:100%;object-fit:cover;"></div><h4>How Love Really Looks Like ↗</h4></a>
-        </div>
-        <div style="text-align:center;margin-top:2rem;"><a href="https://posts.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-outline">View All Writings ↗</a></div>
-    </section>
-
-    <!-- FAQ & CONTACT side by side -->
+    <!-- FAQ + CONTACT (side by side on PC) -->
     <section style="position:relative;z-index:10;padding:50px 16px;max-width:1100px;margin:0 auto;">
-        <p class="eyebrow desktop-only" style="text-align:center;">Questions & Contact</p>
-        <div class="faq-contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;">
-            <!-- FAQ -->
+        <div class="two-col-grid">
             <div id="faq">
-                <p class="eyebrow mobile-only" style="text-align:center;">Questions</p>
-                <h2 class="display" style="margin-bottom:1.5rem;">Frequently Asked</h2>
+                <p class="eyebrow" style="text-align:center;">Questions</p>
+                <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">Frequently Asked Questions</h2>
                 <div style="display:flex;flex-direction:column;gap:0.6rem;">
-                    <div class="faq-item glass-sm" style="padding:1rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;"><span>What do you work on?</span><svg class="faq-chevron" width="16" height="16"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">AI software, web dev, automation, embedded systems.</div></div>
-                    <div class="faq-item glass-sm" style="padding:1rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;"><span>Technologies used?</span><svg class="faq-chevron" width="16" height="16"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">Python, C/C++, HTML/CSS/JS, MySQL, Git, ESP32, FreeRTOS.</div></div>
-                    <div class="faq-item glass-sm" style="padding:1rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;"><span>Currently studying?</span><svg class="faq-chevron" width="16" height="16"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">B.Sc. Automation Engineering at Nanjing Tech University.</div></div>
-                    <div class="faq-item glass-sm" style="padding:1rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;"><span>Open to collaborations?</span><svg class="faq-chevron" width="16" height="16"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">Yes, open to software, AI, automation, and research projects.</div></div>
-                    <div class="faq-item glass-sm" style="padding:1rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;"><span>Location?</span><svg class="faq-chevron" width="16" height="16"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">Based in China, developing projects with a global perspective.</div></div>
+                    <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;color:#fff;font-size:0.88rem;">What do you work on?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">I work across AI-powered software, web development, automation, embedded systems, IoT, and digital product development.</div></div>
+                    <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;color:#fff;font-size:0.88rem;">What technologies do you use?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">My technical stack includes Python, C/C++, HTML, CSS, JavaScript, MySQL, Git, GitHub, ESP32, Arduino, FreeRTOS, LVGL, and other tools used for AI, automation, and embedded development.</div></div>
+                    <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;color:#fff;font-size:0.88rem;">What are you currently studying?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">I am pursuing a Bachelor's degree in Automation Engineering at Nanjing Tech University in China, with a focus on automation, intelligent systems, and practical engineering.</div></div>
+                    <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;color:#fff;font-size:0.88rem;">Are you open to collaborations?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">Yes. I am open to meaningful collaborations involving software, AI, automation, embedded systems, research, and technology-driven projects.</div></div>
+                    <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;color:#fff;font-size:0.88rem;">Where are you based?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">I am currently based in China while pursuing my degree at Nanjing Tech University and developing projects with a global perspective.</div></div>
                 </div>
             </div>
-            <!-- Contact -->
             <div id="contact">
-                <p class="eyebrow mobile-only" style="text-align:center;">📬 Contact</p>
-                <div class="glass" style="padding:2rem;">
-                    <h2 class="display" style="margin-bottom:1.5rem;">Let's Work Together</h2>
+                <p class="eyebrow" style="text-align:center;">📬 Contact</p>
+                <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:1.5rem;">Let's Work Together</h2>
+                <div class="glass" style="padding:2.5rem;">
                     <form onsubmit="handleSubmit(event)" style="display:flex;flex-direction:column;gap:1rem;">
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Email Address" required>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                            <input type="text" placeholder="Your Name" required>
+                            <input type="email" placeholder="Email Address" required>
+                        </div>
                         <textarea rows="4" placeholder="Tell me about your project..." required></textarea>
                         <div style="display:flex;justify-content:flex-end;"><button type="submit" class="btn-pill btn-primary">Send Message</button></div>
                     </form>
-                    <div style="display:flex;gap:1rem;margin-top:1.5rem;justify-content:center;flex-wrap:wrap;">
-                        <a href="mailto:abdullahbinfahad.abf@gmail.com" style="color:var(--text2);">📧 Email</a>
-                        <a href="https://github.com/abdullahbinfahad" target="_blank" style="color:var(--text2);">💻 GitHub</a>
-                        <span style="color:var(--text3);">📍 Nanjing, China</span>
-                        <span style="color:var(--text3);">📱 +86 18105180247</span>
+                    <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.05);justify-content:center;font-size:0.83rem;">
+                        <a href="mailto:abdullahbinfahad.abf@gmail.com" style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;">📧 Email</a>
+                        <a href="https://github.com/abdullahbinfahad" target="_blank" style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;">💻 GitHub</a>
+                        <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📍 Nanjing, China</span>
+                        <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📱 +86 18105180247</span>
                     </div>
                 </div>
             </div>
@@ -329,18 +779,22 @@
 
     <!-- FOOTER -->
     <footer style="padding:32px 16px;text-align:center;border-top:1px solid rgba(255,255,255,0.04);">
-        <div style="max-width:850px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:0.75rem;color:var(--text3);">
-            <p>© 2026 Abdullah Bin Fahad</p>
-            <div><span class="pulse-dot" style="width:5px;height:5px;"></span> Nanjing, China | <span id="localTime"></span></div>
+        <div style="max-width:850px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;font-size:0.75rem;color:var(--text3);">
+            <p style="margin:0;">© 2026 Abdullah Bin Fahad. All rights reserved.</p>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;">
+                <span style="display:flex;align-items:center;gap:5px;"><span class="pulse-dot" style="width:5px;height:5px;"></span> Nanjing, China</span>
+                <span id="localTime" style="color:#52525B;"></span>
+            </div>
         </div>
-        <a href="https://www.abdullahbinfahad.info" style="color:#52525B;font-size:0.7rem;margin-top:8px;display:inline-block;">www.abdullahbinfahad.info</a>
+        <a href="https://www.abdullahbinfahad.info" style="color:#52525B;text-decoration:none;font-size:0.7rem;margin-top:8px;display:inline-block;">www.abdullahbinfahad.info</a>
     </footer>
 
+    <!-- THREE.JS BACKGROUND & ROCKET -->
     <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.157.0/build/three.module.js"}}</script>
     <script type="module">
         import * as THREE from 'three';
 
-        // ── BACKGROUND PARTICLES ──
+        // Background particles
         const bgCanvas = document.getElementById('bg3d');
         const bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, alpha: true, antialias: false });
         bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
@@ -350,17 +804,34 @@
         bgCamera.position.z = 40;
         const pCount = 150;
         const pPos = new Float32Array(pCount * 3);
-        for (let i = 0; i < pCount; i++) { pPos[i*3] = (Math.random() - 0.5) * 70; pPos[i*3+1] = (Math.random() - 0.5) * 45; pPos[i*3+2] = (Math.random() - 0.5) * 35; }
-        const pGeo = new THREE.BufferGeometry(); pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        for (let i = 0; i < pCount; i++) { pPos[i * 3] = (Math.random() - 0.5) * 70;
+            pPos[i * 3 + 1] = (Math.random() - 0.5) * 45;
+            pPos[i * 3 + 2] = (Math.random() - 0.5) * 35; }
+        const pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
         const pMat = new THREE.PointsMaterial({ color: 0x0EA5E9, size: 0.08, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending, depthWrite: false });
-        const particles = new THREE.Points(pGeo, pMat); bgScene.add(particles);
-        let mX = 0, mY = 0, tX = 0, tY = 0;
-        document.addEventListener('mousemove', (e) => { tX = (e.clientX / window.innerWidth) * 2 - 1; tY = -(e.clientY / window.innerHeight) * 2 + 1; });
-        function bgAnimate() { requestAnimationFrame(bgAnimate); mX += (tX - mX) * 0.02; mY += (tY - mY) * 0.02; particles.rotation.y += 0.0003; particles.rotation.x += mY * 0.0004; particles.rotation.z += mX * 0.0003; bgRenderer.render(bgScene, bgCamera); }
-        bgAnimate();
-        window.addEventListener('resize', () => { bgCamera.aspect = window.innerWidth / window.innerHeight; bgCamera.updateProjectionMatrix(); bgRenderer.setSize(window.innerWidth, window.innerHeight); });
+        const particles = new THREE.Points(pGeo, pMat);
+        bgScene.add(particles);
+        let mX = 0,
+            mY = 0,
+            tX = 0,
+            tY = 0;
+        document.addEventListener('mousemove', (e) => { tX = (e.clientX / window.innerWidth) * 2 - 1;
+            tY = -(e.clientY / window.innerHeight) * 2 + 1; });
 
-        // ── REALISTIC ROCKET WITH FIRE & SMOKE ──
+        function bgAnimate() { requestAnimationFrame(bgAnimate);
+            mX += (tX - mX) * 0.02;
+            mY += (tY - mY) * 0.02;
+            particles.rotation.y += 0.0003;
+            particles.rotation.x += mY * 0.0004;
+            particles.rotation.z += mX * 0.0003;
+            bgRenderer.render(bgScene, bgCamera); }
+        bgAnimate();
+        window.addEventListener('resize', () => { bgCamera.aspect = window.innerWidth / window.innerHeight;
+            bgCamera.updateProjectionMatrix();
+            bgRenderer.setSize(window.innerWidth, window.innerHeight); });
+
+        // Realistic rocket with fire & smoke
         const rocketCanvas = document.getElementById('rocketCanvas');
         const rocketContainer = document.getElementById('planeContainer');
         if (rocketCanvas && rocketContainer) {
@@ -368,68 +839,197 @@
             rRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
             const rScene = new THREE.Scene();
             const rCamera = new THREE.PerspectiveCamera(45, rocketContainer.clientWidth / Math.max(rocketContainer.clientHeight, 1), 0.1, 100);
-            rCamera.position.set(0, 1.8, 10); rCamera.lookAt(0, 0, 0);
-            rScene.add(new THREE.AmbientLight(0xffffff, 0.7));
+            rCamera.position.set(0, 2, 12);
+            rCamera.lookAt(0, 0, 0);
+            rScene.add(new THREE.AmbientLight(0xffffff, 0.6));
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 8, 5);
+            rScene.add(dirLight);
+
             const rocketGroup = new THREE.Group();
-            const metalMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, metalness: 0.9, roughness: 0.3 });
-            const bodyGeo = new THREE.CylinderGeometry(0.18, 0.24, 2.2, 12); bodyGeo.rotateX(Math.PI/2);
-            rocketGroup.add(new THREE.Mesh(bodyGeo, metalMat));
-            const noseGeo = new THREE.ConeGeometry(0.22, 0.65, 12); noseGeo.rotateX(-Math.PI/2);
-            const nose = new THREE.Mesh(noseGeo, metalMat); nose.position.set(1.45, 0, 0); rocketGroup.add(nose);
-            const nozzleGeo = new THREE.CylinderGeometry(0.16, 0.2, 0.4, 8); nozzleGeo.rotateX(Math.PI/2);
-            const nozzle = new THREE.Mesh(nozzleGeo, new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.95, roughness: 0.1 })); nozzle.position.set(-1.35, 0, 0); rocketGroup.add(nozzle);
-            const finGeo = new THREE.BoxGeometry(0.08, 0.25, 0.5);
-            for (let i = 0; i < 3; i++) { const fin = new THREE.Mesh(finGeo, metalMat); fin.position.set(-0.6, 0.2, 0); fin.rotation.x = (i * Math.PI*2)/3; rocketGroup.add(fin); }
-            // Fire
-            const flameGeo = new THREE.ConeGeometry(0.18, 0.9, 8); flameGeo.rotateX(Math.PI/2);
-            const flameMat = new THREE.MeshBasicMaterial({ color: 0xff5500, transparent: true, opacity: 0.8 });
-            const flame = new THREE.Mesh(flameGeo, flameMat); flame.position.set(-1.7, 0, 0); rocketGroup.add(flame);
-            const innerFlameGeo = new THREE.ConeGeometry(0.09, 0.55, 8); innerFlameGeo.rotateX(Math.PI/2);
-            const innerFlame = new THREE.Mesh(innerFlameGeo, new THREE.MeshBasicMaterial({ color: 0xffcc00, transparent: true, opacity: 0.9 })); innerFlame.position.set(-1.65, 0, 0); rocketGroup.add(innerFlame);
-            // Smoke particles
-            const smokeCount = 80;
-            const smokePos = new Float32Array(smokeCount * 3);
-            for (let i = 0; i < smokeCount; i++) { smokePos[i*3] = -1.8 - Math.random()*2.2; smokePos[i*3+1] = (Math.random()-0.5)*0.5; smokePos[i*3+2] = (Math.random()-0.5)*0.5; }
-            const smokeGeo = new THREE.BufferGeometry(); smokeGeo.setAttribute('position', new THREE.BufferAttribute(smokePos, 3));
-            const smokeMat = new THREE.PointsMaterial({ color: 0x888888, size: 0.07, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.4 });
-            const smoke = new THREE.Points(smokeGeo, smokeMat); rocketGroup.add(smoke);
-            rocketGroup.rotation.y = -0.05; rScene.add(rocketGroup);
-            let rocketX = -7; const speed = 0.018;
-            function updateSize() { const w = rocketContainer.clientWidth; const h = Math.max(rocketContainer.clientHeight, 1); rRenderer.setSize(w, h); rCamera.aspect = w / h; rCamera.updateProjectionMatrix(); }
+            // Body
+            const bodyGeo = new THREE.CylinderGeometry(0.18, 0.24, 2.2, 16);
+            bodyGeo.rotateX(Math.PI / 2);
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, metalness: 0.7, roughness: 0.3 });
+            rocketGroup.add(new THREE.Mesh(bodyGeo, bodyMat));
+
+            // Nose cone
+            const noseGeo = new THREE.ConeGeometry(0.22, 0.7, 16);
+            noseGeo.rotateX(-Math.PI / 2);
+            const nose = new THREE.Mesh(noseGeo, bodyMat);
+            nose.position.set(1.55, 0, 0);
+            rocketGroup.add(nose);
+
+            // Fins
+            const finGeo = new THREE.BoxGeometry(0.06, 0.25, 0.45);
+            for (let i = 0; i < 3; i++) {
+                const fin = new THREE.Mesh(finGeo, bodyMat);
+                fin.position.set(-0.7, 0.2, 0);
+                fin.rotation.x = (i * Math.PI * 2) / 3;
+                rocketGroup.add(fin);
+            }
+
+            // Nozzle
+            const nozzleGeo = new THREE.CylinderGeometry(0.14, 0.18, 0.4, 12);
+            nozzleGeo.rotateX(Math.PI / 2);
+            const nozzle = new THREE.Mesh(nozzleGeo, new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.9, roughness: 0.2 }));
+            nozzle.position.set(-1.3, 0, 0);
+            rocketGroup.add(nozzle);
+
+            // Flame layers
+            const flameOuterGeo = new THREE.ConeGeometry(0.18, 0.9, 8);
+            flameOuterGeo.rotateX(Math.PI / 2);
+            const flameOuter = new THREE.Mesh(flameOuterGeo, new THREE.MeshBasicMaterial({ color: 0xff4400, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending, depthWrite: false }));
+            flameOuter.position.set(-1.85, 0, 0);
+            rocketGroup.add(flameOuter);
+
+            const flameInnerGeo = new THREE.ConeGeometry(0.09, 0.6, 6);
+            flameInnerGeo.rotateX(Math.PI / 2);
+            const flameInner = new THREE.Mesh(flameInnerGeo, new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false }));
+            flameInner.position.set(-1.7, 0, 0);
+            rocketGroup.add(flameInner);
+
+            const flameCoreGeo = new THREE.ConeGeometry(0.04, 0.4, 4);
+            flameCoreGeo.rotateX(Math.PI / 2);
+            const flameCore = new THREE.Mesh(flameCoreGeo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false }));
+            flameCore.position.set(-1.65, 0, 0);
+            rocketGroup.add(flameCore);
+
+            // Smoke particles (exhaust)
+            const smokeCount = 100;
+            const smokePositions = new Float32Array(smokeCount * 3);
+            const smokeColors = new Float32Array(smokeCount * 3);
+            for (let i = 0; i < smokeCount; i++) {
+                smokePositions[i * 3] = -1.6 - Math.random() * 2.5;
+                smokePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
+                smokePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+                const gray = 0.3 + Math.random() * 0.4;
+                smokeColors[i * 3] = gray;
+                smokeColors[i * 3 + 1] = gray;
+                smokeColors[i * 3 + 2] = gray;
+            }
+            const smokeGeo = new THREE.BufferGeometry();
+            smokeGeo.setAttribute('position', new THREE.BufferAttribute(smokePositions, 3));
+            smokeGeo.setAttribute('color', new THREE.BufferAttribute(smokeColors, 3));
+            const smokeMat = new THREE.PointsMaterial({
+                size: 0.12,
+                vertexColors: true,
+                blending: THREE.NormalBlending,
+                depthWrite: false,
+                transparent: true,
+                opacity: 0.5,
+            });
+            const smoke = new THREE.Points(smokeGeo, smokeMat);
+            rocketGroup.add(smoke);
+
+            rocketGroup.rotation.y = -0.05;
+            rScene.add(rocketGroup);
+
+            let rocketX = -8;
+            const speed = 0.022;
+
+            function updateSize() { const w = rocketContainer.clientWidth;
+                const h = Math.max(rocketContainer.clientHeight, 1);
+                rRenderer.setSize(w, h);
+                rCamera.aspect = w / h;
+                rCamera.updateProjectionMatrix(); }
             updateSize();
-            function rocketAnimate() { requestAnimationFrame(rocketAnimate); rocketX += speed; if (rocketX > 7) rocketX = -7;
-                rocketGroup.position.x = rocketX; rocketGroup.position.y = Math.sin(rocketX * 0.5) * 0.4;
-                flame.scale.setScalar(0.7 + Math.random()*0.8); innerFlame.scale.setScalar(0.7 + Math.random()*0.7);
-                for (let i = 0; i < smokeCount; i++) { smokePos[i*3] -= 0.04; if (smokePos[i*3] < -3.5) smokePos[i*3] = -1.8; }
+
+            function rocketAnimate() {
+                requestAnimationFrame(rocketAnimate);
+                rocketX += speed;
+                if (rocketX > 8) rocketX = -8;
+                rocketGroup.position.x = rocketX;
+                rocketGroup.position.y = Math.sin(rocketX * 0.7) * 0.5;
+                rocketGroup.rotation.z = Math.sin(rocketX * 0.5) * 0.05 - 0.02;
+
+                // Flicker flames
+                flameOuter.scale.setScalar(0.7 + Math.random() * 0.6);
+                flameInner.scale.setScalar(0.8 + Math.random() * 0.5);
+                flameCore.scale.setScalar(0.7 + Math.random() * 0.6);
+
+                // Update smoke particles
+                for (let i = 0; i < smokeCount; i++) {
+                    smokePositions[i * 3] -= 0.04 + Math.random() * 0.04;
+                    smokePositions[i * 3 + 1] += (Math.random() - 0.5) * 0.03;
+                    smokePositions[i * 3 + 2] += (Math.random() - 0.5) * 0.03;
+                    if (smokePositions[i * 3] < -3.0) {
+                        smokePositions[i * 3] = -1.5;
+                        smokePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.4;
+                        smokePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.4;
+                    }
+                    const gray = 0.2 + Math.random() * 0.35;
+                    smokeColors[i * 3] = gray;
+                    smokeColors[i * 3 + 1] = gray;
+                    smokeColors[i * 3 + 2] = gray;
+                }
                 smokeGeo.attributes.position.needsUpdate = true;
-                rRenderer.render(rScene, rCamera); }
+                smokeGeo.attributes.color.needsUpdate = true;
+
+                rRenderer.render(rScene, rCamera);
+            }
             rocketAnimate();
             window.addEventListener('resize', updateSize);
         }
     </script>
 
+    <!-- SCRIPTS -->
     <script>
-        const hamBtn = document.getElementById('hamBtn'), mobMenu = document.getElementById('mobMenu'), hamIcon = document.getElementById('hamIcon');
-        hamBtn.addEventListener('click', () => { const o = mobMenu.classList.contains('open'); mobMenu.classList.toggle('open', !o); hamIcon.textContent = o ? '☰' : '✕'; });
-        mobMenu.addEventListener('click', function(e) { if (e.target === mobMenu) { mobMenu.classList.remove('open'); hamIcon.textContent = '☰'; } });
-        mobMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { mobMenu.classList.remove('open'); hamIcon.textContent = '☰'; }));
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobMenu.classList.contains('open')) { mobMenu.classList.remove('open'); hamIcon.textContent = '☰'; } });
+        const hamBtn = document.getElementById('hamBtn'),
+            mobMenu = document.getElementById('mobMenu'),
+            hamIcon = document.getElementById('hamIcon');
+        hamBtn.addEventListener('click', (e) => { const o = mobMenu.classList.contains('open');
+            mobMenu.classList.toggle('open', !o);
+            hamIcon.textContent = o ? '☰' : '✕'; });
+        mobMenu.addEventListener('click', function(e) { if (e.target === mobMenu) { mobMenu.classList.remove('open');
+                hamIcon.textContent = '☰'; } });
+        mobMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { mobMenu.classList.remove('open');
+            hamIcon.textContent = '☰'; }));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobMenu.classList.contains('open')) { mobMenu.classList.remove('open');
+                hamIcon.textContent = '☰'; } });
 
-        function toggleFAQ(el) { const act = el.classList.contains('active'); document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active')); if (!act) el.classList.add('active'); }
+        function toggleFAQ(el) { const act = el.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active')); if (!act) el.classList.add('active'); }
 
-        function handleSubmit(e) { e.preventDefault(); const b = e.target.querySelector('button'); b.textContent = 'Sent! ✓'; b.style.background = '#10B981'; setTimeout(() => { b.textContent = 'Send Message'; b.style.background = '#0EA5E9'; e.target.reset(); }, 2500); }
+        function handleSubmit(e) { e.preventDefault(); const b = e.target.querySelector('button');
+            b.textContent = 'Sent! ✓';
+            b.style.background = '#10B981';
+            setTimeout(() => { b.textContent = 'Send Message';
+                b.style.background = '#0EA5E9';
+                e.target.reset(); }, 2500); }
 
         function updTime() { document.getElementById('localTime').textContent = '🕐 ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Shanghai', hour12: true }) + ' CST'; }
-        updTime(); setInterval(updTime, 60000);
+        updTime();
+        setInterval(updTime, 60000);
 
-        const deskNav = document.getElementById('deskNav'), hamIconEl = document.querySelector('.ham-icon');
-        function handleNav() { if (window.innerWidth >= 768) { deskNav.style.display = 'flex'; hamIconEl.style.display = 'none'; } else { deskNav.style.display = 'none'; hamIconEl.style.display = 'block'; } }
-        handleNav(); window.addEventListener('resize', handleNav);
+        // Skill bar animation - force trigger
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const row = entry.target;
+                    row.classList.add('visible');
+                    const fills = row.querySelectorAll('.fill');
+                    fills.forEach(f => {
+                        const w = f.style.getPropertyValue('--w');
+                        f.style.width = w;
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.skill-row').forEach(row => skillObserver.observe(row));
 
-        // Skill bars animation
-        const skillObserver = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); if (e.target.querySelector('.fill')) { e.target.querySelectorAll('.fill').forEach(f => { f.style.width = f.style.getPropertyValue('--w'); }); } } }); }, { threshold: 0.3 });
-        document.querySelectorAll('.skill-row').forEach(el => skillObserver.observe(el));
-        setTimeout(() => { document.querySelectorAll('.skill-row').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) { el.classList.add('visible'); el.querySelectorAll('.fill').forEach(f => f.style.width = f.style.getPropertyValue('--w')); } }); }, 500);
+        // Also trigger on load if visible
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.skill-row').forEach(row => {
+                const rect = row.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    row.classList.add('visible');
+                    row.querySelectorAll('.fill').forEach(f => {
+                        f.style.width = f.style.getPropertyValue('--w');
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
