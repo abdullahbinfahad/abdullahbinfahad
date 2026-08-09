@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abdullah Bin Fahad</title>
+    <title>Abdullah Bin Fahad.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
@@ -21,8 +21,6 @@
             --cyan: #0EA5E9;
             --emerald: #10B981;
             --violet: #8B5CF6;
-            --amber: #F59E0B;
-            --rose: #F43F5E;
             --radius: 24px;
             --pill: 80px;
             --spring: cubic-bezier(0.16, 1, 0.3, 1);
@@ -45,6 +43,15 @@
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
             min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ── 3D Canvas Background ── */
+        #bg3d {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
         }
 
         /* ── Atmospheric Background ── */
@@ -99,10 +106,13 @@
             -webkit-backdrop-filter: blur(22px);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            transition: all 0.4s var(--spring);
+            transition: all 0.4s var(--spring), transform 0.15s ease-out;
             position: relative;
             z-index: 1;
             overflow: hidden;
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
         }
         .glass:hover {
             transform: translateY(-4px);
@@ -117,11 +127,23 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 18px;
             transition: all 0.35s var(--spring);
+            will-change: transform;
+            transform: translateZ(0);
         }
         .glass-sm:hover {
             border-color: rgba(255, 255, 255, 0.11);
             background: rgba(26, 26, 30, 0.55);
             transform: translateY(-2px);
+        }
+
+        /* ── 3D Hover Cards ── */
+        .card-3d {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        .card-3d .glass {
+            transition: all 0.4s var(--spring), transform 0.2s ease-out;
+            will-change: transform;
         }
 
         /* ── Pulse Dot ── */
@@ -164,6 +186,7 @@
             width: max-content;
             animation: marquee 30s linear infinite;
             gap: 2.5rem;
+            will-change: transform;
         }
         .marquee-track:hover {
             animation-play-state: paused;
@@ -206,6 +229,7 @@
             letter-spacing: 0.01em;
             border: none;
             font-family: var(--font-body);
+            will-change: transform;
         }
         .btn-primary {
             background: #0EA5E9;
@@ -336,6 +360,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s;
+            cursor: pointer;
         }
         .mobile-overlay.open {
             opacity: 1;
@@ -349,6 +374,8 @@
             text-decoration: none;
             transition: color 0.3s;
             letter-spacing: -0.01em;
+            cursor: pointer;
+            pointer-events: auto;
         }
         .mobile-overlay a:hover {
             color: #0EA5E9;
@@ -378,6 +405,7 @@
             background: linear-gradient(90deg, #0EA5E9, #38BDF8);
             transition: width 1.2s var(--spring);
             width: 0;
+            will-change: width;
         }
         .skill-row.visible .fill {
             width: var(--w);
@@ -428,30 +456,6 @@
             line-height: 1.3;
         }
 
-        /* ── Quotes ── */
-        .quote-card {
-            text-align: center;
-            padding: 2.2rem 1.8rem;
-            font-weight: 800;
-            font-size: clamp(1.3rem, 3.5vw, 2.2rem);
-            line-height: 1.25;
-            font-family: var(--font-display);
-            letter-spacing: -0.02em;
-            color: #fff;
-            text-shadow: 0 0 28px rgba(14, 165, 233, 0.3);
-            background: rgba(14, 165, 233, 0.04);
-            border: 1px solid rgba(14, 165, 233, 0.1);
-            border-radius: var(--radius);
-            margin-bottom: 0.9rem;
-            transition: all 0.5s var(--spring);
-        }
-        .quote-card:hover {
-            border-color: rgba(14, 165, 233, 0.28);
-            background: rgba(14, 165, 233, 0.07);
-            text-shadow: 0 0 42px rgba(14, 165, 233, 0.45);
-            transform: translateY(-3px);
-        }
-
         /* ── Principle ── */
         .principle {
             font-size: 0.95rem;
@@ -461,25 +465,6 @@
             padding-left: 14px;
             border-left: 3px solid #0EA5E9;
             line-height: 1.5;
-        }
-
-        /* ── Locked ── */
-        .locked-box {
-            background: rgba(30, 30, 35, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            padding: 1.4rem;
-            text-align: center;
-            color: var(--text3);
-            filter: blur(2.5px);
-            user-select: none;
-            pointer-events: none;
-            font-size: 0.85rem;
-        }
-        .locked-box .lock-icon {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-            opacity: 0.4;
         }
 
         /* ── Inputs ── */
@@ -564,6 +549,15 @@
             transform: scale(1.03);
         }
 
+        /* ── Blog Card Image Hover ── */
+        .blog-card img {
+            transition: transform 0.45s var(--spring);
+            will-change: transform;
+        }
+        .blog-card:hover img {
+            transform: scale(1.05);
+        }
+
         @media (max-width: 768px) {
             .glass:hover {
                 transform: translateY(-2px);
@@ -602,6 +596,9 @@
 </head>
 <body>
 
+    <!-- ═══════════ 3D CANVAS BACKGROUND ═══════════ -->
+    <canvas id="bg3d"></canvas>
+
     <!-- ═══════════ ATMOSPHERIC BACKGROUND ═══════════ -->
     <div class="bg-atmos"></div>
     <div class="glow-orb glow-orb-1"></div>
@@ -625,11 +622,12 @@
         <a href="https://posts.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-ghost">✍️ Writings <span
         class="ext-arrow">↗</span></a>
         <a href="https://games.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-games">🎮 Explore More
+        <span class="ext-arrow">↗</span></a>
         <a href="#contact" class="btn-pill btn-primary" style="padding:10px 20px;font-size:0.82rem;">Book a
-        Call</a>
-    </div>
-    <button id="hamBtn" aria-label="Menu"
-    style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;z-index:110;display:block;"
+    Call</a>
+</div>
+<button id="hamBtn" aria-label="Menu"
+style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;z-index:110;display:block;"
 class="ham-icon">
 <span id="hamIcon">☰</span>
 </button>
@@ -653,214 +651,66 @@ style="font-size:0.7em;">↗</span></a>
 </div>
 
 <!-- ═══════════ HERO ═══════════ -->
-<section style="
-    position:relative;
-    z-index:10;
-    padding:150px 16px 80px;
-">
-
-    <div style="
-        max-width:1050px;
-        margin:0 auto;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:4rem;
-    ">
-
-        <!-- ═══════════ PROFILE IMAGE ═══════════ -->
-        <div style="
-            position:relative;
-            flex:0 0 auto;
-        ">
-
-            <div style="
-                width:150px;
-                height:150px;
-                border-radius:50%;
-                padding:3px;
-                background:linear-gradient(135deg,#0EA5E9,#475569);
-                box-shadow:0 20px 60px rgba(14,165,233,.16);
-            ">
-
+<section style="position:relative;z-index:10;padding:150px 16px 80px;">
+    <div style="max-width:1050px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:4rem;">
+        <div style="position:relative;flex:0 0 auto;">
+            <div style="width:150px;height:150px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#0EA5E9,#475569);box-shadow:0 20px 60px rgba(14,165,233,.16);">
                 <img
-                    src="https://raw.githubusercontent.com/abdullahbinfahad/writings/main/assets/uploads/abdullahbinfahad.jpg"
-                    alt="Abdullah Bin Fahad"
-                    style="
-                        width:100%;
-                        height:100%;
-                        border-radius:50%;
-                        object-fit:cover;
-                        display:block;
-                    "
-                >
-
+                src="https://raw.githubusercontent.com/abdullahbinfahad/writings/main/assets/uploads/abdullahbinfahad.jpg"
+                alt="Abdullah Bin Fahad"
+                style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;">
             </div>
-
-
-            <!-- Availability -->
-            <div style="
-                position:absolute;
-                bottom:-8px;
-                left:50%;
-                transform:translateX(-50%);
-                background:#0a0a0a;
-                border:1px solid rgba(255,255,255,.14);
-                border-radius:50px;
-                padding:6px 13px;
-                display:flex;
-                align-items:center;
-                gap:6px;
-                white-space:nowrap;
-                box-shadow:0 7px 26px rgba(0,0,0,.55);
-            ">
-
+            <div style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:#0a0a0a;border:1px solid rgba(255,255,255,.14);border-radius:50px;padding:6px 13px;display:flex;align-items:center;gap:6px;white-space:nowrap;box-shadow:0 7px 26px rgba(0,0,0,.55);">
                 <span class="pulse-dot"></span>
-
-                <span style="
-                    font-size:.62rem;
-                    font-weight:700;
-                    text-transform:uppercase;
-                    letter-spacing:.1em;
-                    color:#10B981;
-                ">
-                    Available
-                </span>
-
+                <span style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#10B981;">Available</span>
             </div>
-
         </div>
-
-
-        <!-- ═══════════ HERO CONTENT ═══════════ -->
-        <div style="
-            flex:1;
-            max-width:760px;
-            text-align:left;
-        ">
-
-            <p class="eyebrow" style="
-                margin-bottom:.8rem;
-            ">
-                Abdullah Bin Fahad · Automation Engineering
-            </p>
-
-
-            <h1 class="display" style="
-                font-size:clamp(2.2rem,5.2vw,4.4rem);
-                line-height:1.04;
-                margin:0;
-                letter-spacing:-.035em;
-            ">
-
-                <span style="
-                    background:linear-gradient(180deg,#fff,#cbd5e1);
-                    -webkit-background-clip:text;
-                    -webkit-text-fill-color:transparent;
-                    background-clip:text;
-                ">
-                    Building technology
-                </span>
-
-                <span style="
-                    background:linear-gradient(135deg,#0EA5E9,#475569);
-                    -webkit-background-clip:text;
-                    -webkit-text-fill-color:transparent;
-                    background-clip:text;
-                ">
-                    that expands human potential.
-                </span>
-
+        <div style="flex:1;max-width:760px;text-align:left;">
+            <p class="eyebrow" style="margin-bottom:.8rem;">Abdullah Bin Fahad · Automation Engineering</p>
+            <h1 class="display" style="font-size:clamp(2.2rem,5.2vw,4.4rem);line-height:1.04;margin:0;letter-spacing:-.035em;">
+                <span style="background:linear-gradient(180deg,#fff,#cbd5e1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Building technology</span>
+                <span style="background:linear-gradient(135deg,#0EA5E9,#475569);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">that expands human potential.</span>
             </h1>
-
-
-            <p style="
-                color:var(--text2);
-                font-size:1.02rem;
-                line-height:1.7;
-                max-width:650px;
-                margin:1.15rem 0 1.5rem;
-            ">
-                I build AI-powered products, intelligent web platforms, and
-                automation systems that turn ideas into practical solutions
-                for real-world problems.
-            </p>
-
-
-            <!-- ═══════════ ACTIONS ═══════════ -->
-            <div style="
-                display:flex;
-                flex-wrap:wrap;
-                gap:11px;
-                justify-content:flex-start;
-            ">
-
-                <a href="#contact"
-                   class="btn-pill btn-primary">
-                    Get in Touch
-                </a>
-
-                <a href="https://cv.abdullahbinfahad.info/"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="btn-pill btn-outline">
-                    View Resume
-                    <span class="ext-arrow">↗</span>
-                </a>
-
+            <p style="color:var(--text2);font-size:1.02rem;line-height:1.7;max-width:650px;margin:1.15rem 0 1.5rem;">I build AI-powered products, intelligent web platforms, and automation systems that turn ideas into practical solutions for real-world problems.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:11px;justify-content:flex-start;">
+                <a href="#contact" class="btn-pill btn-primary">Get in Touch</a>
+                <a href="https://cv.abdullahbinfahad.info/" target="_blank" rel="noopener noreferrer" class="btn-pill btn-outline">View Resume <span class="ext-arrow">↗</span></a>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
-
-<!-- ═══════════ HERO RESPONSIVE ═══════════ -->
 <style>
-
-@media (max-width: 720px) {
-
-    section:first-of-type > div {
-        flex-direction:column !important;
-        gap:2rem !important;
-        text-align:center !important;
+    @media (max-width: 720px) {
+        section:first-of-type>div {
+            flex-direction: column !important;
+            gap: 2rem !important;
+            text-align: center !important;
+        }
+        section:first-of-type>div>div:last-child {
+            text-align: center !important;
+        }
+        section:first-of-type .eyebrow {
+            text-align: center !important;
+        }
+        section:first-of-type h1 {
+            font-size: clamp(2.2rem, 10vw, 3.3rem) !important;
+        }
+        section:first-of-type p {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        section:first-of-type>div>div:last-child>div {
+            justify-content: center !important;
+        }
     }
-
-    section:first-of-type > div > div:last-child {
-        text-align:center !important;
-    }
-
-    section:first-of-type .eyebrow {
-        text-align:center !important;
-    }
-
-    section:first-of-type h1 {
-        font-size:clamp(2.2rem,10vw,3.3rem) !important;
-    }
-
-    section:first-of-type p {
-        margin-left:auto !important;
-        margin-right:auto !important;
-    }
-
-    section:first-of-type > div > div:last-child > div {
-        justify-content:center !important;
-    }
-
-}
-
 </style>
-<!-- ═══════════ SKILLS & EXPERIENCE ═══════════ -->
-<section style="position:relative;z-index:10;padding:25px 0 50px;">
-    <p style="text-align:center;font-size:0.64rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text3);margin-bottom:1rem;">
-        Skills & Experience
-    </p>
 
+<!-- ═══════════ SKILLS & EXPERIENCE MARQUEE ═══════════ -->
+<section style="position:relative;z-index:10;padding:25px 0 50px;">
+    <p style="text-align:center;font-size:0.64rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text3);margin-bottom:1rem;">Skills & Experience</p>
     <div class="marquee-wrap">
         <div class="marquee-track">
-
             <span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span>
             <span class="marquee-item"><span class="marquee-dot"></span>HTML5</span>
             <span class="marquee-item"><span class="marquee-dot"></span>CSS3</span>
@@ -871,7 +721,6 @@ style="font-size:0.7em;">↗</span></a>
             <span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span>
             <span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span>
             <span class="marquee-item"><span class="marquee-dot"></span>SEO Optimization</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>WordPress Development</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Arduino Development</span>
             <span class="marquee-item"><span class="marquee-dot"></span>ESP32 Programming</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span>
@@ -881,12 +730,7 @@ style="font-size:0.7em;">↗</span></a>
             <span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Audio Editing</span>
-
-            <!-- Duplicate for seamless infinite marquee -->
-
             <span class="marquee-item"><span class="marquee-dot"></span>Frontend Development</span>
             <span class="marquee-item"><span class="marquee-dot"></span>HTML5</span>
             <span class="marquee-item"><span class="marquee-dot"></span>CSS3</span>
@@ -896,8 +740,6 @@ style="font-size:0.7em;">↗</span></a>
             <span class="marquee-item"><span class="marquee-dot"></span>Git & GitHub</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Responsive Web Design</span>
             <span class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>SEO Optimization</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>WordPress Development</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Arduino Development</span>
             <span class="marquee-item"><span class="marquee-dot"></span>ESP32 Programming</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Embedded Systems</span>
@@ -907,713 +749,124 @@ style="font-size:0.7em;">↗</span></a>
             <span class="marquee-item"><span class="marquee-dot"></span>AI Integration</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Automation Engineering</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Technical Writing</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
             <span class="marquee-item"><span class="marquee-dot"></span>Video Editing</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Audio Editing</span>
-
         </div>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     FEATURED PROJECTS
-═══════════════════════════════════════════════════════════════ -->
-<section id="projects"
-    style="position:relative;z-index:10;padding:70px 16px;max-width:1000px;margin:0 auto;">
-
-    <!-- Section Header -->
+<!-- ═══════════ FEATURED PROJECTS ═══════════ -->
+<section id="projects" style="position:relative;z-index:10;padding:70px 16px;max-width:1000px;margin:0 auto;">
     <div style="text-align:center;margin-bottom:3rem;">
         <p class="eyebrow">🚀 Selected Work</p>
-
-        <h2 class="display"
-            style="font-size:clamp(1.8rem,4vw,3rem);margin:0.5rem 0 0.8rem;">
-            Projects & Products
-        </h2>
-
-        <p style="
-            color:var(--text2);
-            max-width:620px;
-            margin:0 auto;
-            line-height:1.7;
-            font-size:.95rem;
-        ">
-            A selection of software, AI, automation, and embedded systems
-            I've designed and developed to explore real-world problems.
-        </p>
+        <h2 class="display" style="font-size:clamp(1.8rem,4vw,3rem);margin:0.5rem 0 0.8rem;">Projects & Products</h2>
+        <p style="color:var(--text2);max-width:620px;margin:0 auto;line-height:1.7;font-size:.95rem;">A selection of software, AI, automation, and embedded systems I've designed and developed to explore real-world problems.</p>
     </div>
 
-
-    <!-- ═══════════════════════════════════════════════════════════
-         PROJECT 01
-    ═══════════════════════════════════════════════════════════ -->
-    <article class="glass"
-        style="
-            padding:2rem;
-            margin-bottom:1.5rem;
-            overflow:hidden;
-        ">
-
-        <div style="
-            display:grid;
-            grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
-            gap:2.5rem;
-            align-items:center;
-        ">
-
-            <!-- Project Information -->
+    <!-- Project 1: MarketLens AI -->
+    <article class="glass card-3d" style="padding:2rem;margin-bottom:1.5rem;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:2.5rem;align-items:center;">
             <div>
-
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    gap:8px;
-                    margin-bottom:.7rem;
-                ">
-                    <span style="
-                        width:8px;
-                        height:8px;
-                        border-radius:50%;
-                        background:#0EA5E9;
-                        box-shadow:0 0 12px rgba(14,165,233,.6);
-                    "></span>
-
-                    <span style="
-                        color:#0EA5E9;
-                        font-size:.68rem;
-                        font-weight:700;
-                        text-transform:uppercase;
-                        letter-spacing:.12em;
-                    ">
-                        AI Platform
-                    </span>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#0EA5E9;box-shadow:0 0 12px rgba(14,165,233,.6);"></span>
+                    <span style="color:#0EA5E9;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">AI Platform</span>
                 </div>
-
-
-                <h3 style="
-                    font-family:var(--font-display);
-                    font-weight:900;
-                    font-size:clamp(1.6rem,3vw,2.1rem);
-                    margin:0 0 .7rem;
-                    color:#fff;
-                ">
-                    MarketLens AI
-                </h3>
-
-
-                <p style="
-                    color:var(--text2);
-                    line-height:1.75;
-                    margin:0 0 1.2rem;
-                    font-size:.92rem;
-                ">
-                    An AI-powered decision-support platform for
-                    cross-border e-commerce. Designed to combine market
-                    intelligence, consumer insights, product research,
-                    and business analysis into a unified workflow.
-                </p>
-
-
-                <!-- Technology Tags -->
-                <div style="
-                    display:flex;
-                    flex-wrap:wrap;
-                    gap:7px;
-                    margin-bottom:1.4rem;
-                ">
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        AI
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        Market Intelligence
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        Data Analysis
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        E-Commerce
-                    </span>
-
+                <h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">MarketLens AI</h3>
+                <p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">An AI-powered decision-support platform for cross-border e-commerce. Designed to combine market intelligence, consumer insights, product research, and business analysis into a unified workflow.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;">
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">AI</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Market Intelligence</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Data Analysis</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">E-Commerce</span>
                 </div>
-
-
-                <!-- Links -->
-                <div style="
-                    display:flex;
-                    flex-wrap:wrap;
-                    gap:1.2rem;
-                    align-items:center;
-                ">
-
-                    <a href="https://www.marketlens-ai.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style="
-                            color:#0EA5E9;
-                            font-weight:600;
-                            text-decoration:none;
-                            font-size:.84rem;
-                            display:inline-flex;
-                            align-items:center;
-                            gap:5px;
-                        ">
-                        Explore Project
-                        <span class="ext-arrow">↗</span>
-                    </a>
-
-                    <span style="
-                        color:var(--text3);
-                        font-size:.75rem;
-                    ">
-                        Independent Project
-                    </span>
-
+                <div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;">
+                    <a href="https://www.marketlens-ai.com" target="_blank" rel="noopener noreferrer" style="color:#0EA5E9;font-weight:600;text-decoration:none;font-size:.84rem;display:inline-flex;align-items:center;gap:5px;">Explore Project <span class="ext-arrow">↗</span></a>
+                    <span style="color:var(--text3);font-size:.75rem;">Independent Project</span>
                 </div>
-
             </div>
-
-
-            <!-- Project Visual -->
-            <div style="
-                min-height:230px;
-                border-radius:16px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:
-                    radial-gradient(
-                        circle at center,
-                        rgba(14,165,233,.12),
-                        rgba(14,165,233,.02) 55%,
-                        transparent 75%
-                    );
-                border:1px solid rgba(14,165,233,.10);
-                overflow:hidden;
-            ">
-
-                <div style="
-                    width:82%;
-                    max-width:330px;
-                    padding:1rem;
-                    border:1px solid rgba(255,255,255,.08);
-                    border-radius:12px;
-                    background:rgba(15,15,18,.65);
-                    box-shadow:0 20px 50px rgba(0,0,0,.25);
-                ">
-
-                    <div style="
-                        display:flex;
-                        justify-content:space-between;
-                        align-items:center;
-                        margin-bottom:1rem;
-                    ">
-                        <span style="
-                            font-size:.65rem;
-                            color:var(--text3);
-                        ">
-                            MARKET INTELLIGENCE
-                        </span>
-
-                        <span style="
-                            width:7px;
-                            height:7px;
-                            border-radius:50%;
-                            background:#0EA5E9;
-                        "></span>
-                    </div>
-
-                    <div style="
-                        height:7px;
-                        width:75%;
-                        border-radius:10px;
-                        background:rgba(14,165,233,.25);
-                        margin-bottom:9px;
-                    "></div>
-
-                    <div style="
-                        height:7px;
-                        width:55%;
-                        border-radius:10px;
-                        background:rgba(255,255,255,.08);
-                        margin-bottom:9px;
-                    "></div>
-
-                    <div style="
-                        height:7px;
-                        width:88%;
-                        border-radius:10px;
-                        background:rgba(255,255,255,.06);
-                        margin-bottom:1rem;
-                    "></div>
-
-                    <div style="
-                        display:grid;
-                        grid-template-columns:repeat(3,1fr);
-                        gap:7px;
-                    ">
-
-                        <div style="
-                            height:45px;
-                            border-radius:7px;
-                            background:rgba(14,165,233,.08);
-                        "></div>
-
-                        <div style="
-                            height:45px;
-                            border-radius:7px;
-                            background:rgba(14,165,233,.06);
-                        "></div>
-
-                        <div style="
-                            height:45px;
-                            border-radius:7px;
-                            background:rgba(14,165,233,.04);
-                        "></div>
-
-                    </div>
-
+            <div style="min-height:230px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,rgba(14,165,233,.12),rgba(14,165,233,.02) 55%,transparent 75%);border:1px solid rgba(14,165,233,.10);overflow:hidden;">
+                <div style="width:82%;max-width:330px;padding:1rem;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(15,15,18,.65);box-shadow:0 20px 50px rgba(0,0,0,.25);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span style="font-size:.65rem;color:var(--text3);">MARKET INTELLIGENCE</span><span style="width:7px;height:7px;border-radius:50%;background:#0EA5E9;"></span></div>
+                    <div style="height:7px;width:75%;border-radius:10px;background:rgba(14,165,233,.25);margin-bottom:9px;"></div>
+                    <div style="height:7px;width:55%;border-radius:10px;background:rgba(255,255,255,.08);margin-bottom:9px;"></div>
+                    <div style="height:7px;width:88%;border-radius:10px;background:rgba(255,255,255,.06);margin-bottom:1rem;"></div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;"><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.08);"></div><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.06);"></div><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.04);"></div></div>
                 </div>
-
             </div>
-
         </div>
-
     </article>
 
-
-    <!-- ═══════════════════════════════════════════════════════════
-         PROJECT 02
-    ═══════════════════════════════════════════════════════════ -->
-    <article class="glass"
-        style="
-            padding:2rem;
-            margin-bottom:1.5rem;
-            overflow:hidden;
-        ">
-
-        <div style="
-            display:grid;
-            grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr);
-            gap:2.5rem;
-            align-items:center;
-        ">
-
-            <!-- Project Visual -->
-            <div style="
-                min-height:230px;
-                border-radius:16px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:
-                    radial-gradient(
-                        circle at center,
-                        rgba(16,185,129,.11),
-                        rgba(16,185,129,.02) 55%,
-                        transparent 75%
-                    );
-                border:1px solid rgba(16,185,129,.10);
-            ">
-
-                <div style="
-                    width:170px;
-                    height:205px;
-                    border-radius:18px;
-                    border:1px solid rgba(255,255,255,.12);
-                    background:rgba(15,15,18,.75);
-                    box-shadow:0 20px 50px rgba(0,0,0,.3);
-                    padding:12px;
-                    display:flex;
-                    flex-direction:column;
-                    align-items:center;
-                    justify-content:space-between;
-                ">
-
-                    <div style="
-                        width:100%;
-                        height:105px;
-                        border-radius:9px;
-                        border:1px solid rgba(16,185,129,.15);
-                        background:rgba(16,185,129,.05);
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        color:#10B981;
-                        font-size:.7rem;
-                        letter-spacing:.08em;
-                    ">
-                        SMART
-                    </div>
-
-                    <div style="
-                        display:flex;
-                        gap:7px;
-                        width:100%;
-                    ">
-                        <div style="
-                            flex:1;
-                            height:27px;
-                            border-radius:6px;
-                            background:rgba(255,255,255,.06);
-                        "></div>
-
-                        <div style="
-                            flex:1;
-                            height:27px;
-                            border-radius:6px;
-                            background:rgba(16,185,129,.12);
-                        "></div>
-
-                        <div style="
-                            flex:1;
-                            height:27px;
-                            border-radius:6px;
-                            background:rgba(255,255,255,.06);
-                        "></div>
-                    </div>
-
+    <!-- Project 2: Smart Calculator -->
+    <article class="glass card-3d" style="padding:2rem;margin-bottom:1.5rem;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr);gap:2.5rem;align-items:center;">
+            <div style="min-height:230px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,rgba(16,185,129,.11),rgba(16,185,129,.02) 55%,transparent 75%);border:1px solid rgba(16,185,129,.10);">
+                <div style="width:170px;height:205px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(15,15,18,.75);box-shadow:0 20px 50px rgba(0,0,0,.3);padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;">
+                    <div style="width:100%;height:105px;border-radius:9px;border:1px solid rgba(16,185,129,.15);background:rgba(16,185,129,.05);display:flex;align-items:center;justify-content:center;color:#10B981;font-size:.7rem;letter-spacing:.08em;">SMART</div>
+                    <div style="display:flex;gap:7px;width:100%;"><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(16,185,129,.12);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div></div>
                 </div>
-
             </div>
-
-
-            <!-- Project Information -->
             <div>
-
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    gap:8px;
-                    margin-bottom:.7rem;
-                ">
-                    <span style="
-                        width:8px;
-                        height:8px;
-                        border-radius:50%;
-                        background:#10B981;
-                        box-shadow:0 0 12px rgba(16,185,129,.6);
-                    "></span>
-
-                    <span style="
-                        color:#10B981;
-                        font-size:.68rem;
-                        font-weight:700;
-                        text-transform:uppercase;
-                        letter-spacing:.12em;
-                    ">
-                        EdTech · Embedded System
-                    </span>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#10B981;box-shadow:0 0 12px rgba(16,185,129,.6);"></span><span style="color:#10B981;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">EdTech · Embedded System</span></div>
+                <h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">Smart Calculator</h3>
+                <p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">A multifunctional educational device designed for children and students, combining calculation, learning, communication, productivity, and intelligent assistance in a compact embedded platform.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;">
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">ESP32-S3</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">FreeRTOS</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">LVGL</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">IoT</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">AI</span>
                 </div>
-
-
-                <h3 style="
-                    font-family:var(--font-display);
-                    font-weight:900;
-                    font-size:clamp(1.6rem,3vw,2.1rem);
-                    margin:0 0 .7rem;
-                    color:#fff;
-                ">
-                    Smart Calculator
-                </h3>
-
-
-                <p style="
-                    color:var(--text2);
-                    line-height:1.75;
-                    margin:0 0 1.2rem;
-                    font-size:.92rem;
-                ">
-                    A multifunctional educational device designed for
-                    children and students, combining calculation,
-                    learning, communication, productivity, and
-                    intelligent assistance in a compact embedded platform.
-                </p>
-
-
-                <!-- Technology Tags -->
-                <div style="
-                    display:flex;
-                    flex-wrap:wrap;
-                    gap:7px;
-                    margin-bottom:1.4rem;
-                ">
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        ESP32-S3
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        FreeRTOS
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        LVGL
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        IoT
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        AI
-                    </span>
-
-                </div>
-
-
-                <div style="
-                    color:var(--text3);
-                    font-size:.75rem;
-                ">
-                    Hardware & Software Product Concept
-                </div>
-
+                <div style="color:var(--text3);font-size:.75rem;">Hardware & Software Product Concept</div>
             </div>
-
         </div>
-
     </article>
 
-
-    <!-- ═══════════════════════════════════════════════════════════
-         PROJECT 03
-    ═══════════════════════════════════════════════════════════ -->
-    <article class="glass"
-        style="
-            padding:2rem;
-            overflow:hidden;
-        ">
-
-        <div style="
-            display:grid;
-            grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
-            gap:2.5rem;
-            align-items:center;
-        ">
-
+    <!-- Project 3: Digital Products -->
+    <article class="glass card-3d" style="padding:2rem;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:2.5rem;align-items:center;">
             <div>
-
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    gap:8px;
-                    margin-bottom:.7rem;
-                ">
-                    <span style="
-                        width:8px;
-                        height:8px;
-                        border-radius:50%;
-                        background:#8B5CF6;
-                        box-shadow:0 0 12px rgba(139,92,246,.6);
-                    "></span>
-
-                    <span style="
-                        color:#8B5CF6;
-                        font-size:.68rem;
-                        font-weight:700;
-                        text-transform:uppercase;
-                        letter-spacing:.12em;
-                    ">
-                        Software · Web
-                    </span>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#8B5CF6;box-shadow:0 0 12px rgba(139,92,246,.6);"></span><span style="color:#8B5CF6;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">Software · Web</span></div>
+                <h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">Digital Products & Platforms</h3>
+                <p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">A growing collection of web applications, experimental tools, and digital platforms focused on practical problems, user experience, and accessible technology.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;">
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">HTML</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">CSS</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">JavaScript</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Python</span>
+                    <span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">MySQL</span>
                 </div>
-
-
-                <h3 style="
-                    font-family:var(--font-display);
-                    font-weight:900;
-                    font-size:clamp(1.6rem,3vw,2.1rem);
-                    margin:0 0 .7rem;
-                    color:#fff;
-                ">
-                    Digital Products & Platforms
-                </h3>
-
-
-                <p style="
-                    color:var(--text2);
-                    line-height:1.75;
-                    margin:0 0 1.2rem;
-                    font-size:.92rem;
-                ">
-                    A growing collection of web applications, experimental
-                    tools, and digital platforms focused on practical
-                    problems, user experience, and accessible technology.
-                </p>
-
-
-                <div style="
-                    display:flex;
-                    flex-wrap:wrap;
-                    gap:7px;
-                    margin-bottom:1.4rem;
-                ">
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        HTML
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        CSS
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        JavaScript
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        Python
-                    </span>
-
-                    <span class="glass-sm"
-                        style="padding:6px 11px;border-radius:50px;font-size:.7rem;">
-                        MySQL
-                    </span>
-
-                </div>
-
-
-                <a href="https://github.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style="
-                        color:#8B5CF6;
-                        font-weight:600;
-                        text-decoration:none;
-                        font-size:.84rem;
-                        display:inline-flex;
-                        align-items:center;
-                        gap:5px;
-                    ">
-                    View Development Work
-                    <span class="ext-arrow">↗</span>
-                </a>
-
+                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" style="color:#8B5CF6;font-weight:600;text-decoration:none;font-size:.84rem;display:inline-flex;align-items:center;gap:5px;">View Development Work <span class="ext-arrow">↗</span></a>
             </div>
-
-
-            <!-- Project Visual -->
-            <div style="
-                min-height:230px;
-                border-radius:16px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:
-                    radial-gradient(
-                        circle at center,
-                        rgba(139,92,246,.11),
-                        rgba(139,92,246,.02) 55%,
-                        transparent 75%
-                    );
-                border:1px solid rgba(139,92,246,.10);
-            ">
-
-                <div style="
-                    width:82%;
-                    max-width:330px;
-                    display:grid;
-                    grid-template-columns:1fr 1fr;
-                    gap:8px;
-                ">
-
-                    <div style="
-                        height:85px;
-                        border-radius:10px;
-                        background:rgba(139,92,246,.08);
-                        border:1px solid rgba(139,92,246,.10);
-                    "></div>
-
-                    <div style="
-                        height:85px;
-                        border-radius:10px;
-                        background:rgba(255,255,255,.04);
-                        border:1px solid rgba(255,255,255,.06);
-                    "></div>
-
-                    <div style="
-                        height:55px;
-                        border-radius:10px;
-                        background:rgba(255,255,255,.035);
-                        border:1px solid rgba(255,255,255,.05);
-                    "></div>
-
-                    <div style="
-                        height:55px;
-                        border-radius:10px;
-                        background:rgba(139,92,246,.06);
-                        border:1px solid rgba(139,92,246,.08);
-                    "></div>
-
-                </div>
-
+            <div style="min-height:230px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,rgba(139,92,246,.11),rgba(139,92,246,.02) 55%,transparent 75%);border:1px solid rgba(139,92,246,.10);">
+                <div style="width:82%;max-width:330px;display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="height:85px;border-radius:10px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.10);"></div><div style="height:85px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);"></div><div style="height:55px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.05);"></div><div style="height:55px;border-radius:10px;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.08);"></div></div>
             </div>
-
         </div>
-
     </article>
-
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════════════════
-     RESPONSIVE PROJECT LAYOUT
-═══════════════════════════════════════════════════════════════ -->
 <style>
-@media (max-width: 700px) {
-
-    #projects article > div {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
+    @media (max-width: 700px) {
+        #projects article>div {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+        }
+        #projects article {
+            padding: 1.4rem !important;
+        }
+        #projects article>div>div:first-child {
+            order: 1;
+        }
+        #projects article>div>div:last-child {
+            order: 2;
+            min-height: 190px !important;
+        }
     }
-
-    #projects article {
-        padding: 1.4rem !important;
-    }
-
-    #projects article > div > div:first-child {
-        order: 1;
-    }
-
-    #projects article > div > div:last-child {
-        order: 2;
-        min-height:190px !important;
-    }
-
-}
 </style>
 
 <!-- ═══════════ ABOUT ME ═══════════ -->
 <section id="about" style="position:relative;z-index:10;padding:55px 16px;max-width:780px;margin:0 auto;">
     <p class="eyebrow" style="text-align:center;">🌍 About Me</p>
-
     <div class="glass" style="padding:2rem;text-align:center;">
-        <p style="color:var(--text2);line-height:1.8;font-size:1rem;">
-            I'm <strong style="color:#fff;">Abdullah Bin Fahad</strong>, an Automation Engineering student at
-            <strong style="color:#fff;">Nanjing Tech University</strong> passionate about building
-            <span style="color:#38BDF8;">AI-powered software</span>,
-            <span style="color:#10B981;">intelligent systems</span>, and
-            <span style="color:#8B5CF6;">digital products</span> that solve real-world problems. I believe
-            <strong style="color:#38BDF8;">knowing how to think is more valuable than knowing what to think</strong>,
-            and that <strong style="color:#fff;">curiosity drives innovation</strong>. By combining engineering,
-            technology, and critical thinking, I strive to create meaningful solutions that make a lasting impact.
-        </p>
+        <p style="color:var(--text2);line-height:1.8;font-size:1rem;">I'm <strong style="color:#fff;">Abdullah Bin Fahad</strong>, an Automation Engineering student at <strong style="color:#fff;">Nanjing Tech University</strong> passionate about building <span style="color:#38BDF8;">AI-powered software</span>, <span style="color:#10B981;">intelligent systems</span>, and <span style="color:#8B5CF6;">digital products</span> that solve real-world problems. I believe <strong style="color:#38BDF8;">knowing how to think is more valuable than knowing what to think</strong>, and that <strong style="color:#fff;">curiosity drives innovation</strong>. By combining engineering, technology, and critical thinking, I strive to create meaningful solutions that make a lasting impact.</p>
     </div>
 </section>
 
@@ -1632,8 +885,7 @@ style="font-size:0.7em;">↗</span></a>
         </div>
         <div>
             <p style="font-weight:700;">Secondary School Certificate (Science)</p>
-            <p style="color:var(--text3);font-size:0.88rem;">Dhaligour Nagar Secondary School, Bangladesh (2020–2022)
-            </p>
+            <p style="color:var(--text3);font-size:0.88rem;">Dhaligour Nagar Secondary School, Bangladesh (2020–2022)</p>
         </div>
     </div>
 </section>
@@ -1641,24 +893,15 @@ style="font-size:0.7em;">↗</span></a>
 <!-- ═══════════ HIGHLIGHTS ═══════════ -->
 <section style="position:relative;z-index:10;padding:40px 16px;max-width:780px;margin:0 auto;">
     <p class="eyebrow" style="text-align:center;">🏆 Highlights</p>
-
     <div class="glass" style="padding:1.8rem;">
         <ul style="color:var(--text2);line-height:2;list-style:none;padding:0;">
-
-            <li> <strong style="color:#fff;">Automation Engineering Student</strong> at Nanjing Tech University.</li>
-
-            <li> Built AI-powered applications, modern web platforms, embedded systems, and IoT solutions.</li>
-
-            <li> Developing innovative projects including <strong style="color:#fff;">MarketLens AI</strong> and <strong style="color:#fff;">Smart Calculator</strong>.</li>
-
-            <li> Author of <strong style="color:#fff;">"Moral Values"</strong>, exploring philosophy, ethics, and critical thinking.</li>
-
-            <li> Participated in public speaking and youth seminars focused on education, values, and personal development.</li>
-
-            <li> Experienced in AI integration, automation, embedded programming, and full-stack web development.</li>
-
-            <li> Passionate about building technology that creates meaningful impact across education, business, and society.</li>
-
+            <li><strong style="color:#fff;">Automation Engineering Student</strong> at Nanjing Tech University.</li>
+            <li>Built AI-powered applications, modern web platforms, embedded systems, and IoT solutions.</li>
+            <li>Developing innovative projects including <strong style="color:#fff;">MarketLens AI</strong> and <strong style="color:#fff;">Smart Calculator</strong>.</li>
+            <li>Author of <strong style="color:#fff;">"Moral Values"</strong>, exploring philosophy, ethics, and critical thinking.</li>
+            <li>Participated in public speaking and youth seminars focused on education, values, and personal development.</li>
+            <li>Experienced in AI integration, automation, embedded programming, and full-stack web development.</li>
+            <li>Passionate about building technology that creates meaningful impact across education, business, and society.</li>
         </ul>
     </div>
 </section>
@@ -1666,148 +909,39 @@ style="font-size:0.7em;">↗</span></a>
 <!-- ═══════════ PROFESSIONAL JOURNEY ═══════════ -->
 <section id="journey" style="position:relative;z-index:10;padding:50px 16px;max-width:950px;margin:0 auto;">
     <p class="eyebrow" style="text-align:center;">📍 Professional Journey</p>
-
-    <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">
-        Academic & Professional Growth
-    </h2>
-
+    <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">Academic & Professional Growth</h2>
     <div class="timeline-wrap">
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">🇧🇩 Bangladesh</div>
-            <div class="timeline-text">Built a strong foundation in science, technology, and analytical thinking.</div>
-        </div>
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">💻 Self Learning</div>
-            <div class="timeline-text">Developed skills in programming, web development, embedded systems, and AI.</div>
-        </div>
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">🔬 Hands-on Projects</div>
-            <div class="timeline-text">Designed and built software, IoT solutions, and automation projects.</div>
-        </div>
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">🇨🇳 Nanjing Tech University</div>
-            <div class="timeline-text">Pursuing a Bachelor's degree in Automation Engineering while expanding technical expertise.</div>
-        </div>
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">🤖 AI & Automation</div>
-            <div class="timeline-text">Building intelligent products that integrate AI, automation, and modern software engineering.</div>
-        </div>
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">🚀 Product Development</div>
-            <div class="timeline-text">Transforming ideas into scalable digital products and real-world solutions.</div>
-        </div>
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">🌐 Entrepreneurship</div>
-            <div class="timeline-text">Developing innovative technology ventures with a global perspective.</div>
-        </div>
-
-        <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">🎯 Future Vision</div>
-            <div class="timeline-text">Creating impactful technologies that improve lives and solve meaningful challenges worldwide.</div>
-        </div>
-
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🇧🇩 Bangladesh</div><div class="timeline-text">Built a strong foundation in science, technology, and analytical thinking.</div></div>
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">💻 Self Learning</div><div class="timeline-text">Developed skills in programming, web development, embedded systems, and AI.</div></div>
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🔬 Hands-on Projects</div><div class="timeline-text">Designed and built software, IoT solutions, and automation projects.</div></div>
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🇨🇳 Nanjing Tech University</div><div class="timeline-text">Pursuing a Bachelor's degree in Automation Engineering while expanding technical expertise.</div></div>
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🤖 AI & Automation</div><div class="timeline-text">Building intelligent products that integrate AI, automation, and modern software engineering.</div></div>
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🚀 Product Development</div><div class="timeline-text">Transforming ideas into scalable digital products and real-world solutions.</div></div>
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🌐 Entrepreneurship</div><div class="timeline-text">Developing innovative technology ventures with a global perspective.</div></div>
+        <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🎯 Future Vision</div><div class="timeline-text">Creating impactful technologies that improve lives and solve meaningful challenges worldwide.</div></div>
     </div>
 </section>
 
 <!-- ═══════════ TECHNICAL EXPERTISE ═══════════ -->
 <section style="position:relative;z-index:10;padding:50px 16px;max-width:720px;margin:0 auto;">
     <p class="eyebrow" style="text-align:center;">💻 Technical Expertise</p>
-
     <div class="glass" style="padding:2rem;">
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>Frontend Development (HTML, CSS, JavaScript)</span>
-                <span>Advanced</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:90%;"></div></div>
-        </div>
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>Python Programming</span>
-                <span>Advanced</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:85%;"></div></div>
-        </div>
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>Embedded Systems & IoT (ESP32, Arduino)</span>
-                <span>Advanced</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:85%;"></div></div>
-        </div>
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>Automation & Control Systems</span>
-                <span>Advanced</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:75%;"></div></div>
-        </div>
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>AI Integration & Prompt Engineering</span>
-                <span>Advanced</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:80%;"></div></div>
-        </div>
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>Git, GitHub & Version Control</span>
-                <span>Advanced</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:80%;"></div></div>
-        </div>
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>MySQL & Database Design</span>
-                <span>Intermediate</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:75%;"></div></div>
-        </div>
-
-        <div class="skill-row">
-            <div class="lbl">
-                <span>Technical Writing & Documentation</span>
-                <span>Advanced</span>
-            </div>
-            <div class="track"><div class="fill" style="--w:90%;"></div></div>
-        </div>
-
+        <div class="skill-row"><div class="lbl"><span>Frontend Development (HTML, CSS, JavaScript)</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:90%;"></div></div></div>
+        <div class="skill-row"><div class="lbl"><span>Python Programming</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:85%;"></div></div></div>
+        <div class="skill-row"><div class="lbl"><span>Embedded Systems & IoT (ESP32, Arduino)</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:85%;"></div></div></div>
+        <div class="skill-row"><div class="lbl"><span>Automation & Control Systems</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:75%;"></div></div></div>
+        <div class="skill-row"><div class="lbl"><span>AI Integration & Prompt Engineering</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:80%;"></div></div></div>
+        <div class="skill-row"><div class="lbl"><span>Git, GitHub & Version Control</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:80%;"></div></div></div>
+        <div class="skill-row"><div class="lbl"><span>MySQL & Database Design</span><span>Intermediate</span></div><div class="track"><div class="fill" style="--w:75%;"></div></div></div>
+        <div class="skill-row"><div class="lbl"><span>Technical Writing & Documentation</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:90%;"></div></div></div>
     </div>
 </section>
 
-<!-- ═══════════ TECHNICAL EXPERTISE ═══════════ -->
+<!-- ═══════════ TECHNOLOGIES & SKILLS ═══════════ -->
 <section style="position:relative;z-index:10;padding:30px 16px;max-width:900px;margin:0 auto;text-align:center;">
-
     <p class="eyebrow">Technical Expertise</p>
-
-    <h2 class="display" style="font-size:clamp(1.5rem,3.5vw,2.5rem);margin-bottom:1.8rem;">
-        Technologies & Skills
-    </h2>
-
+    <h2 class="display" style="font-size:clamp(1.5rem,3.5vw,2.5rem);margin-bottom:1.8rem;">Technologies & Skills</h2>
     <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
-
         <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">HTML5</span>
         <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">CSS3</span>
         <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">JavaScript</span>
@@ -1830,496 +964,74 @@ style="font-size:0.7em;">↗</span></a>
         <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Responsive Web Design</span>
         <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Technical Writing</span>
         <span class="glass-sm" style="padding:9px 18px;border-radius:50px;">Video Editing</span>
-
     </div>
-
 </section>
 
-
-
 <!-- ═══════════ PROFESSIONAL SNAPSHOT ═══════════ -->
-<p class="eyebrow" style="text-align:center;">📈 Professional Snapshot</p>
-
-<h2 class="display" style="text-align:center;font-size:clamp(1.6rem,3.5vw,2.6rem);margin-bottom:2.5rem;">
-    Experience at a Glance
-</h2>
-
-<div style="
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:1rem;
-">
-
-    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
-        <div class="stat-num">3+</div>
-        <div class="stat-lbl">Years of Development</div>
+<section style="position:relative;z-index:10;padding:40px 16px;max-width:900px;margin:0 auto;">
+    <p class="eyebrow" style="text-align:center;">📈 Professional Snapshot</p>
+    <h2 class="display" style="text-align:center;font-size:clamp(1.6rem,3.5vw,2.6rem);margin-bottom:2.5rem;">Experience at a Glance</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;">
+        <div class="glass-sm" style="padding:1.6rem;text-align:center;"><div class="stat-num">3+</div><div class="stat-lbl">Years of Development</div></div>
+        <div class="glass-sm" style="padding:1.6rem;text-align:center;"><div class="stat-num">20+</div><div class="stat-lbl">Technologies & Tools</div></div>
+        <div class="glass-sm" style="padding:1.6rem;text-align:center;"><div class="stat-num">6+</div><div class="stat-lbl">Projects Developed</div></div>
+        <div class="glass-sm" style="padding:1.6rem;text-align:center;"><div class="stat-num">4</div><div class="stat-lbl">Spoken Languages</div></div>
+        <div class="glass-sm" style="padding:1.6rem;text-align:center;"><div class="stat-num">2</div><div class="stat-lbl">AI Product Concepts</div></div>
+        <div class="glass-sm" style="padding:1.6rem;text-align:center;"><div class="stat-num">∞</div><div class="stat-lbl">Curiosity to Learn</div></div>
     </div>
-
-    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
-        <div class="stat-num">20+</div>
-        <div class="stat-lbl">Technologies & Tools</div>
-    </div>
-
-    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
-        <div class="stat-num">6+</div>
-        <div class="stat-lbl">Projects Developed</div>
-    </div>
-
-    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
-        <div class="stat-num">4</div>
-        <div class="stat-lbl">Spoken Languages</div>
-    </div>
-
-    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
-        <div class="stat-num">2</div>
-        <div class="stat-lbl">AI Product Concepts</div>
-    </div>
-
-    <div class="glass-sm" style="padding:1.6rem;text-align:center;">
-        <div class="stat-num">∞</div>
-        <div class="stat-lbl">Curiosity to Learn</div>
-    </div>
-
-</div>
+</section>
 
 <!-- ═══════════ PHILOSOPHY & VISION ═══════════ -->
 <section id="philosophy" style="position:relative;z-index:10;padding:60px 16px;max-width:850px;margin:0 auto;">
-
     <p class="eyebrow" style="text-align:center;">🧠 Philosophy & Vision</p>
-
     <div class="glass" style="padding:2.5rem;">
-
-        <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.3rem);text-align:center;margin-bottom:1.25rem;">
-            Building Technology with Purpose
-        </h2>
-
-        <p style="color:var(--text2);line-height:1.9;text-align:center;max-width:680px;margin:0 auto 2.5rem;">
-            I believe technology should <strong style="color:#fff;">empower people</strong>, not replace them.
-            My work is driven by curiosity, critical thinking, and ethical engineering, with the goal of creating
-            intelligent solutions that solve meaningful problems and make a lasting impact.
-        </p>
-
-        <div style="
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-            gap:1rem;
-        ">
-
-            <div class="glass-sm" style="padding:1.25rem;">
-                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
-                    💡 Think Independently
-                </h3>
-                <p style="margin:0;color:var(--text2);line-height:1.7;">
-                    Challenge assumptions, seek understanding, and develop original ideas.
-                </p>
-            </div>
-
-            <div class="glass-sm" style="padding:1.25rem;">
-                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
-                    🔍 Stay Curious
-                </h3>
-                <p style="margin:0;color:var(--text2);line-height:1.7;">
-                    Continuous learning and experimentation are the foundation of innovation.
-                </p>
-            </div>
-
-            <div class="glass-sm" style="padding:1.25rem;">
-                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
-                    ⚖️ Build Responsibly
-                </h3>
-                <p style="margin:0;color:var(--text2);line-height:1.7;">
-                    Every technology should respect people, society, and long-term sustainability.
-                </p>
-            </div>
-
-            <div class="glass-sm" style="padding:1.25rem;">
-                <h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">
-                    🚀 Create Meaningful Impact
-                </h3>
-                <p style="margin:0;color:var(--text2);line-height:1.7;">
-                    Focus on solving real-world challenges through practical, scalable, and human-centered solutions.
-                </p>
-            </div>
-
+        <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.3rem);text-align:center;margin-bottom:1.25rem;">Building Technology with Purpose</h2>
+        <p style="color:var(--text2);line-height:1.9;text-align:center;max-width:680px;margin:0 auto 2.5rem;">I believe technology should <strong style="color:#fff;">empower people</strong>, not replace them. My work is driven by curiosity, critical thinking, and ethical engineering, with the goal of creating intelligent solutions that solve meaningful problems and make a lasting impact.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
+            <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">💡 Think Independently</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Challenge assumptions, seek understanding, and develop original ideas.</p></div>
+            <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">🔍 Stay Curious</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Continuous learning and experimentation are the foundation of innovation.</p></div>
+            <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">⚖️ Build Responsibly</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Every technology should respect people, society, and long-term sustainability.</p></div>
+            <div class="glass-sm" style="padding:1.25rem;"><h3 style="margin:0 0 .6rem;font-size:1rem;color:#fff;">🚀 Create Meaningful Impact</h3><p style="margin:0;color:var(--text2);line-height:1.7;">Focus on solving real-world challenges through practical, scalable, and human-centered solutions.</p></div>
         </div>
-
     </div>
-
 </section>
 
-<!-- ═══════════ BLOG ═══════════ -->
+<!-- ═══════════ LATEST WRITINGS ═══════════ -->
 <section id="blog" style="position:relative;z-index:10;padding:50px 16px;max-width:920px;margin:0 auto;">
     <p class="eyebrow" style="text-align:center;">✍️ Writings</p>
-    <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">Latest Blog
-    Posts</h2>
+    <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">Latest Writings</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;">
-        <a href="https://posts.abdullahbinfahad.info/at-a-certain-point-neither-happiness-nor-sorrow-holds-any-meaning-where-life-itself-is-an-illusion/"
-        target="_blank" class="glass" style="padding:1.5rem;text-decoration:none;color:inherit;display:block;">
-        <div
-        style="width:100%;height:125px;background:rgba(30,30,35,0.55);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;border:1px solid rgba(14,165,233,0.1);">
-        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="1.5" opacity="0.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="#0EA5E9" opacity="0.3"/></svg>
-    </div>
-    <p style="color:var(--text3);font-size:0.68rem;margin-bottom:0.3rem;">Philosophical Essay</p>
-    <h4 style="font-family:var(--font-display);font-weight:700;font-size:0.98rem;color:#fff;line-height:1.35;">At a
-    Certain Point, Neither Happiness Nor Sorrow Holds Any Meaning — Where Life Itself Is an Illusion <span
-class="ext-arrow">↗</span></h4>
-</a>
-<a href="https://posts.abdullahbinfahad.info/illusion-of-existence/"
-target="_blank" class="glass" style="padding:1.5rem;text-decoration:none;color:inherit;display:block;">
-<div
-style="width:100%;height:125px;background:rgba(30,30,35,0.55);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;border:1px solid rgba(71,85,105,0.1);">
-<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" opacity="0.5"><path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><circle cx="12" cy="12" r="3" fill="#475569" opacity="0.25"/></svg>
-</div>
-<p style="color:var(--text3);font-size:0.68rem;margin-bottom:0.3rem;">Existential Reflection</p>
-<h4 style="font-family:var(--font-display);font-weight:700;font-size:0.98rem;color:#fff;line-height:1.35;">Illusion
-of Existence <span class="ext-arrow">↗</span></h4>
-</a>
-</div>
-<div style="text-align:center;margin-top:2rem;">
-    <a href="https://posts.abdullahbinfahad.info/" target="_blank" class="btn-pill btn-outline">View All Writings
-    <span class="ext-arrow">↗</span></a>
-</div>
-</section>
-<!-- ═══════════ BLOG / WRITINGS ═══════════ -->
-<section id="blog" style="position:relative;z-index:10;padding:50px 16px;max-width:920px;margin:0 auto;">
-
-    <p class="eyebrow" style="text-align:center;">✍️ Writings</p>
-
-    <h2 class="display"
-        style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">
-        Latest Writings
-    </h2>
-
-    <div style="
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-        gap:1.2rem;
-    ">
-
-        <!-- ═══════════ POST 1 ═══════════ -->
-        <a href="https://posts.abdullahbinfahad.info/at-a-certain-point-neither-happiness-nor-sorrow-holds-any-meaning-where-life-itself-is-an-illusion/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="glass blog-card"
-           style="
-               padding:1.5rem;
-               text-decoration:none;
-               color:inherit;
-               display:block;
-               overflow:hidden;
-           ">
-
-            <div style="
-                width:100%;
-                height:180px;
-                border-radius:12px;
-                overflow:hidden;
-                margin-bottom:1rem;
-                border:1px solid rgba(14,165,233,.12);
-                background:rgba(30,30,35,.55);
-            ">
-                <img
-                    src="https://cdn.vox-cdn.com/thumbor/fvwe9t7KT4Eixb4bU-FTvvpOMo0=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19715160/GettyImages_515177654.jpg"
-                    alt="At a Certain Point, Neither Happiness Nor Sorrow Holds Any Meaning"
-                    loading="lazy"
-                    style="
-                        width:100%;
-                        height:100%;
-                        object-fit:cover;
-                        display:block;
-                        transition:transform .45s ease;
-                    ">
+        <a href="https://posts.abdullahbinfahad.info/at-a-certain-point-neither-happiness-nor-sorrow-holds-any-meaning-where-life-itself-is-an-illusion/" target="_blank" rel="noopener noreferrer" class="glass blog-card" style="padding:1.5rem;text-decoration:none;color:inherit;display:block;overflow:hidden;">
+            <div style="width:100%;height:180px;border-radius:12px;overflow:hidden;margin-bottom:1rem;border:1px solid rgba(14,165,233,.12);background:rgba(30,30,35,.55);">
+                <img src="https://cdn.vox-cdn.com/thumbor/fvwe9t7KT4Eixb4bU-FTvvpOMo0=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19715160/GettyImages_515177654.jpg" alt="At a Certain Point" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
             </div>
-
-            <p style="
-                color:var(--text3);
-                font-size:.68rem;
-                margin-bottom:.35rem;
-                text-transform:uppercase;
-                letter-spacing:.08em;
-            ">
-                Philosophical Essay
-            </p>
-
-            <h4 style="
-                font-family:var(--font-display);
-                font-weight:700;
-                font-size:.98rem;
-                color:#fff;
-                line-height:1.4;
-                margin:0;
-            ">
-                At a Certain Point, Neither Happiness Nor Sorrow Holds Any Meaning
-                <span class="ext-arrow">↗</span>
-            </h4>
-
+            <p style="color:var(--text3);font-size:.68rem;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em;">Philosophical Essay</p>
+            <h4 style="font-family:var(--font-display);font-weight:700;font-size:.98rem;color:#fff;line-height:1.4;margin:0;">At a Certain Point, Neither Happiness Nor Sorrow Holds Any Meaning <span class="ext-arrow">↗</span></h4>
         </a>
-
-
-        <!-- ═══════════ POST 2 ═══════════ -->
-        <a href="https://posts.abdullahbinfahad.info/illusion-of-existence/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="glass blog-card"
-           style="
-               padding:1.5rem;
-               text-decoration:none;
-               color:inherit;
-               display:block;
-               overflow:hidden;
-           ">
-
-            <div style="
-                width:100%;
-                height:180px;
-                border-radius:12px;
-                overflow:hidden;
-                margin-bottom:1rem;
-                border:1px solid rgba(71,85,105,.12);
-                background:rgba(30,30,35,.55);
-            ">
-                <img
-                    src="https://posts.abdullahbinfahad.info/assets/uploads/alone-picture.png"
-                    alt="Illusion of Existence"
-                    loading="lazy"
-                    style="
-                        width:100%;
-                        height:100%;
-                        object-fit:cover;
-                        display:block;
-                        transition:transform .45s ease;
-                    ">
+        <a href="https://posts.abdullahbinfahad.info/illusion-of-existence/" target="_blank" rel="noopener noreferrer" class="glass blog-card" style="padding:1.5rem;text-decoration:none;color:inherit;display:block;overflow:hidden;">
+            <div style="width:100%;height:180px;border-radius:12px;overflow:hidden;margin-bottom:1rem;border:1px solid rgba(71,85,105,.12);background:rgba(30,30,35,.55);">
+                <img src="https://posts.abdullahbinfahad.info/assets/uploads/alone-picture.png" alt="Illusion of Existence" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
             </div>
-
-            <p style="
-                color:var(--text3);
-                font-size:.68rem;
-                margin-bottom:.35rem;
-                text-transform:uppercase;
-                letter-spacing:.08em;
-            ">
-                Existential Reflection
-            </p>
-
-            <h4 style="
-                font-family:var(--font-display);
-                font-weight:700;
-                font-size:.98rem;
-                color:#fff;
-                line-height:1.4;
-                margin:0;
-            ">
-                অস্তিত্বের ভ্রম: আপনি কি শুধুই একটি কল্পিত পরিচয়?
-                <span class="ext-arrow">↗</span>
-            </h4>
-
+            <p style="color:var(--text3);font-size:.68rem;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em;">Existential Reflection</p>
+            <h4 style="font-family:var(--font-display);font-weight:700;font-size:.98rem;color:#fff;line-height:1.4;margin:0;">অস্তিত্বের ভ্রম: আপনি কি শুধুই একটি কল্পিত পরিচয়? <span class="ext-arrow">↗</span></h4>
         </a>
-
     </div>
-
-
-    <!-- ═══════════ VIEW ALL ═══════════ -->
     <div style="text-align:center;margin-top:2rem;">
-
-        <a href="https://posts.abdullahbinfahad.info/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="btn-pill btn-outline">
-
-            View All Writings
-            <span class="ext-arrow">↗</span>
-
-        </a>
-
+        <a href="https://posts.abdullahbinfahad.info/" target="_blank" rel="noopener noreferrer" class="btn-pill btn-outline">View All Writings <span class="ext-arrow">↗</span></a>
     </div>
-
 </section>
-
-
-<!-- ═══════════ BLOG CARD HOVER ═══════════ -->
-<style>
-.blog-card img {
-    transition: transform .45s ease;
-}
-
-.blog-card:hover img {
-    transform: scale(1.05);
-}
-</style>
-
 
 <!-- ═══════════ FAQ ═══════════ -->
 <section id="faq" style="position:relative;z-index:10;padding:50px 16px;max-width:700px;margin:0 auto;">
-
     <p class="eyebrow" style="text-align:center;">Questions</p>
-
-    <h2 class="display"
-        style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">
-        Frequently Asked Questions
-    </h2>
-
+    <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:2rem;">Frequently Asked Questions</h2>
     <div style="display:flex;flex-direction:column;gap:.6rem;">
-
-        <!-- FAQ 1 -->
-        <div class="faq-item glass-sm"
-             style="padding:1rem 1.3rem;cursor:pointer;"
-             onclick="toggleFAQ(this)">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
-
-                <span style="font-weight:600;color:#fff;font-size:.88rem;">
-                    What do you work on?
-                </span>
-
-                <svg class="faq-chevron"
-                     width="16"
-                     height="16"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
-                    <path d="M19 9l-7 7-7-7"/>
-                </svg>
-
-            </div>
-
-            <div class="faq-answer">
-                I work across AI-powered software, web development, automation,
-                embedded systems, IoT, and digital product development.
-            </div>
-
-        </div>
-
-
-        <!-- FAQ 2 -->
-        <div class="faq-item glass-sm"
-             style="padding:1rem 1.3rem;cursor:pointer;"
-             onclick="toggleFAQ(this)">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
-
-                <span style="font-weight:600;color:#fff;font-size:.88rem;">
-                    What technologies do you use?
-                </span>
-
-                <svg class="faq-chevron"
-                     width="16"
-                     height="16"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
-                    <path d="M19 9l-7 7-7-7"/>
-                </svg>
-
-            </div>
-
-            <div class="faq-answer">
-                My technical stack includes Python, C/C++, HTML, CSS, JavaScript,
-                MySQL, Git, GitHub, ESP32, Arduino, FreeRTOS, LVGL, and other
-                tools used for AI, automation, and embedded development.
-            </div>
-
-        </div>
-
-
-        <!-- FAQ 3 -->
-        <div class="faq-item glass-sm"
-             style="padding:1rem 1.3rem;cursor:pointer;"
-             onclick="toggleFAQ(this)">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
-
-                <span style="font-weight:600;color:#fff;font-size:.88rem;">
-                    What are you currently studying?
-                </span>
-
-                <svg class="faq-chevron"
-                     width="16"
-                     height="16"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
-                    <path d="M19 9l-7 7-7-7"/>
-                </svg>
-
-            </div>
-
-            <div class="faq-answer">
-                I am pursuing a Bachelor's degree in Automation Engineering at
-                Nanjing Tech University in China, with a focus on automation,
-                intelligent systems, and practical engineering.
-            </div>
-
-        </div>
-
-
-        <!-- FAQ 4 -->
-        <div class="faq-item glass-sm"
-             style="padding:1rem 1.3rem;cursor:pointer;"
-             onclick="toggleFAQ(this)">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
-
-                <span style="font-weight:600;color:#fff;font-size:.88rem;">
-                    Are you open to collaborations?
-                </span>
-
-                <svg class="faq-chevron"
-                     width="16"
-                     height="16"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
-                    <path d="M19 9l-7 7-7-7"/>
-                </svg>
-
-            </div>
-
-            <div class="faq-answer">
-                Yes. I am open to meaningful collaborations involving software,
-                AI, automation, embedded systems, research, and technology-driven
-                projects.
-            </div>
-
-        </div>
-
-
-        <!-- FAQ 5 -->
-        <div class="faq-item glass-sm"
-             style="padding:1rem 1.3rem;cursor:pointer;"
-             onclick="toggleFAQ(this)">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
-
-                <span style="font-weight:600;color:#fff;font-size:.88rem;">
-                    Where are you based?
-                </span>
-
-                <svg class="faq-chevron"
-                     width="16"
-                     height="16"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
-                    <path d="M19 9l-7 7-7-7"/>
-                </svg>
-
-            </div>
-
-            <div class="faq-answer">
-                I am currently based in China while pursuing my degree at
-                Nanjing Tech University and developing projects with a global
-                perspective.
-            </div>
-
-        </div>
-
+        <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;"><span style="font-weight:600;color:#fff;font-size:.88rem;">What do you work on?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">I work across AI-powered software, web development, automation, embedded systems, IoT, and digital product development.</div></div>
+        <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;"><span style="font-weight:600;color:#fff;font-size:.88rem;">What technologies do you use?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">My technical stack includes Python, C/C++, HTML, CSS, JavaScript, MySQL, Git, GitHub, ESP32, Arduino, FreeRTOS, LVGL, and other tools used for AI, automation, and embedded development.</div></div>
+        <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;"><span style="font-weight:600;color:#fff;font-size:.88rem;">What are you currently studying?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">I am pursuing a Bachelor's degree in Automation Engineering at Nanjing Tech University in China, with a focus on automation, intelligent systems, and practical engineering.</div></div>
+        <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;"><span style="font-weight:600;color:#fff;font-size:.88rem;">Are you open to collaborations?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">Yes. I am open to meaningful collaborations involving software, AI, automation, embedded systems, research, and technology-driven projects.</div></div>
+        <div class="faq-item glass-sm" style="padding:1rem 1.3rem;cursor:pointer;" onclick="toggleFAQ(this)"><div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;"><span style="font-weight:600;color:#fff;font-size:.88rem;">Where are you based?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></div><div class="faq-answer">I am currently based in China while pursuing my degree at Nanjing Tech University and developing projects with a global perspective.</div></div>
     </div>
-
 </section>
 
 <!-- ═══════════ CONTACT ═══════════ -->
@@ -2336,43 +1048,154 @@ of Existence <span class="ext-arrow">↗</span></h4>
             <button type="submit" class="btn-pill btn-primary" style="align-self:flex-start;">Send Message</button>
         </form>
         <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.05);justify-content:center;font-size:0.83rem;">
-            <a href="mailto:abdullahbinfahad.abf@gmail.com"
-            style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.3s;">📧
-        Email</a>
-        <a href="https://github.com/abdullahbinfahad" target="_blank"
-        style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.3s;">💻
-    GitHub</a>
-    <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📍 Nanjing, China</span>
-    <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📱 +86 18105180247</span>
-</div>
-</div>
+            <a href="mailto:abdullahbinfahad.abf@gmail.com" style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.3s;">📧 Email</a>
+            <a href="https://github.com/abdullahbinfahad" target="_blank" style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.3s;">💻 GitHub</a>
+            <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📍 Nanjing, China</span>
+            <span style="color:var(--text3);display:flex;align-items:center;gap:5px;">📱 +86 18105180247</span>
+        </div>
+    </div>
 </section>
 
 <!-- ═══════════ FOOTER ═══════════ -->
-<footer style="position:relative;z-index:10;padding:40px 16px;text-align:center;border-top:1px solid rgba(255,255,255,0.04);">
-    <div style="max-width:850px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0.8rem;font-size:0.78rem;color:var(--text3);">
-        <p>© 2026 Abdullah Bin Fahad. All rights reserved.</p>
-        <div style="display:flex;align-items:center;gap:1rem;">
-            <span style="display:flex;align-items:center;gap:5px;"><span class="pulse-dot" style="width:6px;height:6px;"></span> Nanjing, China</span>
+<footer style="position:relative;z-index:10;padding:32px 16px;text-align:center;border-top:1px solid rgba(255,255,255,0.04);">
+    <div style="max-width:850px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;font-size:0.75rem;color:var(--text3);">
+        <p style="margin:0;">© 2026 Abdullah Bin Fahad. All rights reserved.</p>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;">
+            <span style="display:flex;align-items:center;gap:5px;"><span class="pulse-dot" style="width:5px;height:5px;"></span> Nanjing, China</span>
             <span id="localTime" style="color:#52525B;"></span>
         </div>
     </div>
-    <a href="https://www.abdullahbinfahad.info"
-    style="color:#52525B;text-decoration:none;font-size:0.73rem;margin-top:0.6rem;display:inline-block;">www.abdullahbinfahad.info</a>
+    <a href="https://www.abdullahbinfahad.info" style="color:#52525B;text-decoration:none;font-size:0.7rem;margin-top:8px;display:inline-block;">www.abdullahbinfahad.info</a>
 </footer>
 
+<style>
+    @media (max-width: 480px) {
+        footer>div {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 6px !important;
+        }
+        footer>div>div {
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+        footer a {
+            font-size: 0.68rem !important;
+        }
+    }
+</style>
+
+<!-- ═══════════ THREE.JS 3D BACKGROUND ═══════════ -->
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.157.0/build/three.module.js"
+        }
+    }
+</script>
+<script type="module">
+    import * as THREE from 'three';
+
+    const canvas = document.getElementById('bg3d');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.5, 100);
+    camera.position.z = 40;
+
+    const particleCount = 300;
+    const positions = new Float32Array(particleCount * 3);
+    const sizes = new Float32Array(particleCount);
+    for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 70;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 45;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 35;
+        sizes[i] = Math.random() * 3 + 0.5;
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    const mat = new THREE.PointsMaterial({
+        color: 0x0EA5E9,
+        size: 0.06,
+        transparent: true,
+        opacity: 0.5,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+    });
+
+    const particles = new THREE.Points(geo, mat);
+    scene.add(particles);
+
+    let mouseX = 0,
+        mouseY = 0;
+    let targetX = 0,
+        targetY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        targetX = (e.clientX / window.innerWidth) * 2 - 1;
+        targetY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    function animate() {
+        requestAnimationFrame(animate);
+        mouseX += (targetX - mouseX) * 0.03;
+        mouseY += (targetY - mouseY) * 0.03;
+        particles.rotation.y += 0.0004;
+        particles.rotation.x += mouseY * 0.0006;
+        particles.rotation.z += mouseX * 0.0004;
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
 <script>
     const hamBtn = document.getElementById('hamBtn');
     const mobMenu = document.getElementById('mobMenu');
     const hamIcon = document.getElementById('hamIcon');
-    const mobLinks = mobMenu.querySelectorAll('a');
-    hamBtn.addEventListener('click', () => {
+
+    hamBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const o = mobMenu.classList.contains('open');
         mobMenu.classList.toggle('open', !o);
         hamIcon.textContent = o ? '☰' : '✕';
     });
-    mobLinks.forEach(l => l.addEventListener('click', () => { mobMenu.classList.remove('open');
-        hamIcon.textContent = '☰'; }));
+
+    // Close mobile menu when clicking on blank space (the overlay itself)
+    mobMenu.addEventListener('click', function(e) {
+        if (e.target === mobMenu) {
+            mobMenu.classList.remove('open');
+            hamIcon.textContent = '☰';
+        }
+    });
+
+    // Close mobile menu when clicking a link inside
+    mobMenu.querySelectorAll('a').forEach(l => {
+        l.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobMenu.classList.remove('open');
+            hamIcon.textContent = '☰';
+        });
+    });
+
+    // Close mobile menu on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobMenu.classList.contains('open')) {
+            mobMenu.classList.remove('open');
+            hamIcon.textContent = '☰';
+        }
+    });
 
     function toggleFAQ(el) {
         const act = el.classList.contains('active');
@@ -2386,9 +1209,11 @@ of Existence <span class="ext-arrow">↗</span></h4>
         const t = b.textContent;
         b.textContent = 'Sent! ✓';
         b.style.background = '#10B981';
-        setTimeout(() => { b.textContent = t;
+        setTimeout(() => {
+            b.textContent = t;
             b.style.background = '#0EA5E9';
-            e.target.reset(); }, 2800);
+            e.target.reset();
+        }, 2800);
     }
 
     function updTime() {
@@ -2409,13 +1234,14 @@ of Existence <span class="ext-arrow">↗</span></h4>
     handleNav();
     window.addEventListener('resize', handleNav);
 
+    // Intersection Observer for skill bars and card entrance
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) {
                 e.target.classList.add('visible');
                 if (e.target.querySelector('.fill')) {
-                    e.target.querySelectorAll('.fill').forEach(f => f.style.width = f.style.getPropertyValue(
-                        '--w'));
+                    e.target.querySelectorAll('.fill').forEach(f => f.style.width = f.style
+                        .getPropertyValue('--w'));
                 }
                 e.target.style.opacity = '1';
                 e.target.style.transform = 'translateY(0)';
@@ -2424,7 +1250,7 @@ of Existence <span class="ext-arrow">↗</span></h4>
     }, { threshold: 0.18 });
 
     document.querySelectorAll('.skill-row').forEach(el => obs.observe(el));
-    document.querySelectorAll('.glass,.glass-sm,.quote-card').forEach(el => {
+    document.querySelectorAll('.glass,.glass-sm').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(22px)';
         el.style.transition =
@@ -2433,7 +1259,7 @@ of Existence <span class="ext-arrow">↗</span></h4>
     });
 
     setTimeout(() => {
-        document.querySelectorAll('.glass,.glass-sm,.quote-card').forEach(el => {
+        document.querySelectorAll('.glass,.glass-sm').forEach(el => {
             const r = el.getBoundingClientRect();
             if (r.top < window.innerHeight) { el.style.opacity = '1';
                 el.style.transform = 'translateY(0)'; }
@@ -2441,7 +1267,8 @@ of Existence <span class="ext-arrow">↗</span></h4>
         document.querySelectorAll('.skill-row').forEach(el => {
             const r = el.getBoundingClientRect();
             if (r.top < window.innerHeight) { el.classList.add('visible');
-                el.querySelectorAll('.fill').forEach(f => f.style.width = f.style.getPropertyValue('--w')); }
+                el.querySelectorAll('.fill').forEach(f => f.style.width = f.style.getPropertyValue(
+                '--w')); }
         });
     }, 400);
 </script>
