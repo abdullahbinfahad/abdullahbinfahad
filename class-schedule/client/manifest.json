@@ -1,0 +1,18 @@
+{
+  "name": "Schedule daily — Class 2501",
+  "short_name": "Schedule daily",
+  "description": "Daily and weekly class schedule for Class 2501.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f0e5",
+  "theme_color": "#275EDE",
+  "icons": [
+    {
+      "src": "./schedule-daily-logo.png",
+      "sizes": "1920x1920",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
