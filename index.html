@@ -122,6 +122,62 @@
             #work article>div { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
             #work article { padding: 1.4rem !important; }
         }
+
+        /* ===== Floating doodle stream ===== */
+        @keyframes pulse-amber { 0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.75); } 50% { box-shadow: 0 0 0 10px rgba(245,158,11,0); } }
+        @keyframes doodle-travel {
+            0%   { transform: translate3d(-20vw, 0, 0); }
+            100% { transform: translate3d(120vw, 0, 0); }
+        }
+        @keyframes doodle-bob {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-14px); }
+        }
+        @keyframes doodle-spin { to { transform: rotate(360deg); } }
+        @keyframes doodle-sway { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+
+        .doodle-space {
+            position: relative;
+            width: 100%;
+            height: 140px; /* Reduced from 320px to tighten the gap */
+            overflow: hidden;
+        }
+        .doodle {
+            position: absolute;
+            top: var(--y, 20%);
+            left: 0;
+            color: #6b7280;
+            opacity: 0;
+            animation: doodle-travel var(--dur, 30s) linear infinite;
+            animation-delay: var(--delay, 0s);
+            will-change: transform;
+            transition: opacity 1s ease var(--d, 0s), color 0.4s ease;
+        }
+        .doodle-space.drawn .doodle { opacity: 0.55; }
+        .doodle-in {
+            display: block;
+            animation: doodle-bob var(--fd, 7s) ease-in-out infinite;
+            animation-delay: var(--fdelay, 0s);
+            transition: filter 0.45s ease, color 0.4s ease;
+        }
+        .doodle svg { display: block; overflow: visible; }
+        .doodle [pathLength] {
+            stroke-dasharray: 1;
+            stroke-dashoffset: 1;
+            transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s);
+        }
+        .doodle-space.drawn .doodle [pathLength] { stroke-dashoffset: 0; }
+        .doodle:hover { color: #38BDF8; }
+        .doodle:hover .doodle-in { filter: drop-shadow(0 0 10px rgba(56,189,248,0.55)); }
+        .doodle-spin { animation: doodle-spin 26s linear infinite; transform-origin: 50% 50%; }
+        .doodle-sway { animation: doodle-sway 5.5s ease-in-out infinite; transform-origin: 50% 80%; }
+
+        @media (max-width: 768px) {
+            .doodle-space { height: 100px; } /* Further reduced for mobile */
+            .doodle[data-hide="m"] { display: none; }
+            .doodle svg { width: 38px; height: 38px; }
+            #smartCalcCard { padding: 2.9rem 1.4rem 1.4rem !important; }
+        }
     </style>
 </head>
 <body>
@@ -137,7 +193,6 @@
             <div id="deskNav">
                 <a href="#work" class="nav-link">Work</a>
                 <a href="#about" class="nav-link">About me</a>
-                <a href="#journey" class="nav-link">Journey</a>
                 <a href="#blog" class="nav-link">Blog</a>
                 <a href="#faq" class="nav-link">FAQ</a>
                 <a href="https://posts.abdullahbinfahad.info/" target="_blank" rel="noopener noreferrer" class="btn-pill btn-ghost"> Writings <span class="ext-arrow">↗</span></a>
@@ -149,7 +204,7 @@
     </nav>
 
     <div class="mobile-overlay" id="mobMenu">
-        <a href="#work">Work</a><a href="#about">About</a><a href="#journey">Journey</a><a href="#blog">Blog</a><a href="#faq">FAQ</a>
+        <a href="#work">Work</a><a href="#about">About</a><a href="#blog">Blog</a><a href="#faq">FAQ</a>
         <a href="https://posts.abdullahbinfahad.info/" target="_blank" rel="noopener noreferrer" style="color:#38BDF8;display:inline-flex;align-items:center;gap:6px;">✍️ Writings <span style="font-size:0.7em;">↗</span></a>
         <a href="https://games.abdullahbinfahad.info/" target="_blank" rel="noopener noreferrer" style="color:#A78BFA;display:inline-flex;align-items:center;gap:6px;">🎮 Explore More <span style="font-size:0.7em;">↗</span></a>
         <a href="#contact" class="btn-pill btn-primary" style="font-size:1rem;padding:14px 30px;">Book a Call</a>
@@ -228,7 +283,7 @@
         </article>
         <!-- End BridgeX Project Card -->
         <article class="glass" style="padding:2rem;margin-bottom:1.5rem;overflow:hidden;"><div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:2.5rem;align-items:center;"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#0EA5E9;box-shadow:0 0 12px rgba(14,165,233,.6);"></span><span style="color:#0EA5E9;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">AI Platform</span></div><h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">MarketLens AI</h3><p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">An AI-powered decision-support platform for cross-border e-commerce. Designed to combine market intelligence, consumer insights, product research, and business analysis into a unified workflow.</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">AI</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Market Intelligence</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Data Analysis</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">E-Commerce</span></div><div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;"><a href="https://www.marketlens-ai.com" target="_blank" rel="noopener noreferrer" style="color:#0EA5E9;font-weight:600;text-decoration:none;font-size:.84rem;display:inline-flex;align-items:center;gap:5px;">Explore Project <span class="ext-arrow">↗</span></a><span style="color:var(--text3);font-size:.75rem;">Independent Project</span></div></div><div class="case-img" style="min-height:230px;background:radial-gradient(circle at center,rgba(14,165,233,.12),rgba(14,165,233,.02) 55%,transparent 75%);border:1px solid rgba(14,165,233,.10);"><div style="width:82%;max-width:330px;padding:1rem;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(15,15,18,.65);box-shadow:0 20px 50px rgba(0,0,0,.25);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><span style="font-size:.65rem;color:var(--text3);">MARKET INTELLIGENCE</span><span style="width:7px;height:7px;border-radius:50%;background:#0EA5E9;"></span></div><div style="height:7px;width:75%;border-radius:10px;background:rgba(14,165,233,.25);margin-bottom:9px;"></div><div style="height:7px;width:55%;border-radius:10px;background:rgba(255,255,255,.08);margin-bottom:9px;"></div><div style="height:7px;width:88%;border-radius:10px;background:rgba(255,255,255,.06);margin-bottom:1rem;"></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;"><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.08);"></div><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.06);"></div><div style="height:45px;border-radius:7px;background:rgba(14,165,233,.04);"></div></div></div></div></div></article>
-        <article class="glass" style="padding:2rem;margin-bottom:1.5rem;overflow:hidden;"><div style="display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr);gap:2.5rem;align-items:center;"><div class="case-img" style="min-height:230px;background:radial-gradient(circle at center,rgba(16,185,129,.11),rgba(16,185,129,.02) 55%,transparent 75%);border:1px solid rgba(16,185,129,.10);"><div style="width:170px;height:205px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(15,15,18,.75);box-shadow:0 20px 50px rgba(0,0,0,.3);padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;"><div style="width:100%;height:105px;border-radius:9px;border:1px solid rgba(16,185,129,.15);background:rgba(16,185,129,.05);display:flex;align-items:center;justify-content:center;color:#10B981;font-size:.7rem;letter-spacing:.08em;">SMART</div><div style="display:flex;gap:7px;width:100%;"><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(16,185,129,.12);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div></div></div></div><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#10B981;box-shadow:0 0 12px rgba(16,185,129,.6);"></span><span style="color:#10B981;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">EdTech · Embedded System</span></div><h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">Smart Calculator</h3><p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">A multifunctional educational device designed for children and students, combining calculation, learning, communication, productivity, and intelligent assistance in a compact embedded platform.</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">ESP32-S3</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">FreeRTOS</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">LVGL</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">IoT</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">AI</span></div><div style="color:var(--text3);font-size:.75rem;">Hardware & Software Product Concept</div></div></div></article>
+        <article class="glass" id="smartCalcCard" style="padding:2.9rem 2rem 2rem;margin-bottom:1.5rem;overflow:hidden;"><div style="position:absolute;top:14px;right:14px;z-index:3;display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:50px;background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.32);color:#FBBF24;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;"><span style="width:6px;height:6px;border-radius:50%;background:#F59E0B;animation:pulse-amber 2s infinite;"></span>In Progress</div><div style="display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr);gap:2.5rem;align-items:center;"><div class="case-img" style="min-height:230px;background:radial-gradient(circle at center,rgba(16,185,129,.11),rgba(16,185,129,.02) 55%,transparent 75%);border:1px solid rgba(16,185,129,.10);"><div style="width:170px;height:205px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(15,15,18,.75);box-shadow:0 20px 50px rgba(0,0,0,.3);padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;"><div style="width:100%;height:105px;border-radius:9px;border:1px solid rgba(16,185,129,.15);background:rgba(16,185,129,.05);display:flex;align-items:center;justify-content:center;color:#10B981;font-size:.7rem;letter-spacing:.08em;">SMART</div><div style="display:flex;gap:7px;width:100%;"><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(16,185,129,.12);"></div><div style="flex:1;height:27px;border-radius:6px;background:rgba(255,255,255,.06);"></div></div></div></div><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#10B981;box-shadow:0 0 12px rgba(16,185,129,.6);"></span><span style="color:#10B981;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">EdTech · Embedded System</span></div><h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">Smart Calculator</h3><p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">A multifunctional educational device designed for children and students, combining calculation, learning, communication, productivity, and intelligent assistance in a compact embedded platform.</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">ESP32-S3</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">FreeRTOS</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">LVGL</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">IoT</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">AI</span></div><div style="color:var(--text3);font-size:.75rem;">Hardware & Software Product Concept</div></div></div></article>
         <article class="glass" style="padding:2rem;overflow:hidden;"><div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:2.5rem;align-items:center;"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:.7rem;"><span style="width:8px;height:8px;border-radius:50%;background:#8B5CF6;box-shadow:0 0 12px rgba(139,92,246,.6);"></span><span style="color:#8B5CF6;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">Software · Web</span></div><h3 style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 .7rem;color:#fff;">Digital Products & Platforms</h3><p style="color:var(--text2);line-height:1.75;margin:0 0 1.2rem;font-size:.92rem;">A growing collection of web applications, experimental tools, and digital platforms focused on practical problems, user experience, and accessible technology.</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.4rem;"><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">HTML</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">CSS</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">JavaScript</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">Python</span><span class="glass-sm" style="padding:6px 11px;border-radius:50px;font-size:.7rem;">MySQL</span></div><a href="https://github.com/abdullahbinfahad" target="_blank" rel="noopener noreferrer" style="color:#8B5CF6;font-weight:600;text-decoration:none;font-size:.84rem;display:inline-flex;align-items:center;gap:5px;">View Development Work <span class="ext-arrow">↗</span></a></div><div class="case-img" style="min-height:230px;background:radial-gradient(circle at center,rgba(139,92,246,.11),rgba(139,92,246,.02) 55%,transparent 75%);border:1px solid rgba(139,92,246,.10);"><div style="width:82%;max-width:330px;display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="height:85px;border-radius:10px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.10);"></div><div style="height:85px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);"></div><div style="height:55px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.05);"></div><div style="height:55px;border-radius:10px;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.08);"></div></div></div></div></article>
     </section>
 
@@ -262,11 +317,11 @@
         </div>
     </section>
 
-    <section style="position:relative;z-index:10;padding:40px 16px;max-width:780px;margin:0 auto;">
+    <section style="position:relative;z-index:10;padding:20px 16px 10px;max-width:780px;margin:0 auto;">
         <p class="eyebrow" style="text-align:center;">Key Achievements</p>
         <div class="glass" style="padding:1.8rem;">
             <ul style="color:var(--text2);line-height:2.2;list-style:none;padding:0;">
-                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span><strong style="color:#fff;">Automation Engineering Student</strong> at Nanjing Tech University.</span></li>
+                <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span><strong style="color:#fff;">Automation and Robotics Engineering Student</strong> at Nanjing Tech University.</span></li>
                 <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Built AI-powered applications, modern web platforms, embedded systems, and IoT solutions.</span></li>
                 <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Developing innovative projects including <strong style="color:#fff;">MarketLens AI</strong> and <strong style="color:#fff;">Smart Calculator</strong>.</span></li>
                 <li style="display:flex;align-items:flex-start;"><span class="highlight-dot" style="margin-top:0.55rem;"></span><span>Author of <strong style="color:#fff;">"Moral Values"</strong>, exploring philosophy, ethics, and critical thinking.</span></li>
@@ -277,23 +332,159 @@
         </div>
     </section>
 
-    <section id="journey" style="position:relative;z-index:10;padding:50px 16px;max-width:950px;margin:0 auto;">
-        <p class="eyebrow" style="text-align:center;">📍 Professional Journey</p>
-        <h2 class="display" style="text-align:center;font-size:clamp(1.7rem,3.8vw,2.8rem);margin-bottom:0.3rem;">Academic & Professional Growth</h2>
-        <div style="position:relative;width:100%;height:150px;overflow:hidden;margin-bottom:-10px;" id="planeContainer"><canvas id="rocketCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas></div>
-        <div class="timeline-wrap">
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">🇧🇩 Bangladesh</div><div class="timeline-text">Built a strong foundation in science, technology, and analytical thinking.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Self Learning</div><div class="timeline-text">Developed skills in programming, web development, embedded systems, and AI.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Hands-on Projects</div><div class="timeline-text">Designed and built software, IoT solutions, and automation projects.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Nanjing Tech</div><div class="timeline-text">Pursuing Automation Engineering while expanding technical expertise.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">AI & Automation</div><div class="timeline-text">Building intelligent products integrating AI, automation, and modern software.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Product Development</div><div class="timeline-text">Transforming ideas into scalable digital products and real-world solutions.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Entrepreneurship</div><div class="timeline-text">Developing innovative technology ventures with a global perspective.</div></div>
-            <div class="timeline-node"><div class="timeline-dot"></div><div class="timeline-year">Future Vision</div><div class="timeline-text">Creating impactful technologies that improve lives worldwide.</div></div>
+    <!-- ===== Floating doodle stream (compact) ===== -->
+    <section id="journey" style="position:relative;z-index:10;padding:15px 0 25px;">
+        <div class="doodle-space" id="doodleStage">
+
+            <!-- lightbulb -->
+            <div class="doodle" style="--y:8%;--dur:32s;--delay:-6s;--fd:6.5s;--fdelay:-1.2s;--d:0.05s;">
+                <span class="doodle-in">
+                    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M24 7c-6.8 0-12 5-12 11.4 0 4.3 2.5 7.2 4.6 9.3 1.4 1.4 2.1 2.7 2.1 4.2v1.6h10.6v-1.6c0-1.5.7-2.8 2.1-4.2 2.1-2.1 4.6-5 4.6-9.3C36 12 30.8 7 24 7Z"/>
+                        <path pathLength="1" d="M19 37.5h10"/>
+                        <path pathLength="1" d="M21.5 42h5"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- atom (spin) -->
+            <div class="doodle" style="--y:22%;--dur:26s;--delay:-14s;--fd:7.5s;--fdelay:-2.4s;--d:0.15s;">
+                <span class="doodle-in">
+                    <svg class="doodle-spin" width="50" height="50" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse pathLength="1" cx="24" cy="24" rx="18" ry="7.5"/>
+                        <ellipse pathLength="1" cx="24" cy="24" rx="18" ry="7.5" transform="rotate(60 24 24)"/>
+                        <ellipse pathLength="1" cx="24" cy="24" rx="18" ry="7.5" transform="rotate(120 24 24)"/>
+                        <circle pathLength="1" cx="24" cy="24" r="2"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- cloud -->
+            <div class="doodle" style="--y:38%;--dur:36s;--delay:-2s;--fd:8.5s;--fdelay:-3.1s;--d:0.25s;">
+                <span class="doodle-in">
+                    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M15 33h18.5a6.5 6.5 0 0 0 1.2-12.9A9.2 9.2 0 0 0 16.4 17.2 7.6 7.6 0 0 0 15 33Z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- spiral -->
+            <div class="doodle" style="--y:12%;--dur:29s;--delay:-20s;--fd:7s;--fdelay:-0.8s;--d:0.35s;">
+                <span class="doodle-in">
+                    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M24 24a3 3 0 1 1 6 0 6 6 0 0 1-12 0 9 9 0 0 1 18 0 12 12 0 0 1-24 0"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- sparkle star -->
+            <div class="doodle" data-hide="m" style="--y:52%;--dur:24s;--delay:-9s;--fd:5.5s;--fdelay:-1.7s;--d:0.45s;">
+                <span class="doodle-in">
+                    <svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M24 6c1.7 9.7 5.3 13.3 15 15-9.7 1.7-13.3 5.3-15 15-1.7-9.7-5.3-13.3-15-15 9.7-1.7 13.3-5.3 15-15Z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- curvy arrow (sway) -->
+            <div class="doodle" style="--y:70%;--dur:34s;--delay:-16s;--fd:6.8s;--fdelay:-2.9s;--d:0.2s;">
+                <span class="doodle-in">
+                    <svg class="doodle-sway" width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M7 36C17 35 24 27 31 13"/>
+                        <path pathLength="1" d="M31 13l-7.5 1.2"/>
+                        <path pathLength="1" d="M31 13l.8 7.4"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- lightning bolt -->
+            <div class="doodle" style="--y:30%;--dur:27s;--delay:-24s;--fd:5.8s;--fdelay:-1.4s;--d:0.3s;">
+                <span class="doodle-in">
+                    <svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M27 5 13.5 26.5h8.5L20 43l14-22h-8.6L27 5Z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- infinity -->
+            <div class="doodle" style="--y:58%;--dur:38s;--delay:-11s;--fd:7.8s;--fdelay:-3.6s;--d:0.4s;">
+                <span class="doodle-in">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M24 24c-3.2-5.2-6.4-8-10.2-8a8 8 0 0 0 0 16c3.8 0 7-2.8 10.2-8Z"/>
+                        <path pathLength="1" d="M24 24c3.2-5.2 6.4-8 10.2-8a8 8 0 0 1 0 16c-3.8 0-7-2.8-10.2-8Z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- gear (spin) -->
+            <div class="doodle" style="--y:44%;--dur:25s;--delay:-3s;--fd:6.2s;--fdelay:-2.1s;--d:0.5s;">
+                <span class="doodle-in">
+                    <svg class="doodle-spin" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <circle pathLength="1" cx="24" cy="24" r="8"/>
+                        <circle pathLength="1" cx="24" cy="24" r="3"/>
+                        <path pathLength="1" d="M24 3v6M24 39v6M3 24h6M39 24h6M9.2 9.2l4.2 4.2M34.6 34.6l4.2 4.2M38.8 9.2l-4.2 4.2M13.4 34.6l-4.2 4.2"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- code brackets -->
+            <div class="doodle" data-hide="m" style="--y:76%;--dur:31s;--delay:-19s;--fd:7.2s;--fdelay:-0.6s;--d:0.6s;">
+                <span class="doodle-in">
+                    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M17 13 7 24l10 11"/>
+                        <path pathLength="1" d="M31 13l10 11-10 11"/>
+                        <path pathLength="1" d="M27.5 8.5 20.5 39.5"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- rocket -->
+            <div class="doodle" style="--y:64%;--dur:35s;--delay:-27s;--fd:6.9s;--fdelay:-3.3s;--d:0.55s;">
+                <span class="doodle-in">
+                    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M24 5c5.5 4.8 8.2 11.4 8.2 17.6 0 3.4-.7 6.3-1.9 8.5H17.7c-1.2-2.2-1.9-5.1-1.9-8.5C15.8 16.4 18.5 9.8 24 5Z"/>
+                        <circle pathLength="1" cx="24" cy="19.5" r="3.2"/>
+                        <path pathLength="1" d="M17.7 31.1 13 39.5l6.4-2.3M30.3 31.1l4.7 8.4-6.4-2.3"/>
+                        <path pathLength="1" d="M21.8 35.5c.6 2.4 1.5 4.4 2.2 5.5.7-1.1 1.6-3.1 2.2-5.5"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- coffee cup -->
+            <div class="doodle" style="--y:84%;--dur:28s;--delay:-8s;--fd:8.2s;--fdelay:-2.7s;--d:0.65s;">
+                <span class="doodle-in">
+                    <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M11 17h21v9a10.5 10.5 0 0 1-21 0v-9Z"/>
+                        <path pathLength="1" d="M32 19h3.2a5 5 0 0 1 0 10H32"/>
+                        <path pathLength="1" d="M18 9.5c0-2 2-2.4 2-4.5M25 9.5c0-2 2-2.4 2-4.5"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- location pin -->
+            <div class="doodle" style="--y:18%;--dur:33s;--delay:-23s;--fd:6.4s;--fdelay:-1.9s;--d:0.75s;">
+                <span class="doodle-in">
+                    <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M24 43s12.5-11.7 12.5-21a12.5 12.5 0 1 0-25 0C11.5 31.3 24 43 24 43Z"/>
+                        <circle pathLength="1" cx="24" cy="21.5" r="4.6"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- small star -->
+            <div class="doodle" data-hide="m" style="--y:88%;--dur:23s;--delay:-13s;--fd:5.2s;--fdelay:-0.9s;--d:0.85s;">
+                <span class="doodle-in">
+                    <svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path pathLength="1" d="M24 8c1.4 8 4.4 11 12.4 12.4C28.4 21.8 25.4 24.8 24 32.8 22.6 24.8 19.6 21.8 11.6 20.4 19.6 19 22.6 16 24 8Z"/>
+                    </svg>
+                </span>
+            </div>
+
         </div>
     </section>
+    <!-- ===== End floating doodle stream ===== -->
 
-    <section style="position:relative;z-index:10;padding:50px 16px;max-width:720px;margin:0 auto;">
+    <section style="position:relative;z-index:10;padding:15px 16px 50px;max-width:720px;margin:0 auto;">
         <p class="eyebrow" style="text-align:center;">Technical Expertise</p>
         <div class="glass" style="padding:2rem;">
             <div class="skill-row"><div class="lbl"><span>Frontend Development (HTML, CSS, JavaScript)</span><span>Advanced</span></div><div class="track"><div class="fill" style="--w:90%;"></div></div></div>
@@ -535,6 +726,23 @@
         const skillObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { const row = entry.target; row.classList.add('visible'); row.querySelectorAll('.fill').forEach(f => { f.style.width = f.style.getPropertyValue('--w'); }); } }); }, { threshold: 0.3 });
         document.querySelectorAll('.skill-row').forEach(row => skillObserver.observe(row));
         window.addEventListener('load', () => { document.querySelectorAll('.skill-row').forEach(row => { const rect = row.getBoundingClientRect(); if (rect.top < window.innerHeight && rect.bottom > 0) { row.classList.add('visible'); row.querySelectorAll('.fill').forEach(f => { f.style.width = f.style.getPropertyValue('--w'); }); } }); });
+    </script>
+
+    <!-- ===== Floating doodle stream script ===== -->
+    <script>
+        (function () {
+            var stage = document.getElementById('doodleStage');
+            if (!stage) return;
+            var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) {
+                        stage.classList.add('drawn');
+                        obs.disconnect();
+                    }
+                });
+            }, { threshold: 0.15 });
+            obs.observe(stage);
+        })();
     </script>
 </body>
 </html>
