@@ -24,7 +24,7 @@ I turn ideas into working software: games you can play in a browser, tools that 
 
 | Project | What it is | Live site |
 | --- | --- | --- |
-| 🌉 [BridgeX](https://github.com/abdullahbinfahad/BridgeX) | Peer-to-peer carry marketplace — senders meet travelers with spare luggage space | — |
+| 🌉 [BridgeX](https://github.com/abdullahbinfahad/BridgeX) | Peer-to-peer carry marketplace — senders meet travelers with spare luggage space | [bridgex-q2h5.onrender.com](https://bridgex-q2h5.onrender.com/) |
 | 🌱 [life-os](https://github.com/abdullahbinfahad/life-os) | Personal system for goals, projects, habits, and journal — React + TypeScript + Supabase | [abdullahbinfahad.github.io/life-os](https://abdullahbinfahad.github.io/life-os/) |
 | [zch-sourcing](https://github.com/sejotta/web-zch-sourcing) | China→Europe sourcing agency site — supplier verification, quality control, logistics | — |
 | 🎮 [Online-Fun-Games](https://github.com/abdullahbinfahad/Online-Fun-Games) | 30+ free mini web games in HTML, CSS & JavaScript | [games.abdullahbinfahad.info](https://games.abdullahbinfahad.info) |
