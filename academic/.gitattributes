@@ -1,0 +1,2 @@
+# Patch-format files use a single space to represent blank context lines.
+*.patch whitespace=-blank-at-eol,-blank-at-eof
